@@ -37,6 +37,26 @@ export const projects: Project[] = [
     year: "2025",
   },
   {
+    id: "the-seven-saints",
+    title: "The Seven Saints",
+    category: "web",
+    summary:
+      "Luxury desert camp website for an Agafay-based hospitality destination near Marrakech, designed to present the stay experience, atmosphere, and premium positioning with clarity.",
+    description:
+      "A hospitality-led website shaped to balance immersion and usability, helping a luxury desert camp present its experience, setting, and booking intent with a more refined digital presence.",
+    stack: ["React", "TypeScript", "Vite"],
+    role: "Website development and front-end implementation",
+    outcomes: [
+      "Frames the camp experience with a calmer, more immersive browsing rhythm",
+      "Supports premium hospitality positioning across atmosphere, stay details, and booking intent",
+      "Keeps the presentation elegant, visual, and responsive across devices",
+    ],
+    liveUrl: "https://ornate-marigold-5e0674.netlify.app/",
+    image: "/projects/the-seven-saints.jpg",
+    featured: true,
+    year: "2025",
+  },
+  {
     id: "mahal-films",
     title: "Mahal Films",
     category: "web",

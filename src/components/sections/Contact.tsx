@@ -39,16 +39,16 @@ export default function Contact() {
     <section id="contact" ref={ref} className="section-shell" data-variant="contact">
       <div className="section-container">
         <motion.div
-          className="signal-frame surface-card mx-auto max-w-6xl overflow-hidden p-6 md:p-10"
+          className="signal-frame surface-card mx-auto max-w-6xl overflow-hidden p-5 sm:p-6 md:p-10"
           initial={{ opacity: 0, y: 28 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
         >
-          <div className="grid items-center gap-8 lg:grid-cols-[1.08fr_0.92fr] lg:gap-10">
+          <div className="grid items-center gap-6 sm:gap-8 lg:grid-cols-[1.08fr_0.92fr] lg:gap-10">
             <div className="relative">
               <div className="ambient-orb -left-10 top-0 h-40 w-40" data-tone="light" />
               <p className="ui-kicker mb-5">Open Channel</p>
-              <h2 className="ui-title max-w-3xl text-center text-4xl md:text-5xl lg:text-left lg:text-6xl">
+              <h2 className="ui-title max-w-3xl text-center text-[2.65rem] md:text-5xl lg:text-left lg:text-6xl">
                 I am available for focused freelance work with a premium finish.
               </h2>
               <p className="ui-body mx-auto mt-6 max-w-2xl text-center text-base md:text-lg lg:mx-0 lg:text-left">
@@ -66,7 +66,7 @@ export default function Contact() {
             </div>
 
             <div
-              className="signal-frame relative rounded-[1.8rem] border p-5 md:p-6"
+              className="signal-frame relative rounded-[1.45rem] border p-4 sm:rounded-[1.8rem] sm:p-5 md:p-6"
               style={{
                 borderColor: "rgba(151, 166, 190, 0.14)",
                 background:
@@ -97,14 +97,14 @@ export default function Contact() {
                   <span>Contact</span>
                 </a>
 
-                <div className="mt-6 grid gap-3">
+                <div className="mt-5 grid gap-3 sm:mt-6">
                   {contactLinks.map((item) => (
                     <a
                       key={item.label}
                       href={item.href}
                       target={item.href.startsWith("http") ? "_blank" : undefined}
                       rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                      className="flex flex-col items-start gap-2 rounded-[1.25rem] border border-white/10 bg-white/[0.03] px-4 py-4 transition-colors duration-200 hover:bg-white/[0.05] sm:flex-row sm:items-center sm:justify-between"
+                      className="flex flex-col items-start gap-2 rounded-[1.1rem] border border-white/10 bg-white/[0.03] px-4 py-4 transition-colors duration-200 hover:bg-white/[0.05] sm:flex-row sm:items-center sm:justify-between sm:rounded-[1.25rem]"
                     >
                       <span className="ui-micro">{item.label}</span>
                       <span className="break-all text-sm text-slate-200">{item.value}</span>

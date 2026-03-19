@@ -38,34 +38,47 @@ export default function Projects() {
         />
 
         <motion.div
-          className="mb-12 flex flex-col items-center justify-between gap-5 md:mb-16 md:flex-row"
+          className="mb-10 flex flex-col items-stretch justify-between gap-4 sm:mb-12 md:mb-16 md:flex-row md:items-center md:gap-5"
           initial={{ opacity: 0, y: 18 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.45, delay: 0.12 }}
         >
-          <div className="flex flex-wrap items-center justify-center gap-3 md:justify-start">
-            {categories.map((category) => {
-              const active = activeCategory === category.id;
+          <div className="no-scrollbar -mx-1 overflow-x-auto pb-1">
+            <div className="flex w-max min-w-full items-center gap-3 px-1 md:min-w-0 md:justify-start">
+              {categories.map((category) => {
+                const active = activeCategory === category.id;
 
-              return (
-                <button
-                  key={category.id}
-                  type="button"
-                  onClick={() => setActiveCategory(category.id)}
-                  className="rounded-full px-5 py-3 text-sm transition-all duration-200"
-                  style={{
-                    color: active ? "var(--text-primary)" : "var(--text-secondary)",
-                    background: active ? "rgba(255, 255, 255, 0.05)" : "rgba(255, 255, 255, 0.02)",
-                    border: `1px solid ${active ? "rgba(168, 188, 214, 0.24)" : "rgba(151, 166, 190, 0.12)"}`,
-                  }}
-                >
-                  {category.label}
-                </button>
-              );
-            })}
+                return (
+                  <button
+                    key={category.id}
+                    type="button"
+                    onClick={() => setActiveCategory(category.id)}
+                    className="relative shrink-0 overflow-hidden rounded-full px-4 py-3 text-sm transition-all duration-200 sm:px-5"
+                    style={{
+                      color: active ? "var(--text-primary)" : "var(--text-secondary)",
+                      background: active ? "rgba(255, 255, 255, 0.05)" : "rgba(255, 255, 255, 0.02)",
+                      border: `1px solid ${active ? "rgba(168, 188, 214, 0.24)" : "rgba(151, 166, 190, 0.12)"}`,
+                    }}
+                  >
+                    {active ? (
+                      <motion.span
+                        layoutId="active-project-filter"
+                        className="absolute inset-0"
+                        style={{
+                          background:
+                            "linear-gradient(90deg, rgba(149, 208, 224, 0.12), rgba(255, 255, 255, 0.04), rgba(149, 208, 224, 0.12))",
+                        }}
+                        transition={{ type: "spring", stiffness: 280, damping: 26 }}
+                      />
+                    ) : null}
+                    <span className="relative z-10">{category.label}</span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
-          <div className="signal-pill">{filteredProjects.length} real projects</div>
+          <div className="signal-pill self-start md:self-auto">{filteredProjects.length} real projects</div>
         </motion.div>
 
         <AnimatePresence mode="wait">
@@ -79,11 +92,12 @@ export default function Projects() {
             {featuredProject ? (
               <motion.article
                 layout
-                className="signal-frame surface-card mb-8 overflow-hidden p-6 md:p-8 lg:p-10"
+                className="signal-frame surface-card mb-8 overflow-hidden p-5 sm:p-6 md:p-8 lg:p-10"
+                whileHover={{ y: -6 }}
               >
                 <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10">
                   <motion.div
-                    className="relative overflow-hidden rounded-[1.8rem] border p-5 md:p-6"
+                    className="group relative overflow-hidden rounded-[1.5rem] border p-4 sm:rounded-[1.8rem] sm:p-5 md:p-6"
                     style={{
                       borderColor: "rgba(151, 166, 190, 0.14)",
                       background:
@@ -93,6 +107,15 @@ export default function Projects() {
                     }}
                     whileHover={{ y: -4 }}
                   >
+                    <motion.div
+                      className="pointer-events-none absolute inset-0"
+                      style={{
+                        background:
+                          "radial-gradient(circle at 24% 18%, rgba(149, 208, 224, 0.12), transparent 34%)",
+                      }}
+                      animate={{ opacity: [0.35, 0.7, 0.35] }}
+                      transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+                    />
                     <div className="relative z-10 flex items-center justify-between">
                       <div className="signal-pill">
                         {featuredProject.category === "cybersecurity" ? "Security system" : "Featured website"}
@@ -100,16 +123,18 @@ export default function Projects() {
                       <span className="ui-micro">{featuredProject.year}</span>
                     </div>
 
-                    <div className="relative mt-8 aspect-[4/3.2] overflow-hidden rounded-[1.5rem] border border-white/10">
+                    <div className="relative mt-6 aspect-[4/4.05] overflow-hidden rounded-[1.2rem] border border-white/10 sm:mt-8 sm:aspect-[4/3.2] sm:rounded-[1.5rem]">
                       <motion.div
                         className="absolute inset-[8%] rounded-[1.4rem] border border-white/10 bg-white/[0.02]"
                         animate={{ x: [0, 10, 0], y: [0, -8, 0] }}
                         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                        whileHover={{ scale: 1.02 }}
                       />
                       <motion.div
                         className="absolute inset-[16%] rounded-[1.4rem] border border-white/[0.08]"
                         animate={{ x: [0, -12, 0], y: [0, 10, 0] }}
                         transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+                        whileHover={{ scale: 1.03 }}
                       />
 
                       <svg viewBox="0 0 600 420" className="absolute inset-0 h-full w-full">
@@ -126,7 +151,7 @@ export default function Projects() {
                         ))}
                       </svg>
 
-                      <div className="absolute bottom-4 left-4 max-w-[14rem] rounded-[1.15rem] border border-white/10 bg-[rgba(8,14,24,0.78)] px-4 py-3 backdrop-blur-md">
+                      <div className="absolute inset-x-3 bottom-3 rounded-[1rem] border border-white/10 bg-[rgba(8,14,24,0.82)] px-3.5 py-3 backdrop-blur-md sm:inset-x-auto sm:bottom-4 sm:left-4 sm:max-w-[14rem] sm:rounded-[1.15rem] sm:px-4">
                         <p className="ui-micro mb-2">Case-study frame</p>
                         <p className="text-sm leading-6 text-slate-200">
                           {featuredProject.description}
@@ -142,9 +167,14 @@ export default function Projects() {
                     </div>
                   </motion.div>
 
-                  <div className="flex flex-col justify-between">
+                  <motion.div
+                    className="flex flex-col justify-between"
+                    initial={{ opacity: 0.92, x: 10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.45, delay: 0.08 }}
+                  >
                     <div>
-                      <div className="mb-5 flex items-center justify-between gap-4">
+                      <div className="mb-5 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
                         <span className="ui-chip">
                           {featuredProject.category === "cybersecurity" ? "Cybersecurity" : "Web development"}
                         </span>
@@ -200,7 +230,7 @@ export default function Projects() {
                         </a>
                       ) : null}
                     </div>
-                  </div>
+                  </motion.div>
                 </div>
               </motion.article>
             ) : null}

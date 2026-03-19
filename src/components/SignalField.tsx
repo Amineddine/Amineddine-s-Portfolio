@@ -20,10 +20,13 @@ export default function SignalField() {
   const layerY = useTransform(softY, [0, 100], [-16, 16]);
   const altLayerX = useTransform(softX, [0, 100], [12, -12]);
   const altLayerY = useTransform(softY, [0, 100], [10, -10]);
+  const rotateY = useTransform(softX, [0, 100], [-5, 5]);
+  const rotateX = useTransform(softY, [0, 100], [4, -4]);
+  const beamX = useTransform(softX, [0, 100], ["18%", "82%"]);
 
   return (
     <motion.div
-      className="signal-panel signal-frame relative overflow-hidden rounded-[2rem] p-5 md:p-6"
+      className="signal-panel signal-frame relative overflow-hidden rounded-[1.7rem] p-4 sm:rounded-[2rem] sm:p-5 md:p-6"
       onMouseMove={(event) => {
         const bounds = event.currentTarget.getBoundingClientRect();
         pointerX.set(((event.clientX - bounds.left) / bounds.width) * 100);
@@ -36,18 +39,30 @@ export default function SignalField() {
       initial={{ opacity: 0, y: 30, rotateX: 6 }}
       animate={{ opacity: 1, y: 0, rotateX: 0 }}
       transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+      style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
     >
       <motion.div className="pointer-events-none absolute inset-0" style={{ background: glow }} />
 
-      <div className="relative z-10 flex items-center justify-between">
+      <motion.div
+        className="pointer-events-none absolute inset-y-6 w-28 -translate-x-1/2 rounded-full blur-2xl"
+        style={{
+          left: beamX,
+          background:
+            "linear-gradient(180deg, rgba(149, 208, 224, 0.18), rgba(149, 208, 224, 0.02), transparent)",
+        }}
+      />
+
+      <div className="relative z-10 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="ui-micro text-slate-400">Signal field</p>
-          <p className="mt-2 text-sm text-slate-200">Morocco based / available globally / web + security</p>
+          <p className="mt-2 text-sm text-slate-200">
+            Morocco based / available globally / web + security
+          </p>
         </div>
         <div className="signal-pill">Live frame</div>
       </div>
 
-      <div className="relative mt-8 aspect-[4/4.7] overflow-hidden rounded-[1.7rem] border border-white/8 bg-[linear-gradient(180deg,rgba(8,14,24,0.76),rgba(8,14,24,0.22))]">
+      <div className="relative mt-6 aspect-[4/3.55] overflow-hidden rounded-[1.35rem] border border-white/8 bg-[linear-gradient(180deg,rgba(8,14,24,0.76),rgba(8,14,24,0.22))] sm:mt-8 sm:aspect-[4/4.7] sm:rounded-[1.7rem]">
         <motion.div
           className="absolute inset-[8%] rounded-[1.4rem] border border-white/10 bg-white/[0.02]"
           style={{ x: layerX, y: layerY }}
@@ -103,25 +118,37 @@ export default function SignalField() {
           />
         </motion.svg>
 
-        <div className="absolute left-5 top-5">
+        <motion.div
+          className="absolute left-4 top-4 sm:left-5 sm:top-5"
+          animate={{ y: [0, -4, 0] }}
+          transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+        >
           <div className="signal-pill">Field 01</div>
-        </div>
+        </motion.div>
 
-        <div className="absolute bottom-5 left-5 max-w-[13rem] rounded-[1.25rem] border border-white/10 bg-[rgba(8,14,24,0.78)] px-4 py-3 backdrop-blur-md">
+        <motion.div
+          className="absolute bottom-4 left-4 max-w-[11.5rem] rounded-[1.05rem] border border-white/10 bg-[rgba(8,14,24,0.78)] px-3.5 py-3 backdrop-blur-md sm:bottom-5 sm:left-5 sm:max-w-[13rem] sm:rounded-[1.25rem] sm:px-4"
+          animate={{ y: [0, 4, 0] }}
+          transition={{ duration: 6.8, repeat: Infinity, ease: "easeInOut" }}
+        >
           <p className="ui-micro mb-2">Coordinates</p>
           <p className="text-sm leading-6 text-slate-200">
             Interfaces, client work, and security tooling shaped with a quieter sense of control.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="absolute right-5 top-1/2 hidden -translate-y-1/2 rounded-[1.25rem] border border-white/10 bg-[rgba(8,14,24,0.78)] px-4 py-3 backdrop-blur-md sm:block">
+        <motion.div
+          className="absolute right-5 top-1/2 hidden -translate-y-1/2 rounded-[1.25rem] border border-white/10 bg-[rgba(8,14,24,0.78)] px-4 py-3 backdrop-blur-md sm:block"
+          animate={{ y: [0, -6, 0] }}
+          transition={{ duration: 7.2, repeat: Infinity, ease: "easeInOut" }}
+        >
           <p className="ui-micro mb-2">Focus</p>
           <div className="space-y-2 text-sm text-slate-200">
             <p>Web systems</p>
             <p>Secure delivery</p>
             <p>Field-tested polish</p>
           </div>
-        </div>
+        </motion.div>
       </div>
     </motion.div>
   );

@@ -44,9 +44,9 @@ export default function Navbar() {
         animate={{ y: 0 }}
         transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: 0.6 }}
       >
-        <div className="section-container pt-5">
+        <div className="section-container pt-4 sm:pt-5">
           <div
-            className="mx-auto flex items-center justify-between rounded-full px-4 py-3 md:px-5"
+            className="mx-auto flex items-center justify-between rounded-full px-3.5 py-2.5 sm:px-4 sm:py-3 md:px-5"
             style={{
               background: isScrolled ? "rgba(14, 21, 33, 0.82)" : "rgba(14, 21, 33, 0.42)",
               border: `1px solid ${isScrolled ? "rgba(168, 188, 214, 0.18)" : "rgba(168, 188, 214, 0.12)"}`,
@@ -54,7 +54,10 @@ export default function Navbar() {
               boxShadow: isScrolled ? "0 14px 35px rgba(2, 7, 14, 0.2)" : "none",
             }}
           >
-            <a href="#hero" className="ui-title text-base tracking-[-0.04em] md:text-lg">
+            <a
+              href="#hero"
+              className="ui-title max-w-[11rem] text-[0.95rem] leading-tight tracking-[-0.04em] sm:max-w-none sm:text-base md:text-lg"
+            >
               Amineddine Znin
             </a>
 
@@ -98,7 +101,7 @@ export default function Navbar() {
               <button
                 type="button"
                 onClick={() => setMobileOpen((value) => !value)}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full border md:hidden"
+                className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border md:hidden"
                 style={{
                   borderColor: "var(--border)",
                   background: "rgba(255, 255, 255, 0.03)",
@@ -146,7 +149,7 @@ export default function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            <div className="section-container flex min-h-screen flex-col justify-center gap-5">
+            <div className="section-container flex min-h-screen flex-col justify-center gap-4 pt-24 pb-10">
               {navItems.map((item, index) => (
                 <motion.a
                   key={item.label}
@@ -156,7 +159,7 @@ export default function Navbar() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 14 }}
                   transition={{ delay: 0.05 * index, duration: 0.25 }}
-                  className="surface-card px-6 py-5 text-xl"
+                  className="surface-card px-5 py-4 text-lg sm:px-6 sm:py-5 sm:text-xl"
                 >
                   {item.label}
                 </motion.a>

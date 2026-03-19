@@ -1,6 +1,13 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import {
+  motion,
+  useInView,
+  useMotionTemplate,
+  useMotionValue,
+  useSpring,
+  useTransform,
+} from "framer-motion";
 import { useRef } from "react";
 import type { Project } from "@/data/projects";
 
@@ -18,18 +25,42 @@ export default function ProjectCard({
 }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const pointerX = useMotionValue(50);
+  const pointerY = useMotionValue(50);
+  const softX = useSpring(pointerX, { stiffness: 120, damping: 20 });
+  const softY = useSpring(pointerY, { stiffness: 120, damping: 20 });
+  const rotateY = useTransform(softX, [0, 100], [-4, 4]);
+  const rotateX = useTransform(softY, [0, 100], [3, -3]);
+  const glow = useMotionTemplate`radial-gradient(circle at ${softX}% ${softY}%, rgba(149, 208, 224, 0.18), transparent 34%)`;
+  const previewShiftX = useTransform(softX, [0, 100], [-8, 8]);
+  const previewShiftY = useTransform(softY, [0, 100], [-6, 6]);
+  const previewShiftAltX = useTransform(previewShiftX, (value) => value * -0.7);
+  const previewShiftAltY = useTransform(previewShiftY, (value) => value * -0.7);
+  const beamLeft = useTransform(softX, [0, 100], ["18%", "82%"]);
 
   return (
     <motion.article
       ref={ref}
       layout
-      className="signal-frame surface-card group flex h-full flex-col overflow-hidden p-6 md:p-8"
+      className="signal-frame surface-card group relative flex h-full flex-col overflow-hidden p-6 md:p-8"
       initial={{ opacity: 0, y: 28 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.55, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
-      whileHover={{ y: -6 }}
+      whileHover={{ y: -8 }}
+      onMouseMove={(event) => {
+        const bounds = event.currentTarget.getBoundingClientRect();
+        pointerX.set(((event.clientX - bounds.left) / bounds.width) * 100);
+        pointerY.set(((event.clientY - bounds.top) / bounds.height) * 100);
+      }}
+      onMouseLeave={() => {
+        pointerX.set(50);
+        pointerY.set(50);
+      }}
+      style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
     >
-      <div className="mb-6 flex items-center justify-between gap-4">
+      <motion.div className="pointer-events-none absolute inset-0" style={{ background: glow }} />
+
+      <div className="relative z-10 mb-6 flex items-center justify-between gap-4">
         <span
           className="ui-chip"
           style={{
@@ -49,7 +80,7 @@ export default function ProjectCard({
       </div>
 
       <div
-        className="relative mb-7 min-h-48 overflow-hidden rounded-[1.5rem] border p-5 md:min-h-56"
+        className="relative z-10 mb-7 min-h-44 overflow-hidden rounded-[1.35rem] border p-4 sm:min-h-48 sm:rounded-[1.5rem] sm:p-5 md:min-h-56"
         style={{
           borderColor: "rgba(151, 166, 190, 0.12)",
           background:
@@ -60,18 +91,25 @@ export default function ProjectCard({
       >
         <motion.div
           className="absolute inset-[10%] rounded-[1.25rem] border border-white/[0.08]"
-          whileHover={{ x: 6, y: -6 }}
-          transition={{ duration: 0.35 }}
+          style={{ x: previewShiftX, y: previewShiftY }}
         />
         <motion.div
           className="absolute inset-[18%] rounded-[1.25rem] border border-white/[0.06]"
-          whileHover={{ x: -8, y: 8 }}
-          transition={{ duration: 0.35 }}
+          style={{ x: previewShiftAltX, y: previewShiftAltY }}
+        />
+
+        <motion.div
+          className="pointer-events-none absolute inset-y-3 w-24 -translate-x-1/2 rounded-full blur-2xl"
+          style={{
+            left: beamLeft,
+            background:
+              "linear-gradient(180deg, rgba(149, 208, 224, 0.16), rgba(149, 208, 224, 0.01), transparent)",
+          }}
         />
 
         <div className="relative z-10 flex h-full flex-col justify-between">
           <div className="flex items-start justify-between gap-4">
-            <div className="max-w-[15rem]">
+            <div className="max-w-none sm:max-w-[15rem]">
               <p className="ui-micro mb-2">Project frame / {project.year}</p>
               <p className="text-sm leading-7 text-slate-300">{project.description}</p>
             </div>
@@ -82,7 +120,11 @@ export default function ProjectCard({
 
           <div className="soft-divider mt-6" />
 
-          <div className="mt-4 flex items-center justify-between gap-3">
+          <motion.div
+            className="mt-4 flex items-center justify-between gap-3"
+            animate={{ y: [0, -2, 0] }}
+            transition={{ duration: 5 + index, repeat: Infinity, ease: "easeInOut" }}
+          >
             <span className="ui-micro">
               {project.category === "cybersecurity" ? "System focus" : "Delivery focus"}
             </span>
@@ -94,35 +136,46 @@ export default function ProjectCard({
             >
               {project.category === "cybersecurity" ? "Inspect build" : "View details"}
             </motion.span>
-          </div>
+          </motion.div>
         </div>
       </div>
 
-      <h3 className="ui-title mb-3 text-2xl">{project.title}</h3>
-      <p className="mb-4 text-sm font-semibold tracking-[-0.01em] text-slate-200">
+      <h3 className="ui-title relative z-10 mb-3 text-[1.65rem] sm:text-2xl">{project.title}</h3>
+      <p className="relative z-10 mb-4 text-sm font-semibold tracking-[-0.01em] text-slate-200">
         {project.role}
       </p>
-      <p className="ui-body mb-6 text-base">{project.summary}</p>
+      <p className="ui-body relative z-10 mb-6 text-base">{project.summary}</p>
 
-      <div className="mb-6 flex flex-wrap gap-2">
+      <div className="relative z-10 mb-6 flex flex-wrap gap-2">
         {project.stack.map((item) => (
-          <span key={item} className="ui-chip">
+          <motion.span
+            key={item}
+            className="ui-chip"
+            whileHover={{ y: -3 }}
+            transition={{ duration: 0.18 }}
+          >
             {item}
-          </span>
+          </motion.span>
         ))}
       </div>
 
-      <div className="mb-8 space-y-3">
-        {project.outcomes.map((outcome) => (
-          <div key={outcome} className="flex items-start gap-3 text-sm leading-7 text-slate-300">
+      <div className="relative z-10 mb-8 space-y-3">
+        {project.outcomes.map((outcome, outcomeIndex) => (
+          <motion.div
+            key={outcome}
+            className="flex items-start gap-3 text-sm leading-7 text-slate-300"
+            initial={{ opacity: 0.84, x: 0 }}
+            whileHover={{ opacity: 1, x: 4 }}
+            transition={{ duration: 0.18, delay: outcomeIndex * 0.02 }}
+          >
             <span className="mt-3 h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
             <span>{outcome}</span>
-          </div>
+          </motion.div>
         ))}
       </div>
 
       <div
-        className="mt-auto flex items-center justify-between gap-4 border-t pt-6"
+        className="relative z-10 mt-auto flex flex-col items-start gap-3 border-t pt-6 sm:flex-row sm:items-center sm:justify-between sm:gap-4"
         style={{ borderColor: "rgba(151, 166, 190, 0.12)" }}
       >
         <a
