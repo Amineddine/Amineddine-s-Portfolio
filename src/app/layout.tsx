@@ -1,49 +1,58 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { PersonaProvider } from "@/context/PersonaContext";
+import LenisProvider from "@/components/netflix/LenisProvider";
 
 export const metadata: Metadata = {
-  title: "Amineddine Znin | Software Developer and Cybersecurity Builder",
+  title: "Amineddine Znin — Now Streaming",
   description:
-    "Portfolio of Amineddine Znin, a Morocco-based software developer and freelancer building modern web experiences and security-aware systems.",
+    "The portfolio of Amineddine Znin, a Morocco-based software developer and cybersecurity builder — retold for whoever's watching. Pick a profile: Recruiter, Developer, or Stalker.",
   keywords: [
     "Amineddine Znin",
     "software developer Morocco",
     "freelance web developer",
     "cybersecurity builder",
-    "Next.js developer",
-    "secure web applications",
+    "Next.js portfolio",
+    "Netflix portfolio",
     "SOC tooling",
   ],
   authors: [{ name: "Amineddine Znin" }],
   openGraph: {
-    title: "Amineddine Znin | Software Developer and Cybersecurity Builder",
+    title: "Amineddine Znin — Now Streaming",
     description:
-      "Modern web experiences and security-aware systems by Amineddine Znin, a freelancer based in Morocco.",
+      "One developer, three narrations. A Netflix-style portfolio of web & security work.",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Amineddine Znin | Software Developer and Cybersecurity Builder",
-    description:
-      "Modern web experiences and security-aware systems by Amineddine Znin.",
+    title: "Amineddine Znin — Now Streaming",
+    description: "Pick a profile. Same work, told in your language.",
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className="antialiased">
-        {children}
-        <div className="noise-overlay" />
+    <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body>
+        <PersonaProvider>
+          <LenisProvider>{children}</LenisProvider>
+        </PersonaProvider>
       </body>
     </html>
   );

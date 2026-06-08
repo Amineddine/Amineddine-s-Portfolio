@@ -1,50 +1,68 @@
 "use client";
 
-import { useState } from "react";
-import CommandPalette from "@/components/CommandPalette";
-import GridBackground from "@/components/GridBackground";
-import Loader from "@/components/Loader";
-import Navbar from "@/components/Navbar";
-import SectionDivider from "@/components/SectionDivider";
-import About from "@/components/sections/About";
-import Contact from "@/components/sections/Contact";
-import Experience from "@/components/sections/Experience";
-import Footer from "@/components/sections/Footer";
-import Hero from "@/components/sections/Hero";
-import Process from "@/components/sections/Process";
-import Projects from "@/components/sections/Projects";
-import Skills from "@/components/sections/Skills";
+import { AnimatePresence, motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import IntroSplash from "@/components/netflix/IntroSplash";
+import ProfileGate from "@/components/netflix/ProfileGate";
+import { usePersona } from "@/context/PersonaContext";
+import { playTaDum } from "@/lib/sound";
+import type { Persona } from "@/lib/types";
 
-export default function Home() {
-  const [isLoading, setIsLoading] = useState(true);
+type Phase = "loading" | "splash" | "gate";
+
+export default function EntryPage() {
+  const router = useRouter();
+  const { setPersona, markVisited, muted } = usePersona();
+  const [phase, setPhase] = useState<Phase>("loading");
+
+  // Decide whether to play the splash. Returning visitors skip straight to the
+  // gate. Read localStorage directly to avoid provider/child effect ordering.
+  useEffect(() => {
+    let visited = false;
+    try {
+      visited = localStorage.getItem("nf-visited") === "1";
+    } catch {
+      /* ignore */
+    }
+    // hydrating UI phase from localStorage (an external system) on mount
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setPhase(visited ? "gate" : "splash");
+    // warm up the browse routes
+    router.prefetch("/browse/recruiter");
+    router.prefetch("/browse/developer");
+    router.prefetch("/browse/stalker");
+  }, [router]);
+
+  const handleSplashDone = () => {
+    markVisited();
+    setPhase("gate");
+  };
+
+  const handlePick = (p: Persona) => {
+    setPersona(p);
+    markVisited();
+    if (!muted) playTaDum();
+    router.push(`/browse/${p}`);
+  };
 
   return (
-    <>
-      <Loader onComplete={() => setIsLoading(false)} />
+    <main className="min-h-[100dvh] bg-[var(--nf-bg)]">
+      <AnimatePresence mode="wait">
+        {phase === "splash" && (
+          <IntroSplash key="splash" onDone={handleSplashDone} />
+        )}
 
-      {!isLoading ? (
-        <div className="page-shell">
-          <GridBackground />
-          <Navbar />
-          <CommandPalette />
-
-          <main className="relative z-10">
-            <Hero />
-            <SectionDivider label="Field notes" />
-            <About />
-            <SectionDivider label="Selected work" />
-            <Projects />
-            <SectionDivider label="Practice layers" />
-            <Skills />
-            <Experience />
-            <SectionDivider label="Delivery protocol" />
-            <Process />
-            <Contact />
-          </main>
-
-          <Footer />
-        </div>
-      ) : null}
-    </>
+        {phase === "gate" && (
+          <motion.div
+            key="gate"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, transition: { duration: 0.6 } }}
+          >
+            <ProfileGate onPick={handlePick} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </main>
   );
 }

@@ -12,7 +12,16 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // one-off maintenance node scripts, not part of the app bundle
+    "scripts/**",
   ]),
+  {
+    rules: {
+      // App Router loads fonts via <link> in the root layout <head> on purpose;
+      // the pages/_document rule does not apply here.
+      "@next/next/no-page-custom-font": "off",
+    },
+  },
 ]);
 
 export default eslintConfig;
