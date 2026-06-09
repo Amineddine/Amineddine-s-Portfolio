@@ -2,25 +2,107 @@ import type { CatalogItem } from "@/lib/types";
 
 type Variant = "thumb" | "banner" | "tile";
 
-function initials(title: string): string {
-  const words = title.replace(/[^a-zA-Z0-9 -]/g, "").split(/[\s-]+/).filter(Boolean);
-  if (words.length === 1) return words[0].slice(0, 2).toUpperCase();
-  return (words[0][0] + words[1][0]).toUpperCase();
+function hashId(s: string): number {
+  let h = 0;
+  for (let i = 0; i < s.length; i += 1) h = (h * 31 + s.charCodeAt(i)) >>> 0;
+  return h;
 }
 
-const typeLabel: Record<CatalogItem["type"], string> = {
+const categoryTag: Record<CatalogItem["category"], string> = {
+  web: "Web",
+  cybersecurity: "Security",
+  ops: "Systems",
+  profile: "Profile",
+};
+
+const typeTag: Record<CatalogItem["type"], string> = {
   project: "Project",
   skill: "Skill",
-  experience: "Experience",
-  certification: "Certification",
+  experience: "Principle",
+  certification: "Credential",
   about: "Profile",
 };
 
+/** Per-item geometric motif so no two posters read the same. */
+function Motif({ idx, color }: { idx: number; color: string }) {
+  if (idx === 0) {
+    // concentric rings anchored top-right
+    return (
+      <svg
+        className="absolute inset-0 h-full w-full"
+        viewBox="0 0 200 200"
+        fill="none"
+        preserveAspectRatio="xMidYMid slice"
+        aria-hidden
+      >
+        {[18, 36, 56, 78, 102, 128].map((r, i) => (
+          <circle
+            key={r}
+            cx="172"
+            cy="34"
+            r={r}
+            stroke={color}
+            strokeWidth="0.7"
+            opacity={Math.max(0.05, 0.26 - i * 0.035)}
+          />
+        ))}
+      </svg>
+    );
+  }
+  if (idx === 1) {
+    // dot matrix fading across the diagonal
+    return (
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundImage: `radial-gradient(${color} 1.1px, transparent 1.2px)`,
+          backgroundSize: "17px 17px",
+          opacity: 0.2,
+          maskImage: "linear-gradient(125deg, black, transparent 72%)",
+          WebkitMaskImage: "linear-gradient(125deg, black, transparent 72%)",
+        }}
+      />
+    );
+  }
+  if (idx === 2) {
+    // scanlines (reads nicely for the security work)
+    return (
+      <>
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `repeating-linear-gradient(0deg, ${color}22 0px, ${color}22 1px, transparent 1px, transparent 6px)`,
+            opacity: 0.55,
+            maskImage: "linear-gradient(180deg, transparent, black 60%)",
+            WebkitMaskImage: "linear-gradient(180deg, transparent, black 60%)",
+          }}
+        />
+        <div
+          className="absolute right-5 top-5 h-2 w-2 rounded-full"
+          style={{ background: color, boxShadow: `0 0 14px ${color}` }}
+        />
+      </>
+    );
+  }
+  // diagonal hatch
+  return (
+    <div
+      className="absolute inset-0"
+      style={{
+        backgroundImage: `repeating-linear-gradient(38deg, transparent 0px, transparent 17px, ${color}2b 17px, ${color}2b 19px)`,
+        opacity: 0.5,
+        maskImage: "radial-gradient(120% 120% at 0% 100%, black, transparent 75%)",
+        WebkitMaskImage: "radial-gradient(120% 120% at 0% 100%, black, transparent 75%)",
+      }}
+    />
+  );
+}
+
 /**
- * Generated artwork that stands in until real images are dropped in.
- * If `item.image` (thumb/tile) or `item.banner` (banner) exists it's used as a
- * cover photo; otherwise a per-item gradient + initials placeholder renders so
- * the layout is always visually complete.
+ * Generated artwork that stands in until real images / video are provided.
+ * Uses a real image (`item.image`/`item.banner`) when present; otherwise renders
+ * an editorial poster — dark base, a per-item accent motif, and the full title
+ * set in the display face (no more generic gradient-with-initials look).
  */
 export default function PlaceholderArt({
   item,
@@ -31,7 +113,6 @@ export default function PlaceholderArt({
   variant?: Variant;
   className?: string;
 }) {
-  const [from, to] = item.accent;
   const src = variant === "banner" ? item.banner : item.image;
 
   if (src) {
@@ -46,56 +127,76 @@ export default function PlaceholderArt({
     );
   }
 
+  const [accent] = item.accent;
+  const idx = hashId(item.id) % 4;
+
+  const pad =
+    variant === "banner" ? "p-7 md:p-10" : variant === "tile" ? "p-5" : "p-3.5";
+  const titleSize =
+    variant === "banner"
+      ? "clamp(2rem, 5.5vw, 3.8rem)"
+      : variant === "tile"
+        ? "clamp(1.4rem, 4vw, 2.1rem)"
+        : "clamp(1rem, 3.3vw, 1.5rem)";
+  const tagSize = variant === "banner" ? "0.72rem" : "0.58rem";
+
   return (
     <div
       className={`relative h-full w-full overflow-hidden ${className}`}
-      style={{
-        background: `linear-gradient(135deg, ${from} 0%, ${to} 100%)`,
-      }}
-      aria-label={item.title}
       role="img"
+      aria-label={item.title}
+      style={{
+        background:
+          "linear-gradient(158deg, #18181b 0%, #0d0d0f 58%, #08080a 100%)",
+      }}
     >
-      {/* directional sheen */}
+      {/* accent corner glow */}
       <div
         className="absolute inset-0"
         style={{
-          background:
-            "radial-gradient(120% 90% at 15% 0%, rgba(255,255,255,0.22), transparent 55%)",
+          background: `radial-gradient(78% 70% at 86% 12%, ${accent}55, transparent 60%)`,
         }}
       />
-      {/* grain */}
-      <div className="art-grain absolute inset-0 opacity-50" />
+      <Motif idx={idx} color={accent} />
+      <div className="art-grain absolute inset-0 opacity-40" />
+      {/* base legibility floor */}
+      <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
-      {variant === "banner" ? (
-        <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-10">
+      <div className={`absolute inset-0 flex flex-col ${pad}`}>
+        <div
+          className="flex items-center gap-2 font-mono uppercase tracking-[0.18em] text-white/70"
+          style={{ fontSize: tagSize }}
+        >
           <span
-            className="font-display leading-none text-white/12 absolute right-4 top-2 select-none"
-            style={{ fontSize: "clamp(5rem, 22vw, 16rem)" }}
-            aria-hidden
-          >
-            {initials(item.title)}
-          </span>
+            className="inline-block h-1.5 w-1.5 rounded-full"
+            style={{ background: accent, boxShadow: `0 0 10px ${accent}` }}
+          />
+          {typeTag[item.type]}
+          <span className="text-white/25">/</span>
+          {categoryTag[item.category]}
         </div>
-      ) : (
-        <div className="absolute inset-0 flex flex-col items-center justify-center p-3 text-center">
-          <span
-            className="font-display leading-none text-white/90 drop-shadow-[0_2px_10px_rgba(0,0,0,0.4)]"
-            style={{ fontSize: variant === "tile" ? "clamp(2.5rem,7vw,4rem)" : "clamp(1.8rem,5vw,2.6rem)" }}
+
+        <div className="mt-auto">
+          <h3
+            className="font-display uppercase leading-[0.92] text-white"
+            style={{ fontSize: titleSize, textShadow: "0 2px 14px rgba(0,0,0,0.5)" }}
           >
-            {initials(item.title)}
-          </span>
-          {variant === "thumb" && (
-            <span className="mt-1 max-w-full truncate px-2 text-[0.65rem] font-medium uppercase tracking-[0.18em] text-white/70">
-              {typeLabel[item.type]}
+            {item.title}
+          </h3>
+          <div className="mt-2 flex items-center gap-2.5">
+            <span
+              className="h-px"
+              style={{ width: variant === "banner" ? 44 : 26, background: accent }}
+            />
+            <span
+              className="font-mono uppercase tracking-[0.14em] text-white/55"
+              style={{ fontSize: tagSize }}
+            >
+              {item.maturity ?? item.year}
             </span>
-          )}
+          </div>
         </div>
-      )}
-
-      {/* bottom legibility scrim for thumbs */}
-      {variant === "thumb" && (
-        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/45 to-transparent" />
-      )}
+      </div>
     </div>
   );
 }

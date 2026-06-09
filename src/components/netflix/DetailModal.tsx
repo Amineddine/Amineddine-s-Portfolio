@@ -99,6 +99,19 @@ function ModalBody({
       {/* banner */}
       <div className="relative aspect-[16/8] w-full">
         <PlaceholderArt item={item} variant="banner" />
+        {item.video && (
+          <video
+            className="absolute inset-0 h-full w-full object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            aria-hidden
+          >
+            <source src={item.video} type="video/mp4" />
+          </video>
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-[#181818] via-transparent to-transparent" />
         <button
           type="button"

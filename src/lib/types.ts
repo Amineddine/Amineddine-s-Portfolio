@@ -79,6 +79,8 @@ export interface CatalogItem {
   image?: string;
   /** real wide banner once provided; falls back to placeholder art */
   banner?: string;
+  /** looping video used as the detail-modal banner (takes precedence over banner) */
+  video?: string;
   links: Partial<Record<LinkKind, string>>;
   copy: Record<Persona, PersonaCopy>;
 }

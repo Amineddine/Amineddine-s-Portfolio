@@ -24,6 +24,7 @@ export const catalog: CatalogItem[] = [
     match: 99,
     maturity: "Available globally",
     accent: ["#e50914", "#3a0608"],
+    video: "/about-card.mp4",
     links: { github: GITHUB, linkedin: LINKEDIN, email: EMAIL },
     copy: {
       recruiter: {
@@ -197,6 +198,8 @@ export const catalog: CatalogItem[] = [
     role: "Cybersecurity builder & workflow developer",
     match: 94,
     accent: ["#1f9d6b", "#0b3d2e"],
+    image: "/sigmapack-builder.png",
+    banner: "/sigmapack-builder.png",
     links: { github: `${GITHUB}/SigmaPack-Builder` },
     copy: {
       recruiter: {
@@ -229,6 +232,8 @@ export const catalog: CatalogItem[] = [
     role: "Security tooling developer",
     match: 93,
     accent: ["#2a8fb0", "#0a2a3d"],
+    image: "/soar-mini-enricher.png",
+    banner: "/soar-mini-enricher.png",
     links: { github: `${GITHUB}/soar-mini-enricher` },
     copy: {
       recruiter: {
@@ -261,6 +266,8 @@ export const catalog: CatalogItem[] = [
     role: "Security systems developer",
     match: 92,
     accent: ["#c0632a", "#3d1f0b"],
+    image: "/attck-tagger.png",
+    banner: "/attck-tagger.png",
     links: { github: `${GITHUB}/attck-tagger` },
     copy: {
       recruiter: {
@@ -294,6 +301,8 @@ export const catalog: CatalogItem[] = [
     role: "Security research & applied ML",
     match: 90,
     accent: ["#6c4fd0", "#241b4d"],
+    image: "/rareguard.png",
+    banner: "/rareguard.png",
     links: { github: `${GITHUB}/rareguard` },
     copy: {
       recruiter: {

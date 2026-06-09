@@ -15,7 +15,7 @@ export default function Billboard() {
   const primary = def.primaryCta;
 
   return (
-    <section className="relative h-[78vh] min-h-[520px] w-full">
+    <section className="relative h-[82vh] min-h-[600px] w-full">
       {/* full-bleed Remotion hero reel (PlaceholderArt is the loading fallback) */}
       <div className="absolute inset-0 overflow-hidden bg-[#0b0b0b]">
         <PlaceholderArt item={item} variant="banner" />
@@ -35,7 +35,7 @@ export default function Billboard() {
       <div className="billboard-fade-left absolute inset-0" />
       <div className="billboard-fade-bottom absolute inset-0" />
 
-      <div className="relative flex h-full items-end pb-[12vh] md:items-center md:pb-0">
+      <div className="relative flex h-full items-end pb-[13vh] pt-24 md:pb-[15vh]">
         <motion.div
           className="max-w-[46rem] px-4 md:px-[clamp(1rem,4vw,3.75rem)]"
           initial="hidden"
@@ -55,7 +55,7 @@ export default function Billboard() {
 
           <motion.h1
             variants={fade}
-            className="font-display text-[3.2rem] leading-[0.92] text-white [text-shadow:0_2px_24px_rgba(0,0,0,0.95),0_1px_4px_rgba(0,0,0,0.9)] sm:text-[4.5rem] md:text-[5.5rem]"
+            className="font-display text-[2.5rem] leading-[0.96] text-white [text-shadow:0_2px_24px_rgba(0,0,0,0.95),0_1px_4px_rgba(0,0,0,0.9)] sm:text-[3.5rem] md:text-[4.5rem]"
           >
             {def.tagline}
           </motion.h1>
