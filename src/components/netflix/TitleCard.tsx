@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { usePersona } from "@/context/PersonaContext";
+import { itemCopy } from "@/data/i18n";
 import type { CatalogItem } from "@/lib/types";
 import PlaceholderArt from "./PlaceholderArt";
 import {
@@ -18,7 +19,7 @@ import { EASE_OUT } from "@/lib/motion";
 const CARD_W = "clamp(150px, 42vw, 256px)";
 
 export default function TitleCard({ item }: { item: CatalogItem }) {
-  const { persona, openItem } = usePersona();
+  const { persona, openItem, locale } = usePersona();
   const cardRef = useRef<HTMLButtonElement>(null);
   const enterTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [rect, setRect] = useState<DOMRect | null>(null);
@@ -35,7 +36,7 @@ export default function TitleCard({ item }: { item: CatalogItem }) {
     /* eslint-enable react-hooks/set-state-in-effect */
   }, []);
 
-  const copy = persona ? item.copy[persona] : item.copy.developer;
+  const copy = itemCopy(item, persona ?? "developer", locale);
 
   const showPreview = () => {
     if (!hoverCapable || !cardRef.current) return;

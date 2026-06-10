@@ -4,20 +4,23 @@ import { useEffect, useState } from "react";
 import { usePersona } from "@/context/PersonaContext";
 import { billboardId } from "@/data/catalog";
 import { CV_PATH } from "@/data/personas";
+import { t } from "@/data/i18n";
 import { scrollToId, scrollToTop } from "@/lib/scroll";
 import PersonaSwitcher from "./PersonaSwitcher";
 import { BriefcaseIcon } from "./icons";
 
-const links: { label: string; action: (open: (id: string) => void) => void }[] = [
-  { label: "Home", action: () => scrollToTop() },
-  { label: "Projects", action: () => scrollToId("row-featured") },
-  { label: "Skills", action: () => scrollToId("row-skills") },
-  { label: "About", action: (open) => open(billboardId) },
-  { label: "Contact", action: () => scrollToId("contact") },
+type NavKey = "home" | "projects" | "skills" | "about" | "contact";
+const navItems: { key: NavKey; action: (open: (id: string) => void) => void }[] = [
+  { key: "home", action: () => scrollToTop() },
+  { key: "projects", action: () => scrollToId("row-featured") },
+  { key: "skills", action: () => scrollToId("row-skills") },
+  { key: "about", action: (open) => open(billboardId) },
+  { key: "contact", action: () => scrollToId("contact") },
 ];
 
 export default function NetflixNav() {
-  const { openItem } = usePersona();
+  const { openItem, locale } = usePersona();
+  const strings = t(locale);
   const [solid, setSolid] = useState(false);
 
   useEffect(() => {
@@ -47,14 +50,14 @@ export default function NetflixNav() {
         </button>
 
         <ul className="hidden items-center gap-5 md:flex">
-          {links.map((link) => (
-            <li key={link.label}>
+          {navItems.map((item) => (
+            <li key={item.key}>
               <button
                 type="button"
-                onClick={() => link.action(openItem)}
+                onClick={() => item.action(openItem)}
                 className="text-sm text-[#e5e5e5] transition-colors duration-200 hover:text-white"
               >
-                {link.label}
+                {strings.nav[item.key]}
               </button>
             </li>
           ))}
@@ -70,7 +73,7 @@ export default function NetflixNav() {
             aria-label="Open résumé / CV"
           >
             <BriefcaseIcon width={16} height={16} strokeWidth={2} />
-            <span className="hidden sm:inline">Résumé</span>
+            <span className="hidden sm:inline">{strings.resume}</span>
           </a>
           <PersonaSwitcher />
         </div>

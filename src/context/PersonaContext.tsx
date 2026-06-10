@@ -10,11 +10,15 @@ import {
   type ReactNode,
 } from "react";
 import { isPersona, type Persona } from "@/lib/types";
+import { isLocale, type Locale } from "@/data/i18n";
 
 interface PersonaState {
   /** active narration lens — null until a profile is chosen */
   persona: Persona | null;
   setPersona: (p: Persona) => void;
+  /** display language (second axis): tone is persona, language is locale */
+  locale: Locale;
+  setLocale: (l: Locale) => void;
   /** has the visitor seen the intro splash before (this browser)? */
   hasVisited: boolean;
   markVisited: () => void;
@@ -32,9 +36,11 @@ const PersonaContext = createContext<PersonaState | null>(null);
 const KEY_PERSONA = "nf-persona";
 const KEY_VISITED = "nf-visited";
 const KEY_MUTED = "nf-muted";
+const KEY_LOCALE = "nf-locale";
 
 export function PersonaProvider({ children }: { children: ReactNode }) {
   const [persona, setPersonaState] = useState<Persona | null>(null);
+  const [locale, setLocaleState] = useState<Locale>("en");
   const [hasVisited, setHasVisited] = useState(false);
   const [activeItemId, setActiveItemId] = useState<string | null>(null);
   const [muted, setMuted] = useState(true);
@@ -47,6 +53,8 @@ export function PersonaProvider({ children }: { children: ReactNode }) {
       if (storedPersona && isPersona(storedPersona)) {
         setPersonaState(storedPersona);
       }
+      const storedLocale = localStorage.getItem(KEY_LOCALE);
+      if (storedLocale && isLocale(storedLocale)) setLocaleState(storedLocale);
       if (localStorage.getItem(KEY_VISITED) === "1") setHasVisited(true);
       if (localStorage.getItem(KEY_MUTED) === "0") setMuted(false);
     } catch {
@@ -59,6 +67,15 @@ export function PersonaProvider({ children }: { children: ReactNode }) {
     setPersonaState(p);
     try {
       localStorage.setItem(KEY_PERSONA, p);
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  const setLocale = useCallback((l: Locale) => {
+    setLocaleState(l);
+    try {
+      localStorage.setItem(KEY_LOCALE, l);
     } catch {
       /* ignore */
     }
@@ -92,6 +109,8 @@ export function PersonaProvider({ children }: { children: ReactNode }) {
     () => ({
       persona,
       setPersona,
+      locale,
+      setLocale,
       hasVisited,
       markVisited,
       activeItemId,
@@ -103,6 +122,8 @@ export function PersonaProvider({ children }: { children: ReactNode }) {
     [
       persona,
       setPersona,
+      locale,
+      setLocale,
       hasVisited,
       markVisited,
       activeItemId,

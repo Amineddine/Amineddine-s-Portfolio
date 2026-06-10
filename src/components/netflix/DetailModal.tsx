@@ -4,7 +4,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect } from "react";
 import { usePersona } from "@/context/PersonaContext";
 import { getItem, relatedTo } from "@/data/catalog";
-import type { CatalogItem, LinkKind } from "@/lib/types";
+import { itemCopy, t, type Locale } from "@/data/i18n";
+import type { CatalogItem, LinkKind, Persona } from "@/lib/types";
 import PlaceholderArt from "./PlaceholderArt";
 import {
   PlayIcon,
@@ -25,7 +26,7 @@ const linkMeta: Record<LinkKind, { label: string }> = {
 };
 
 export default function DetailModal() {
-  const { activeItemId, openItem, closeItem, persona } = usePersona();
+  const { activeItemId, openItem, closeItem, persona, locale } = usePersona();
   const item = activeItemId ? getItem(activeItemId) : undefined;
 
   // lock page scroll + Esc to close while open
@@ -68,7 +69,8 @@ export default function DetailModal() {
             <ModalBody
               key={item.id}
               item={item}
-              persona={persona}
+              persona={persona ?? "developer"}
+              locale={locale}
               onClose={closeItem}
               onOpenOther={openItem}
             />
@@ -82,17 +84,34 @@ export default function DetailModal() {
 function ModalBody({
   item,
   persona,
+  locale,
   onClose,
   onOpenOther,
 }: {
   item: CatalogItem;
-  persona: ReturnType<typeof usePersona>["persona"];
+  persona: Persona;
+  locale: Locale;
   onClose: () => void;
   onOpenOther: (id: string) => void;
 }) {
-  const copy = persona ? item.copy[persona] : item.copy.developer;
+  const copy = itemCopy(item, persona, locale);
+  const strings = t(locale);
   const related = relatedTo(item);
   const links = Object.entries(item.links) as [LinkKind, string][];
+
+  const linkLabel = (kind: LinkKind): string => {
+    if (locale === "fr") {
+      const fr: Record<LinkKind, string> = {
+        github: "GitHub",
+        demo: "Démo en ligne",
+        email: "E-mail",
+        linkedin: "LinkedIn",
+        cv: "Télécharger le CV",
+      };
+      return fr[kind];
+    }
+    return linkMeta[kind].label;
+  };
 
   return (
     <>
@@ -169,7 +188,7 @@ function ModalBody({
       <div className="grid gap-6 p-5 md:grid-cols-[1.7fr_1fr] md:gap-8 md:p-10">
         <div>
           <div className="mb-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
-            <span className="font-semibold text-[#46d369]">{item.match}% Match</span>
+            <span className="font-semibold text-[#46d369]">{strings.match(item.match)}</span>
             <span className="text-white/80">{item.year}</span>
             {item.maturity && (
               <span className="rounded border border-white/30 px-1.5 text-xs text-white/60">
@@ -178,7 +197,7 @@ function ModalBody({
             )}
             {item.inProgress && (
               <span className="rounded bg-nf-red px-1.5 text-xs font-medium text-white">
-                Currently building
+                {strings.currentlyBuilding}
               </span>
             )}
           </div>
@@ -201,7 +220,7 @@ function ModalBody({
                   ) : (
                     <ExternalIcon width={14} height={14} />
                   )}
-                  {linkMeta[kind].label}
+                  {linkLabel(kind)}
                 </a>
               ))}
             </div>
@@ -209,12 +228,12 @@ function ModalBody({
         </div>
 
         <div className="space-y-3 text-sm">
-          <MetaLine label="Genres" value={item.tags.join(", ")} />
-          {item.issuer && <MetaLine label="Issued by" value={item.issuer} />}
-          {item.stack && <MetaLine label="Stack" value={item.stack.join(", ")} />}
-          {item.role && <MetaLine label="Role" value={item.role} />}
+          <MetaLine label={strings.meta.genres} value={item.tags.join(", ")} />
+          {item.issuer && <MetaLine label={strings.meta.issuedBy} value={item.issuer} />}
+          {item.stack && <MetaLine label={strings.meta.stack} value={item.stack.join(", ")} />}
+          {item.role && <MetaLine label={strings.meta.role} value={item.role} />}
           <MetaLine
-            label="Category"
+            label={strings.meta.category}
             value={item.category.charAt(0).toUpperCase() + item.category.slice(1)}
           />
         </div>
@@ -223,7 +242,7 @@ function ModalBody({
       {/* more like this */}
       {related.length > 0 && (
         <div className="px-5 pb-8 md:px-10">
-          <h3 className="mb-4 text-xl font-semibold text-white">More Like This</h3>
+          <h3 className="mb-4 text-xl font-semibold text-white">{strings.moreLikeThis}</h3>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
             {related.map((rel) => (
               <button
@@ -245,7 +264,7 @@ function ModalBody({
                     </span>
                   </div>
                   <p className="mt-1 line-clamp-2 text-xs leading-snug text-white/55">
-                    {(persona ? rel.copy[persona] : rel.copy.developer).blurb}
+                    {itemCopy(rel, persona, locale).blurb}
                   </p>
                 </div>
               </button>

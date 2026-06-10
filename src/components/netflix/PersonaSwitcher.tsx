@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { usePersona } from "@/context/PersonaContext";
 import { personas } from "@/data/personas";
+import { t } from "@/data/i18n";
 import type { Persona } from "@/lib/types";
 import ProfileGate from "./ProfileGate";
 import { personaIcon, ChevronDown } from "./icons";
@@ -12,8 +13,9 @@ import { EASE_OUT } from "@/lib/motion";
 
 export default function PersonaSwitcher() {
   const router = useRouter();
-  const { persona, setPersona } = usePersona();
+  const { persona, setPersona, locale } = usePersona();
   const [open, setOpen] = useState(false);
+  const strings = t(locale);
 
   const current = persona ? personas[persona] : personas.developer;
   const Icon = personaIcon[current.icon];
@@ -64,7 +66,7 @@ export default function PersonaSwitcher() {
               onClick={() => setOpen(false)}
               className="absolute right-6 top-6 text-sm uppercase tracking-[0.2em] text-white/50 transition hover:text-white"
             >
-              Close
+              {locale === "fr" ? "Fermer" : "Close"}
             </button>
             <motion.div
               onClick={(e) => e.stopPropagation()}
@@ -75,7 +77,7 @@ export default function PersonaSwitcher() {
             >
               <ProfileGate
                 onPick={handlePick}
-                heading="Re-watch in another language"
+                heading={strings.switchHeading}
                 compact
               />
             </motion.div>

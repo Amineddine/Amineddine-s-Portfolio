@@ -2,6 +2,15 @@
 
 import { motion, type Variants } from "framer-motion";
 import { personaList } from "@/data/personas";
+import { usePersona } from "@/context/PersonaContext";
+import {
+  t,
+  personaLabel,
+  personaBadge,
+  LOCALES,
+  localeShort,
+  localeName,
+} from "@/data/i18n";
 import { personaIcon } from "./icons";
 import type { Persona } from "@/lib/types";
 import { EASE_OUT } from "@/lib/motion";
@@ -15,28 +24,78 @@ const tileIn: Variants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE_OUT } },
 };
 
+function LanguageToggle() {
+  const { locale, setLocale } = usePersona();
+  return (
+    <div
+      className="flex items-center gap-1 rounded-full border border-white/15 bg-white/[0.04] p-1 backdrop-blur-sm"
+      role="group"
+      aria-label="Language"
+    >
+      {LOCALES.map((l) => {
+        const active = locale === l;
+        return (
+          <button
+            key={l}
+            type="button"
+            onClick={() => setLocale(l)}
+            aria-pressed={active}
+            title={localeName[l]}
+            className="relative rounded-full px-4 py-1.5 text-sm font-semibold tracking-wide transition-colors"
+            style={{ color: active ? "#fff" : "rgba(255,255,255,0.5)" }}
+          >
+            {active && (
+              <motion.span
+                layoutId="lang-pill"
+                className="absolute inset-0 rounded-full bg-nf-red"
+                transition={{ type: "spring", stiffness: 380, damping: 30 }}
+              />
+            )}
+            <span className="relative">{localeShort[l]}</span>
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
 export default function ProfileGate({
   onPick,
-  heading = "Who's watching?",
+  heading,
   compact = false,
 }: {
   onPick: (p: Persona) => void;
   heading?: string;
   compact?: boolean;
 }) {
+  const { locale } = usePersona();
+  const strings = t(locale);
+  const title = heading ?? strings.gateHeading;
+
   return (
     <div
-      className={`flex w-full flex-col items-center justify-center px-6 ${
+      className={`relative flex w-full flex-col items-center justify-center px-6 ${
         compact ? "" : "min-h-[100dvh]"
       }`}
     >
+      {/* language toggle, up top */}
+      <div
+        className={
+          compact
+            ? "mb-8"
+            : "absolute left-1/2 top-8 -translate-x-1/2 sm:top-10"
+        }
+      >
+        <LanguageToggle />
+      </div>
+
       <motion.h1
         className="mb-8 text-center text-3xl font-medium text-white sm:mb-12 sm:text-5xl md:text-6xl"
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        {heading}
+        {title}
       </motion.h1>
 
       <motion.ul
@@ -68,10 +127,10 @@ export default function ProfileGate({
                   </div>
                 </motion.div>
                 <span className="text-sm text-[var(--nf-text-faint)] transition-colors duration-200 group-hover:text-white sm:text-lg">
-                  {p.label}
+                  {personaLabel(p.id, locale)}
                 </span>
                 <span className="-mt-1.5 text-[0.7rem] uppercase tracking-[0.18em] text-white/25 transition-colors duration-200 group-hover:text-white/55">
-                  {p.badge}
+                  {personaBadge(p.id, locale)}
                 </span>
               </button>
             </motion.li>
@@ -81,8 +140,7 @@ export default function ProfileGate({
 
       {!compact && (
         <p className="mt-12 max-w-md text-center text-sm text-[var(--nf-text-faint)]">
-          Same projects, three narrations. Pick the voice you want the work told
-          in — switch anytime from the avatar up top.
+          {strings.gateSub}
         </p>
       )}
     </div>

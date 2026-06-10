@@ -3,6 +3,7 @@
 import { motion, type Variants } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { usePersona } from "@/context/PersonaContext";
+import { t } from "@/data/i18n";
 import { playTaDum } from "@/lib/sound";
 import { SoundOnIcon, SoundOffIcon } from "./icons";
 import { EASE_OUT, EASE_IN, EASE_STD } from "@/lib/motion";
@@ -27,7 +28,7 @@ const letter: Variants = {
 };
 
 export default function IntroSplash({ onDone }: { onDone: () => void }) {
-  const { muted, toggleMuted } = usePersona();
+  const { muted, toggleMuted, locale } = usePersona();
   const [zoom, setZoom] = useState(false);
   const doneRef = useRef(false);
 
@@ -130,7 +131,7 @@ export default function IntroSplash({ onDone }: { onDone: () => void }) {
       </motion.div>
 
       <span className="absolute bottom-6 left-1/2 -translate-x-1/2 text-xs uppercase tracking-[0.3em] text-white/30">
-        Click to skip
+        {t(locale).clickToSkip}
       </span>
     </motion.div>
   );

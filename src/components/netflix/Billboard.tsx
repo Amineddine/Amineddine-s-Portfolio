@@ -4,15 +4,19 @@ import { motion } from "framer-motion";
 import { usePersona } from "@/context/PersonaContext";
 import { getItem, billboardId } from "@/data/catalog";
 import { personas } from "@/data/personas";
+import { personaText, t } from "@/data/i18n";
+import type { Persona } from "@/lib/types";
 import PlaceholderArt from "./PlaceholderArt";
 import { PlayIcon, InfoIcon } from "./icons";
 import { EASE_OUT } from "@/lib/motion";
 
 export default function Billboard() {
-  const { persona, openItem } = usePersona();
+  const { persona, openItem, locale } = usePersona();
   const item = getItem(billboardId)!;
-  const def = persona ? personas[persona] : personas.developer;
-  const primary = def.primaryCta;
+  const active: Persona = persona ?? "developer";
+  const def = personas[active];
+  const pt = personaText(active, locale);
+  const strings = t(locale);
 
   return (
     <section className="relative h-[82vh] min-h-[600px] w-full">
@@ -50,21 +54,21 @@ export default function Billboard() {
             className="mb-3 flex items-center gap-2 text-sm font-medium tracking-[0.18em] text-white/80"
           >
             <span className="nf-logo text-xl leading-none">A</span>
-            <span className="uppercase">Portfolio · {def.badge}</span>
+            <span className="uppercase">{strings.portfolio} · {pt.badge}</span>
           </motion.div>
 
           <motion.h1
             variants={fade}
             className="font-display text-[2.5rem] leading-[0.96] text-white [text-shadow:0_2px_24px_rgba(0,0,0,0.95),0_1px_4px_rgba(0,0,0,0.9)] sm:text-[3.5rem] md:text-[4.5rem]"
           >
-            {def.tagline}
+            {pt.tagline}
           </motion.h1>
 
           <motion.div
             variants={fade}
             className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm"
           >
-            <span className="font-semibold text-[#46d369]">{item.match}% Match</span>
+            <span className="font-semibold text-[#46d369]">{strings.match(item.match)}</span>
             <span className="text-white/80">Amineddine Znin</span>
             <span className="rounded border border-white/30 px-1 text-xs text-white/60">
               {item.maturity}
@@ -75,19 +79,19 @@ export default function Billboard() {
             variants={fade}
             className="mt-4 max-w-xl text-sm leading-relaxed text-[#dcdcdc] drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)] sm:text-base md:text-lg"
           >
-            {def.heroDescription}
+            {pt.heroDescription}
           </motion.p>
 
           <motion.div variants={fade} className="mt-6 flex flex-wrap items-center gap-3">
             <a
-              href={primary.href}
-              target={primary.href.startsWith("http") ? "_blank" : undefined}
-              rel={primary.href.startsWith("http") ? "noopener noreferrer" : undefined}
-              download={primary.download}
+              href={def.primaryCta.href}
+              target={def.primaryCta.href.startsWith("http") ? "_blank" : undefined}
+              rel={def.primaryCta.href.startsWith("http") ? "noopener noreferrer" : undefined}
+              download={def.primaryCta.download}
               className="flex items-center gap-2 rounded bg-white px-6 py-2.5 text-base font-semibold text-black transition hover:bg-white/80"
             >
               <PlayIcon width={20} height={20} />
-              {primary.label}
+              {pt.primaryCtaLabel}
             </a>
             <button
               type="button"
@@ -95,7 +99,7 @@ export default function Billboard() {
               className="flex items-center gap-2 rounded bg-[rgba(109,109,110,0.5)] px-6 py-2.5 text-base font-semibold text-white backdrop-blur-sm transition hover:bg-[rgba(109,109,110,0.4)]"
             >
               <InfoIcon width={20} height={20} />
-              {def.infoLabel}
+              {pt.infoLabel}
             </button>
           </motion.div>
         </motion.div>

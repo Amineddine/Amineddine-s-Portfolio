@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { usePersona } from "@/context/PersonaContext";
 import { catalogById, rows } from "@/data/catalog";
-import { personas } from "@/data/personas";
+import { personaText } from "@/data/i18n";
 import type { CatalogItem, Persona } from "@/lib/types";
 import NetflixNav from "./NetflixNav";
 import Billboard from "./Billboard";
@@ -13,7 +13,7 @@ import DetailModal from "./DetailModal";
 import BrowseSkeleton from "./BrowseSkeleton";
 
 export default function Browse({ persona }: { persona: Persona }) {
-  const { persona: active, setPersona } = usePersona();
+  const { persona: active, setPersona, locale } = usePersona();
   const [ready, setReady] = useState(false);
 
   // the route param is canonical — sync it into shared state
@@ -29,7 +29,7 @@ export default function Browse({ persona }: { persona: Persona }) {
 
   if (!ready) return <BrowseSkeleton />;
 
-  const def = personas[persona];
+  const rowTitles = personaText(persona, locale).rowTitles;
 
   return (
     <div className="min-h-screen bg-[var(--nf-bg)]">
@@ -45,7 +45,7 @@ export default function Browse({ persona }: { persona: Persona }) {
               <ContentRow
                 key={row.key}
                 id={`row-${row.key}`}
-                title={def.rowTitles[row.key]}
+                title={rowTitles[row.key]}
                 items={items}
               />
             );
