@@ -164,22 +164,22 @@ export const catalog: CatalogItem[] = [
     accent: ["#c9a25e", "#3a2a16"],
     image: "/moroccan-mirage-preview.png",
     banner: "/moroccan-mirage-preview.png",
-    links: {},
+    links: { demo: "https://moroccanmirage.com" },
     copy: {
       recruiter: {
         blurb:
           "A full-stack luxury-travel website that positions a high-end Moroccan agency like a glossy travel magazine — cinematic storytelling, a custom trip planner, and a full tour catalog built to turn browsers into booked guests.",
-        cta: { label: "See the build", href: "#" },
+        cta: { label: "Visit live site", href: "https://moroccanmirage.com" },
       },
       developer: {
         blurb:
           "Next.js 15 + React 19 + TypeScript with Framer Motion and Lenis. Scroll-driven storytelling, a sticky parallax Morocco showcase, horizontal city scroll, animated stat counters, a multi-step trip planner, and a dynamically-routed tour/excursion catalog. Dark-sandstone identity, Cormorant Garamond, grain overlays throughout.",
-        cta: { label: "See the build", href: "#" },
+        cta: { label: "Visit live site", href: "https://moroccanmirage.com" },
       },
       stalker: {
         blurb:
           "A gorgeous, magazine-style website for a fancy Moroccan travel agency — the kind of dreamy site that makes you want to book a trip immediately. Sandstone tones, buttery scrolling, parallax everywhere, and a build-your-own-trip planner.",
-        cta: { label: "Take a look", href: "#" },
+        cta: { label: "Take a look", href: "https://moroccanmirage.com" },
       },
     },
   },
@@ -199,22 +199,22 @@ export const catalog: CatalogItem[] = [
     accent: ["#3f8f6d", "#13352a"],
     image: "/gogestion.png",
     banner: "/gogestion.png",
-    links: {},
+    links: { demo: "https://gogestion-dusky.vercel.app" },
     copy: {
       recruiter: {
         blurb:
           "A signature website for a group operating ten prestige riads across the Marrakech medina — SPA, hammam and rooftop terraces brought together under one collection. It frames the portfolio as a single luxury brand and steers high-intent guests toward booking.",
-        cta: { label: "See the build", href: "#" },
+        cta: { label: "Visit live site", href: "https://gogestion-dusky.vercel.app" },
       },
       developer: {
         blurb:
           "Next.js + React + TypeScript, French-first. Editorial typography over courtyard imagery, a unified visual identity across ten properties, and a calm, gallery-style browsing rhythm that lets each riad breathe without fragmenting the brand.",
-        cta: { label: "See the build", href: "#" },
+        cta: { label: "Visit live site", href: "https://gogestion-dusky.vercel.app" },
       },
       stalker: {
         blurb:
           "A site for a group that runs ten gorgeous riads in the old medina of Marrakech, all under one roof — pools, hammams, rooftop terraces. I wanted it to feel like one elegant collection, not ten separate hotels.",
-        cta: { label: "Take a look", href: "#" },
+        cta: { label: "Take a look", href: "https://gogestion-dusky.vercel.app" },
       },
     },
   },
@@ -233,22 +233,22 @@ export const catalog: CatalogItem[] = [
     accent: ["#d4694a", "#3a1c12"],
     image: "/visitare-il-marocco.png",
     banner: "/visitare-il-marocco.png",
-    links: {},
+    links: { demo: "https://visitareilmarocco.vercel.app" },
     copy: {
       recruiter: {
         blurb:
           "An Italian-language website for a tourism agency targeting Italian travellers — 'Il Marocco, raccontato da chi lo ama.' It packages guided tours and bespoke trips across Morocco and routes interested visitors straight to a WhatsApp conversation.",
-        cta: { label: "See the build", href: "#" },
+        cta: { label: "Visit live site", href: "https://visitareilmarocco.vercel.app" },
       },
       developer: {
         blurb:
           "Next.js + React + TypeScript, fully localized in Italian. Warm terracotta-and-cream identity, editorial serif display, and a low-friction inquiry path that drops visitors into WhatsApp instead of a long form — built around how this audience actually converts.",
-        cta: { label: "See the build", href: "#" },
+        cta: { label: "Visit live site", href: "https://visitareilmarocco.vercel.app" },
       },
       stalker: {
         blurb:
           "A site entirely in Italian for an agency that brings Italian tourists to Morocco — tours, trips, the whole thing. Warm desert colors, and you can just tap straight through to WhatsApp to plan a trip.",
-        cta: { label: "Take a look", href: "#" },
+        cta: { label: "Take a look", href: "https://visitareilmarocco.vercel.app" },
       },
     },
   },
@@ -267,22 +267,22 @@ export const catalog: CatalogItem[] = [
     accent: ["#2f7cf6", "#0a1f3d"],
     image: "/automate.png",
     banner: "/automate.png",
-    links: {},
+    links: { demo: "https://automate.ma" },
     copy: {
       recruiter: {
         blurb:
           "My own concept: an AI-automation agency for Moroccan businesses — 'Le travail répétitif. Fait. Par l'IA.' Custom AI agents and workflows that take the repetitive, time-draining tasks off a team's plate, from invoices and reconciliation to social and prospecting.",
-        cta: { label: "See the build", href: "#" },
+        cta: { label: "Visit live site", href: "https://automate.ma" },
       },
       developer: {
         blurb:
           "Next.js + React + TypeScript landing for a self-initiated AI-automation venture. Dark, high-contrast brand with a struck-through headline gag, a marquee of automatable workflows (factures & PDF, réconciliation, automatisation financière, administratif…), and a single 'book a call' funnel.",
-        cta: { label: "See the build", href: "#" },
+        cta: { label: "Visit live site", href: "https://automate.ma" },
       },
       stalker: {
         blurb:
           "A concept I'm building myself — an AI agency for Moroccan companies that automates the boring, repetitive work so people get their time back. Custom AI agents for invoices, admin, social, prospecting, you name it.",
-        cta: { label: "Take a look", href: "#" },
+        cta: { label: "Take a look", href: "https://automate.ma" },
       },
     },
   },

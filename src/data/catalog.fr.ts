@@ -79,12 +79,12 @@ export const catalogFr: Record<string, Partial<Record<Persona, FrCopy>>> = {
     recruiter: {
       blurb:
         "Un site de voyage de luxe full-stack qui positionne une agence marocaine haut de gamme comme un magazine de voyage glacé — storytelling cinématique, planificateur de voyage sur mesure et catalogue de circuits conçu pour transformer les curieux en clients réservés.",
-      cta: "Voir le projet",
+      cta: "Voir le site",
     },
     developer: {
       blurb:
         "Next.js 15 + React 19 + TypeScript avec Framer Motion et Lenis. Storytelling au défilement, section Maroc parallaxe collante, scroll horizontal des villes, compteurs animés, planificateur multi-étapes et catalogue de circuits à routage dynamique. Identité sable sombre, Cormorant Garamond, grain partout.",
-      cta: "Voir le projet",
+      cta: "Voir le site",
     },
     stalker: {
       blurb:
@@ -96,12 +96,12 @@ export const catalogFr: Record<string, Partial<Record<Persona, FrCopy>>> = {
     recruiter: {
       blurb:
         "Le site signature d'un groupe qui exploite dix riads de prestige dans la médina de Marrakech — SPA, hammam et terrasses sur les toits réunis dans une seule collection. Il présente le portefeuille comme une marque de luxe unique et oriente les voyageurs vers la réservation.",
-      cta: "Voir le projet",
+      cta: "Voir le site",
     },
     developer: {
       blurb:
         "Next.js + React + TypeScript, pensé en français. Typographie éditoriale sur des images de patios, une identité visuelle commune aux dix propriétés, et un rythme de navigation calme façon galerie qui laisse respirer chaque riad sans fragmenter la marque.",
-      cta: "Voir le projet",
+      cta: "Voir le site",
     },
     stalker: {
       blurb:
@@ -113,12 +113,12 @@ export const catalogFr: Record<string, Partial<Record<Persona, FrCopy>>> = {
     recruiter: {
       blurb:
         "Un site en italien pour une agence de tourisme visant les voyageurs italiens — « Il Marocco, raccontato da chi lo ama ». Il met en avant des circuits guidés et des voyages sur mesure à travers le Maroc et dirige les visiteurs intéressés directement vers WhatsApp.",
-      cta: "Voir le projet",
+      cta: "Voir le site",
     },
     developer: {
       blurb:
         "Next.js + React + TypeScript, entièrement localisé en italien. Identité terracotta et crème, serif éditorial en titrage, et un parcours de contact sans friction qui ouvre WhatsApp plutôt qu'un long formulaire — calé sur la façon dont ce public convertit vraiment.",
-      cta: "Voir le projet",
+      cta: "Voir le site",
     },
     stalker: {
       blurb:
@@ -130,12 +130,12 @@ export const catalogFr: Record<string, Partial<Record<Persona, FrCopy>>> = {
     recruiter: {
       blurb:
         "Mon propre concept : une agence d'automatisation IA pour les entreprises marocaines — « Le travail répétitif. Fait. Par l'IA. » Des agents IA et des workflows sur mesure qui débarrassent les équipes des tâches répétitives et chronophages : factures, réconciliation, réseaux sociaux, prospection.",
-      cta: "Voir le projet",
+      cta: "Voir le site",
     },
     developer: {
       blurb:
         "Landing Next.js + React + TypeScript pour une initiative perso d'automatisation IA. Marque sombre très contrastée avec un titre barré comme gag, un défilé de workflows automatisables (factures & PDF, réconciliation, automatisation financière, administratif…) et un seul tunnel « réserver un appel ».",
-      cta: "Voir le projet",
+      cta: "Voir le site",
     },
     stalker: {
       blurb:
