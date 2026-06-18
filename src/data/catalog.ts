@@ -184,6 +184,109 @@ export const catalog: CatalogItem[] = [
     },
   },
 
+  {
+    id: "gogestion",
+    title: "GoGestion",
+    type: "project",
+    category: "web",
+    year: "2025",
+    featured: true,
+    maturity: "Live",
+    tags: ["Luxury Hospitality", "Riads", "Marrakech", "Collection"],
+    stack: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
+    role: "Website development & front-end implementation",
+    match: 96,
+    accent: ["#3f8f6d", "#13352a"],
+    image: "/gogestion.png",
+    banner: "/gogestion.png",
+    links: {},
+    copy: {
+      recruiter: {
+        blurb:
+          "A signature website for a group operating ten prestige riads across the Marrakech medina — SPA, hammam and rooftop terraces brought together under one collection. It frames the portfolio as a single luxury brand and steers high-intent guests toward booking.",
+        cta: { label: "See the build", href: "#" },
+      },
+      developer: {
+        blurb:
+          "Next.js + React + TypeScript, French-first. Editorial typography over courtyard imagery, a unified visual identity across ten properties, and a calm, gallery-style browsing rhythm that lets each riad breathe without fragmenting the brand.",
+        cta: { label: "See the build", href: "#" },
+      },
+      stalker: {
+        blurb:
+          "A site for a group that runs ten gorgeous riads in the old medina of Marrakech, all under one roof — pools, hammams, rooftop terraces. I wanted it to feel like one elegant collection, not ten separate hotels.",
+        cta: { label: "Take a look", href: "#" },
+      },
+    },
+  },
+  {
+    id: "visitare-il-marocco",
+    title: "Visitare il Marocco",
+    type: "project",
+    category: "web",
+    year: "2025",
+    featured: true,
+    maturity: "Live",
+    tags: ["Tourism", "Italian Market", "Guided Tours", "Travel"],
+    stack: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
+    role: "Website development & front-end implementation",
+    match: 95,
+    accent: ["#d4694a", "#3a1c12"],
+    image: "/visitare-il-marocco.png",
+    banner: "/visitare-il-marocco.png",
+    links: {},
+    copy: {
+      recruiter: {
+        blurb:
+          "An Italian-language website for a tourism agency targeting Italian travellers — 'Il Marocco, raccontato da chi lo ama.' It packages guided tours and bespoke trips across Morocco and routes interested visitors straight to a WhatsApp conversation.",
+        cta: { label: "See the build", href: "#" },
+      },
+      developer: {
+        blurb:
+          "Next.js + React + TypeScript, fully localized in Italian. Warm terracotta-and-cream identity, editorial serif display, and a low-friction inquiry path that drops visitors into WhatsApp instead of a long form — built around how this audience actually converts.",
+        cta: { label: "See the build", href: "#" },
+      },
+      stalker: {
+        blurb:
+          "A site entirely in Italian for an agency that brings Italian tourists to Morocco — tours, trips, the whole thing. Warm desert colors, and you can just tap straight through to WhatsApp to plan a trip.",
+        cta: { label: "Take a look", href: "#" },
+      },
+    },
+  },
+  {
+    id: "automate",
+    title: "Automate",
+    type: "project",
+    category: "ops",
+    year: "2025",
+    featured: true,
+    maturity: "Concept",
+    tags: ["AI Automation", "Agents", "Business Ops", "Morocco"],
+    stack: ["Next.js", "React", "TypeScript", "AI Agents", "Workflow Automation"],
+    role: "Concept, brand & front-end build",
+    match: 94,
+    accent: ["#2f7cf6", "#0a1f3d"],
+    image: "/automate.png",
+    banner: "/automate.png",
+    links: {},
+    copy: {
+      recruiter: {
+        blurb:
+          "My own concept: an AI-automation agency for Moroccan businesses — 'Le travail répétitif. Fait. Par l'IA.' Custom AI agents and workflows that take the repetitive, time-draining tasks off a team's plate, from invoices and reconciliation to social and prospecting.",
+        cta: { label: "See the build", href: "#" },
+      },
+      developer: {
+        blurb:
+          "Next.js + React + TypeScript landing for a self-initiated AI-automation venture. Dark, high-contrast brand with a struck-through headline gag, a marquee of automatable workflows (factures & PDF, réconciliation, automatisation financière, administratif…), and a single 'book a call' funnel.",
+        cta: { label: "See the build", href: "#" },
+      },
+      stalker: {
+        blurb:
+          "A concept I'm building myself — an AI agency for Moroccan companies that automates the boring, repetitive work so people get their time back. Custom AI agents for invoices, admin, social, prospecting, you name it.",
+        cta: { label: "Take a look", href: "#" },
+      },
+    },
+  },
+
   // ── Cybersecurity projects ────────────────────────────────────────────────
   {
     id: "sigmapack-builder",
@@ -760,9 +863,12 @@ export const rows: RowConfig[] = [
     key: "featured",
     itemIds: [
       "moroccan-mirage",
+      "gogestion",
       "weframe-media",
+      "visitare-il-marocco",
       "the-seven-saints",
       "mahal-films",
+      "automate",
       "sigmapack-builder",
       "soar-mini-enricher",
       "attck-tagger",
@@ -773,9 +879,12 @@ export const rows: RowConfig[] = [
     itemIds: [
       "about-amineddine",
       "moroccan-mirage",
+      "gogestion",
       "soar-mini-enricher",
+      "automate",
       "the-seven-saints",
       "skill-security",
+      "visitare-il-marocco",
       "mahal-films",
       "exp-premium",
     ],

@@ -92,6 +92,57 @@ export const catalogFr: Record<string, Partial<Record<Persona, FrCopy>>> = {
       cta: "Y jeter un œil",
     },
   },
+  "gogestion": {
+    recruiter: {
+      blurb:
+        "Le site signature d'un groupe qui exploite dix riads de prestige dans la médina de Marrakech — SPA, hammam et terrasses sur les toits réunis dans une seule collection. Il présente le portefeuille comme une marque de luxe unique et oriente les voyageurs vers la réservation.",
+      cta: "Voir le projet",
+    },
+    developer: {
+      blurb:
+        "Next.js + React + TypeScript, pensé en français. Typographie éditoriale sur des images de patios, une identité visuelle commune aux dix propriétés, et un rythme de navigation calme façon galerie qui laisse respirer chaque riad sans fragmenter la marque.",
+      cta: "Voir le projet",
+    },
+    stalker: {
+      blurb:
+        "Un site pour un groupe qui gère dix riads magnifiques dans la vieille médina de Marrakech, tous sous une même enseigne — piscines, hammams, terrasses. Je voulais que ça ressemble à une seule belle collection, pas à dix hôtels séparés.",
+      cta: "Y jeter un œil",
+    },
+  },
+  "visitare-il-marocco": {
+    recruiter: {
+      blurb:
+        "Un site en italien pour une agence de tourisme visant les voyageurs italiens — « Il Marocco, raccontato da chi lo ama ». Il met en avant des circuits guidés et des voyages sur mesure à travers le Maroc et dirige les visiteurs intéressés directement vers WhatsApp.",
+      cta: "Voir le projet",
+    },
+    developer: {
+      blurb:
+        "Next.js + React + TypeScript, entièrement localisé en italien. Identité terracotta et crème, serif éditorial en titrage, et un parcours de contact sans friction qui ouvre WhatsApp plutôt qu'un long formulaire — calé sur la façon dont ce public convertit vraiment.",
+      cta: "Voir le projet",
+    },
+    stalker: {
+      blurb:
+        "Un site entièrement en italien pour une agence qui amène des touristes italiens au Maroc — circuits, voyages, tout. Couleurs chaudes du désert, et on peut passer direct sur WhatsApp pour organiser son voyage.",
+      cta: "Y jeter un œil",
+    },
+  },
+  "automate": {
+    recruiter: {
+      blurb:
+        "Mon propre concept : une agence d'automatisation IA pour les entreprises marocaines — « Le travail répétitif. Fait. Par l'IA. » Des agents IA et des workflows sur mesure qui débarrassent les équipes des tâches répétitives et chronophages : factures, réconciliation, réseaux sociaux, prospection.",
+      cta: "Voir le projet",
+    },
+    developer: {
+      blurb:
+        "Landing Next.js + React + TypeScript pour une initiative perso d'automatisation IA. Marque sombre très contrastée avec un titre barré comme gag, un défilé de workflows automatisables (factures & PDF, réconciliation, automatisation financière, administratif…) et un seul tunnel « réserver un appel ».",
+      cta: "Voir le projet",
+    },
+    stalker: {
+      blurb:
+        "Un concept que je construis moi-même — une agence IA pour les boîtes marocaines qui automatise le boulot répétitif et ennuyeux pour rendre du temps aux gens. Des agents IA sur mesure pour les factures, l'administratif, le social, la prospection, etc.",
+      cta: "Y jeter un œil",
+    },
+  },
   "sigmapack-builder": {
     recruiter: {
       blurb:
