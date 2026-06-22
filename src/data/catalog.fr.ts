@@ -449,4 +449,191 @@ export const catalogFr: Record<string, Partial<Record<Persona, FrCopy>>> = {
       cta: "Voir le certificat",
     },
   },
+  "cert-ai-fluency-foundations": {
+    recruiter: {
+      blurb:
+        "Le programme fondamental d'AI Fluency d'Anthropic — un cadre structuré pour travailler avec l'IA de façon délibérée, efficace et responsable. La base de tout ce que je fais avec Claude.",
+      cta: "Vérifier le certificat",
+    },
+    developer: {
+      blurb:
+        "Le framework AI Fluency d'Anthropic : le modèle 4D (Délégation, Description, Discernement, Diligence) pour collaborer avec les systèmes d'IA avec intention plutôt qu'au feeling.",
+      cta: "Vérifier le certificat",
+    },
+    stalker: {
+      blurb:
+        "Le cours de base d'Anthropic pour vraiment savoir travailler avec l'IA — pas juste tâtonner sur un chatbot en espérant.",
+      cta: "Vérifier le certificat",
+    },
+  },
+  "cert-ai-fluency-students": {
+    recruiter: {
+      blurb:
+        "Le parcours AI Fluency d'Anthropic pour apprenants — utiliser l'IA pour approfondir sa compréhension et s'approprier son apprentissage, pas le sous-traiter.",
+      cta: "Vérifier le certificat",
+    },
+    developer: {
+      blurb:
+        "Le cours AI Fluency d'Anthropic axé étudiants : des méthodes concrètes pour apprendre avec l'IA honnêtement — augmenter la compréhension au lieu de la court-circuiter.",
+      cta: "Vérifier le certificat",
+    },
+    stalker: {
+      blurb:
+        "Le cours d'Anthropic sur l'usage de l'IA pour mieux apprendre — la version bonnes habitudes, pas la version triche aux devoirs.",
+      cta: "Vérifier le certificat",
+    },
+  },
+  "cert-ai-fluency-educators": {
+    recruiter: {
+      blurb:
+        "Le programme AI Fluency d'Anthropic pour formateurs — enseigner avec l'IA de façon réfléchie et guider les autres vers un bon usage. Je n'utilise pas que les outils : je sais aussi monter une équipe en compétence dessus.",
+      cta: "Vérifier le certificat",
+    },
+    developer: {
+      blurb:
+        "Le parcours formateurs d'Anthropic : des cadres pour introduire l'IA de façon responsable et aider les autres à développer une vraie maîtrise — utile dès que j'embarque des gens sur des workflows IA.",
+      cta: "Vérifier le certificat",
+    },
+    stalker: {
+      blurb:
+        "Le cours d'Anthropic sur comment apprendre aux autres à bien utiliser l'IA. L'expliquer, c'est un skill à part entière.",
+      cta: "Vérifier le certificat",
+    },
+  },
+  "cert-claude-101": {
+    recruiter: {
+      blurb:
+        "Claude 101 d'Anthropic — les fondamentaux pour travailler efficacement avec Claude, du prompting aux usages réels. Le point de départ d'un ensemble complet de certifications Claude/Anthropic.",
+      cta: "Vérifier le certificat",
+    },
+    developer: {
+      blurb:
+        "Claude 101 d'Anthropic : prompting de base, capacités et fondamentaux d'usage efficace directement à la source — la base du reste du parcours Claude.",
+      cta: "Vérifier le certificat",
+    },
+    stalker: {
+      blurb:
+        "Le cours « bien démarrer avec Claude » — directement par Anthropic, ceux qui le fabriquent.",
+      cta: "Vérifier le certificat",
+    },
+  },
+  "cert-claude-platform-101": {
+    recruiter: {
+      blurb:
+        "Claude Platform 101 d'Anthropic — comment la plateforme Claude s'assemble en tant que produit, de la console aux capacités. Une littératie au niveau plateforme, pas juste le chat.",
+      cta: "Vérifier le certificat",
+    },
+    developer: {
+      blurb:
+        "Claude Platform 101 d'Anthropic : la console, les surfaces produit et comment les pièces s'emboîtent — l'orientation pour construire sur la plateforme, pas juste utiliser l'app de chat.",
+      cta: "Vérifier le certificat",
+    },
+    stalker: {
+      blurb:
+        "Le tour complet de la plateforme Claude d'Anthropic — ce qu'il y a sous le capot au-delà du simple chat.",
+      cta: "Vérifier le certificat",
+    },
+  },
+  "cert-claude-api": {
+    recruiter: {
+      blurb:
+        "Le cours pratique d'Anthropic sur la création de vraies applications avec l'API Claude — le certificat derrière le fait de livrer des fonctionnalités IA, pas juste d'en parler.",
+      cta: "Vérifier le certificat",
+    },
+    developer: {
+      blurb:
+        "Building with the Claude API d'Anthropic : messages, system prompts, streaming, tool use et les patterns pour des intégrations de production avec le SDK Anthropic.",
+      cta: "Vérifier le certificat",
+    },
+    stalker: {
+      blurb:
+        "Le cours pour vraiment brancher Claude dans des applis avec du code — le côté développeur, construire quelque chose de réel.",
+      cta: "Vérifier le certificat",
+    },
+  },
+  "cert-claude-code-101": {
+    recruiter: {
+      blurb:
+        "Claude Code 101 d'Anthropic — les fondamentaux du codage agentique dans le terminal. La raison pour laquelle j'avance vite sans perdre le fil sur de vrais codebases.",
+      cta: "Vérifier le certificat",
+    },
+    developer: {
+      blurb:
+        "Claude Code 101 d'Anthropic : codage agentique en CLI — contexte, outils et le workflow pour laisser un agent travailler sur un vrai dépôt en sécurité.",
+      cta: "Vérifier le certificat",
+    },
+    stalker: {
+      blurb:
+        "L'intro à Claude Code — l'IA qui vit dans le terminal et édite vraiment ton code. Je l'utilise tout le temps.",
+      cta: "Vérifier le certificat",
+    },
+  },
+  "cert-claude-code-in-action": {
+    recruiter: {
+      blurb:
+        "Claude Code in Action d'Anthropic — le côté avancé et pratique : de vrais workflows agentiques sur de vrais projets. Ce portfolio a été construit comme ça.",
+      cta: "Vérifier le certificat",
+    },
+    developer: {
+      blurb:
+        "Claude Code in Action d'Anthropic : workflows agentiques appliqués — changements multi-fichiers, automatisation, hooks et les habitudes qui rendent un agent vraiment productif dans un codebase.",
+      cta: "Vérifier le certificat",
+    },
+    stalker: {
+      blurb:
+        "La suite pratique de Claude Code 101 — le mettre au travail sur de vrais projets. (Oui, y compris ce site.)",
+      cta: "Vérifier le certificat",
+    },
+  },
+  "cert-claude-cowork": {
+    recruiter: {
+      blurb:
+        "L'introduction d'Anthropic à Claude Cowork — collaborer avec Claude comme un coéquipier à travers les tâches et les outils. Une littératie tournée vers l'avenir du travail avec des agents IA.",
+      cta: "Vérifier le certificat",
+    },
+    developer: {
+      blurb:
+        "L'intro Claude Cowork d'Anthropic : le modèle d'agent collaboratif — déléguer, superviser et travailler aux côtés de Claude sur des tâches multi-étapes.",
+      cta: "Vérifier le certificat",
+    },
+    stalker: {
+      blurb:
+        "Le cours sur le fait de voir Claude moins comme un outil et plus comme un collègue. La version futur-du-travail.",
+      cta: "Vérifier le certificat",
+    },
+  },
+  "cert-mcp-intro": {
+    recruiter: {
+      blurb:
+        "L'introduction d'Anthropic au Model Context Protocol — le standard ouvert pour connecter l'IA aux outils et aux données. La couche d'intégration derrière une vraie ingénierie IA.",
+      cta: "Vérifier le certificat",
+    },
+    developer: {
+      blurb:
+        "L'intro MCP d'Anthropic : serveurs, clients, outils et ressources — le protocole pour donner aux modèles un accès sûr et structuré aux systèmes externes.",
+      cta: "Vérifier le certificat",
+    },
+    stalker: {
+      blurb:
+        "Le cours sur MCP — en gros l'adaptateur universel qui laisse l'IA se brancher en sécurité aux autres apps et données.",
+      cta: "Vérifier le certificat",
+    },
+  },
+  "cert-mcp-advanced": {
+    recruiter: {
+      blurb:
+        "Le cours avancé d'Anthropic sur le Model Context Protocol — l'architecture plus profonde derrière des intégrations IA-vers-outils robustes et sécurisées. Le bout expert du parcours MCP.",
+      cta: "Vérifier le certificat",
+    },
+    developer: {
+      blurb:
+        "MCP Advanced Topics d'Anthropic : transport, auth, sampling et les patterns architecturaux pour construire des serveurs MCP de production qui tiennent en usage réel.",
+      cta: "Vérifier le certificat",
+    },
+    stalker: {
+      blurb:
+        "Le cours MCP niveau expert — la suite construire-ça-proprement-et-en-sécurité de l'intro.",
+      cta: "Vérifier le certificat",
+    },
+  },
 };

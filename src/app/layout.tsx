@@ -30,6 +30,15 @@ export const metadata: Metadata = {
     description: "Pick a profile. Same work, told in your language.",
   },
   robots: { index: true, follow: true },
+  manifest: "/favicons/site.webmanifest",
+  icons: {
+    icon: [
+      { url: "/favicons/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicons/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicons/favicon.ico" },
+    ],
+    apple: "/favicons/apple-touch-icon.png",
+  },
 };
 
 export default function RootLayout({

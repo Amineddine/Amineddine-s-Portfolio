@@ -840,6 +840,360 @@ export const catalog: CatalogItem[] = [
       },
     },
   },
+
+  // ── Anthropic / Claude certifications (2025) ──────────────────────────────
+  {
+    id: "cert-ai-fluency-foundations",
+    title: "AI Fluency: Framework & Foundations",
+    type: "certification",
+    category: "profile",
+    year: "2025",
+    issuer: "Anthropic",
+    maturity: "Anthropic",
+    tags: ["AI Fluency", "Claude", "Foundations"],
+    match: 96,
+    accent: ["#d97757", "#3a1d12"],
+    image: "/cert-ai-fluency-foundations.jpg",
+    banner: "/cert-ai-fluency-foundations.jpg",
+    links: {},
+    copy: {
+      recruiter: {
+        blurb:
+          "Anthropic's foundational AI-fluency program — a structured framework for working with AI deliberately, effectively and responsibly. The base layer under everything else I do with Claude.",
+        cta: { label: "Verify credential", href: "https://verify.skilljar.com/c/6jgcv7svs64o" },
+      },
+      developer: {
+        blurb:
+          "Anthropic's AI Fluency framework: the 4D model (Delegation, Description, Discernment, Diligence) for collaborating with AI systems with intent rather than vibes.",
+        cta: { label: "Verify credential", href: "https://verify.skilljar.com/c/6jgcv7svs64o" },
+      },
+      stalker: {
+        blurb:
+          "The groundwork course from Anthropic on actually knowing how to work with AI properly — not just poking at a chatbot and hoping.",
+        cta: { label: "Verify credential", href: "https://verify.skilljar.com/c/6jgcv7svs64o" },
+      },
+    },
+  },
+  {
+    id: "cert-ai-fluency-students",
+    title: "AI Fluency for Students",
+    type: "certification",
+    category: "profile",
+    year: "2025",
+    issuer: "Anthropic",
+    maturity: "Anthropic",
+    tags: ["AI Fluency", "Learning", "Claude"],
+    match: 94,
+    accent: ["#d9a557", "#3a2a12"],
+    image: "/cert-ai-fluency-students.jpg",
+    banner: "/cert-ai-fluency-students.jpg",
+    links: {},
+    copy: {
+      recruiter: {
+        blurb:
+          "Anthropic's AI-fluency track for learners — using AI to deepen understanding and own your learning, not outsource it. Evidence I think hard about how these tools are actually used.",
+        cta: { label: "Verify credential", href: "https://verify.skilljar.com/c/kvbop2mfrz8x" },
+      },
+      developer: {
+        blurb:
+          "Anthropic's student-focused AI-fluency course: practical patterns for learning with AI honestly — augmenting comprehension instead of shortcutting it.",
+        cta: { label: "Verify credential", href: "https://verify.skilljar.com/c/kvbop2mfrz8x" },
+      },
+      stalker: {
+        blurb:
+          "The Anthropic course on using AI to actually learn better — the good-habits version, not the cheat-on-homework version.",
+        cta: { label: "Verify credential", href: "https://verify.skilljar.com/c/kvbop2mfrz8x" },
+      },
+    },
+  },
+  {
+    id: "cert-ai-fluency-educators",
+    title: "AI Fluency for Educators",
+    type: "certification",
+    category: "profile",
+    year: "2025",
+    issuer: "Anthropic",
+    maturity: "Anthropic",
+    tags: ["AI Fluency", "Teaching", "Claude"],
+    match: 93,
+    accent: ["#c97fb0", "#3a1d33"],
+    image: "/cert-ai-fluency-educators.jpg",
+    banner: "/cert-ai-fluency-educators.jpg",
+    links: {},
+    copy: {
+      recruiter: {
+        blurb:
+          "Anthropic's AI-fluency program for educators — how to teach with AI thoughtfully and guide others to use it well. I don't just use the tools; I can bring a team up to speed on them.",
+        cta: { label: "Verify credential", href: "https://verify.skilljar.com/c/moos69piwdsr" },
+      },
+      developer: {
+        blurb:
+          "Anthropic's educator track: frameworks for introducing AI responsibly and helping others build genuine fluency — useful any time I'm onboarding people onto AI workflows.",
+        cta: { label: "Verify credential", href: "https://verify.skilljar.com/c/moos69piwdsr" },
+      },
+      stalker: {
+        blurb:
+          "The Anthropic course on teaching other people to use AI well. Turns out explaining it is its own skill.",
+        cta: { label: "Verify credential", href: "https://verify.skilljar.com/c/moos69piwdsr" },
+      },
+    },
+  },
+  {
+    id: "cert-claude-101",
+    title: "Claude 101",
+    type: "certification",
+    category: "profile",
+    year: "2025",
+    issuer: "Anthropic",
+    maturity: "Anthropic",
+    tags: ["Claude", "Fundamentals", "Prompting"],
+    match: 95,
+    accent: ["#d97757", "#3a1d12"],
+    image: "/cert-claude-101.jpg",
+    banner: "/cert-claude-101.jpg",
+    links: {},
+    copy: {
+      recruiter: {
+        blurb:
+          "Anthropic's Claude 101 — the fundamentals of working effectively with Claude, from prompting to real-world use. The starting point of a deep Claude/Anthropic credential set.",
+        cta: { label: "Verify credential", href: "https://verify.skilljar.com/c/2i72jcqjmw5z" },
+      },
+      developer: {
+        blurb:
+          "Anthropic's Claude 101: core prompting, capabilities and effective-use fundamentals straight from the source — the baseline for the rest of the Claude track.",
+        cta: { label: "Verify credential", href: "https://verify.skilljar.com/c/2i72jcqjmw5z" },
+      },
+      stalker: {
+        blurb:
+          "The 'getting started with Claude, properly' course — straight from Anthropic, the people who make it.",
+        cta: { label: "Verify credential", href: "https://verify.skilljar.com/c/2i72jcqjmw5z" },
+      },
+    },
+  },
+  {
+    id: "cert-claude-platform-101",
+    title: "Claude Platform 101",
+    type: "certification",
+    category: "ops",
+    year: "2025",
+    issuer: "Anthropic",
+    maturity: "Anthropic",
+    tags: ["Claude", "Platform", "Anthropic"],
+    match: 94,
+    accent: ["#7c8fd0", "#1b2342"],
+    image: "/cert-claude-platform-101.jpg",
+    banner: "/cert-claude-platform-101.jpg",
+    links: {},
+    copy: {
+      recruiter: {
+        blurb:
+          "Anthropic's Claude Platform 101 — how the Claude platform fits together as a product surface, from console to capabilities. Platform-level literacy, not just chat.",
+        cta: { label: "Verify credential", href: "https://verify.skilljar.com/c/9hc4vvajsxdz" },
+      },
+      developer: {
+        blurb:
+          "Anthropic's Claude Platform 101: the console, the product surfaces and how the pieces connect — orientation for building on the platform rather than just using the chat app.",
+        cta: { label: "Verify credential", href: "https://verify.skilljar.com/c/9hc4vvajsxdz" },
+      },
+      stalker: {
+        blurb:
+          "The tour of Anthropic's whole Claude platform — what's under the hood beyond just chatting.",
+        cta: { label: "Verify credential", href: "https://verify.skilljar.com/c/9hc4vvajsxdz" },
+      },
+    },
+  },
+  {
+    id: "cert-claude-api",
+    title: "Building with the Claude API",
+    type: "certification",
+    category: "web",
+    year: "2025",
+    issuer: "Anthropic",
+    maturity: "Anthropic",
+    tags: ["Claude API", "Anthropic SDK", "Tool Use"],
+    match: 97,
+    accent: ["#d97757", "#3a1d12"],
+    image: "/cert-claude-api.jpg",
+    banner: "/cert-claude-api.jpg",
+    links: {},
+    copy: {
+      recruiter: {
+        blurb:
+          "Anthropic's hands-on course on building real applications with the Claude API — the credential behind shipping AI features, not just talking about them.",
+        cta: { label: "Verify credential", href: "https://verify.skilljar.com/c/6pq7ncer2n42" },
+      },
+      developer: {
+        blurb:
+          "Anthropic's Building with the Claude API: messages, system prompts, streaming, tool use and the patterns for production-grade integrations with the Anthropic SDK.",
+        cta: { label: "Verify credential", href: "https://verify.skilljar.com/c/6pq7ncer2n42" },
+      },
+      stalker: {
+        blurb:
+          "The course on actually wiring Claude into apps with code — the developer-y, build-something-real one.",
+        cta: { label: "Verify credential", href: "https://verify.skilljar.com/c/6pq7ncer2n42" },
+      },
+    },
+  },
+  {
+    id: "cert-claude-code-101",
+    title: "Claude Code 101",
+    type: "certification",
+    category: "ops",
+    year: "2025",
+    issuer: "Anthropic",
+    maturity: "Anthropic",
+    tags: ["Claude Code", "Agentic Coding", "CLI"],
+    match: 96,
+    accent: ["#34d399", "#0a3a2a"],
+    image: "/cert-claude-code-101.jpg",
+    banner: "/cert-claude-code-101.jpg",
+    links: {},
+    copy: {
+      recruiter: {
+        blurb:
+          "Anthropic's Claude Code 101 — the fundamentals of agentic coding in the terminal. The reason I move fast without losing the plot on real codebases.",
+        cta: { label: "Verify credential", href: "https://verify.skilljar.com/c/2nq9i57jdbek" },
+      },
+      developer: {
+        blurb:
+          "Anthropic's Claude Code 101: agentic coding in the CLI — context, tools, and the workflow for letting an agent work across a real repo safely.",
+        cta: { label: "Verify credential", href: "https://verify.skilljar.com/c/2nq9i57jdbek" },
+      },
+      stalker: {
+        blurb:
+          "The intro to Claude Code — the AI that lives in the terminal and actually edits your code. I use it constantly.",
+        cta: { label: "Verify credential", href: "https://verify.skilljar.com/c/2nq9i57jdbek" },
+      },
+    },
+  },
+  {
+    id: "cert-claude-code-in-action",
+    title: "Claude Code in Action",
+    type: "certification",
+    category: "ops",
+    year: "2025",
+    issuer: "Anthropic",
+    maturity: "Anthropic",
+    tags: ["Claude Code", "Agentic Workflows", "Automation"],
+    match: 95,
+    accent: ["#34d399", "#0a3a2a"],
+    image: "/cert-claude-code-in-action.jpg",
+    banner: "/cert-claude-code-in-action.jpg",
+    links: {},
+    copy: {
+      recruiter: {
+        blurb:
+          "Anthropic's Claude Code in Action — the advanced, practical side: real agentic workflows on real projects. This portfolio itself was built this way.",
+        cta: { label: "Verify credential", href: "https://verify.skilljar.com/c/t4pvvevcc8pz" },
+      },
+      developer: {
+        blurb:
+          "Anthropic's Claude Code in Action: applied agentic workflows — multi-file changes, automation, hooks and the habits that make an AI agent genuinely productive in a codebase.",
+        cta: { label: "Verify credential", href: "https://verify.skilljar.com/c/t4pvvevcc8pz" },
+      },
+      stalker: {
+        blurb:
+          "The hands-on follow-up to Claude Code 101 — putting it to work on actual projects. (Yes, including this site.)",
+        cta: { label: "Verify credential", href: "https://verify.skilljar.com/c/t4pvvevcc8pz" },
+      },
+    },
+  },
+  {
+    id: "cert-claude-cowork",
+    title: "Introduction to Claude Cowork",
+    type: "certification",
+    category: "ops",
+    year: "2025",
+    issuer: "Anthropic",
+    maturity: "Anthropic",
+    tags: ["Claude Cowork", "Collaboration", "Agents"],
+    match: 92,
+    accent: ["#a78bfa", "#2b1d4d"],
+    image: "/cert-claude-cowork.jpg",
+    banner: "/cert-claude-cowork.jpg",
+    links: {},
+    copy: {
+      recruiter: {
+        blurb:
+          "Anthropic's introduction to Claude Cowork — collaborating with Claude as a teammate across tasks and tools. Forward-looking literacy in how AI agents join real work.",
+        cta: { label: "Verify credential", href: "https://verify.skilljar.com/c/vs5s89awfrvp" },
+      },
+      developer: {
+        blurb:
+          "Anthropic's Claude Cowork intro: the collaborative-agent model — delegating, supervising and working alongside Claude across multi-step tasks.",
+        cta: { label: "Verify credential", href: "https://verify.skilljar.com/c/vs5s89awfrvp" },
+      },
+      stalker: {
+        blurb:
+          "The course on treating Claude less like a tool and more like a coworker. The future-of-work-y one.",
+        cta: { label: "Verify credential", href: "https://verify.skilljar.com/c/vs5s89awfrvp" },
+      },
+    },
+  },
+  {
+    id: "cert-mcp-intro",
+    title: "Introduction to Model Context Protocol",
+    type: "certification",
+    category: "cybersecurity",
+    year: "2025",
+    issuer: "Anthropic",
+    maturity: "Anthropic",
+    tags: ["MCP", "Tooling", "Integrations"],
+    match: 95,
+    accent: ["#22d3ee", "#0a3340"],
+    image: "/cert-mcp-intro.jpg",
+    banner: "/cert-mcp-intro.jpg",
+    links: {},
+    copy: {
+      recruiter: {
+        blurb:
+          "Anthropic's introduction to the Model Context Protocol — the open standard for connecting AI to tools and data. The integration layer behind serious AI engineering.",
+        cta: { label: "Verify credential", href: "https://verify.skilljar.com/c/cyaz7o7csrur" },
+      },
+      developer: {
+        blurb:
+          "Anthropic's MCP intro: servers, clients, tools and resources — the protocol for giving models safe, structured access to external systems.",
+        cta: { label: "Verify credential", href: "https://verify.skilljar.com/c/cyaz7o7csrur" },
+      },
+      stalker: {
+        blurb:
+          "The course on MCP — basically the universal adapter that lets AI safely plug into other apps and data.",
+        cta: { label: "Verify credential", href: "https://verify.skilljar.com/c/cyaz7o7csrur" },
+      },
+    },
+  },
+  {
+    id: "cert-mcp-advanced",
+    title: "Model Context Protocol: Advanced Topics",
+    type: "certification",
+    category: "cybersecurity",
+    year: "2025",
+    issuer: "Anthropic",
+    maturity: "Anthropic",
+    tags: ["MCP", "Advanced", "Architecture"],
+    match: 94,
+    accent: ["#22d3ee", "#0a3340"],
+    image: "/cert-mcp-advanced.jpg",
+    banner: "/cert-mcp-advanced.jpg",
+    links: {},
+    copy: {
+      recruiter: {
+        blurb:
+          "Anthropic's advanced Model Context Protocol course — the deeper architecture behind robust, secure AI-to-tool integrations. The expert end of the MCP track.",
+        cta: { label: "Verify credential", href: "https://verify.skilljar.com/c/m6j9xubiujnv" },
+      },
+      developer: {
+        blurb:
+          "Anthropic's MCP Advanced Topics: transport, auth, sampling, and the architectural patterns for building production MCP servers that hold up under real use.",
+        cta: { label: "Verify credential", href: "https://verify.skilljar.com/c/m6j9xubiujnv" },
+      },
+      stalker: {
+        blurb:
+          "The deep-end MCP course — the proper-engineering, build-it-securely follow-up to the intro.",
+        cta: { label: "Verify credential", href: "https://verify.skilljar.com/c/m6j9xubiujnv" },
+      },
+    },
+  },
 ];
 
 // Fast lookup by id.
@@ -904,6 +1258,17 @@ export const rows: RowConfig[] = [
   {
     key: "certifications",
     itemIds: [
+      "cert-claude-api",
+      "cert-claude-code-in-action",
+      "cert-claude-code-101",
+      "cert-claude-101",
+      "cert-claude-platform-101",
+      "cert-mcp-intro",
+      "cert-mcp-advanced",
+      "cert-ai-fluency-foundations",
+      "cert-claude-cowork",
+      "cert-ai-fluency-students",
+      "cert-ai-fluency-educators",
       "cert-fullstack",
       "cert-attack",
       "cert-filesec",
