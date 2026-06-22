@@ -86,8 +86,10 @@ export interface CatalogItem {
 }
 
 export type RowKey =
-  | "featured"
   | "topPicks"
+  | "web"
+  | "security"
+  | "ai"
   | "building"
   | "skills"
   | "experience"

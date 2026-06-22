@@ -12,7 +12,7 @@ import { BriefcaseIcon } from "./icons";
 type NavKey = "home" | "projects" | "skills" | "about" | "contact";
 const navItems: { key: NavKey; action: (open: (id: string) => void) => void }[] = [
   { key: "home", action: () => scrollToTop() },
-  { key: "projects", action: () => scrollToId("row-featured") },
+  { key: "projects", action: () => scrollToId("row-web") },
   { key: "skills", action: () => scrollToId("row-skills") },
   { key: "about", action: (open) => open(billboardId) },
   { key: "contact", action: () => scrollToId("contact") },

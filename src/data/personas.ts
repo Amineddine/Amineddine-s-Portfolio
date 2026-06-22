@@ -21,8 +21,10 @@ export const personas: Record<Persona, PersonaDef> = {
     icon: "briefcase",
     tileColor: ["#b9090b", "#7a0608"],
     rowTitles: {
-      featured: "Proven Impact",
       topPicks: "Why You Should Hire Me",
+      web: "Client Work That Shipped",
+      security: "Security That Protects the Business",
+      ai: "AI & Automation Edge",
       building: "Currently Shipping",
       skills: "Skills Employers Want",
       experience: "Track Record",
@@ -41,8 +43,10 @@ export const personas: Record<Persona, PersonaDef> = {
     icon: "terminal",
     tileColor: ["#1f6feb", "#0b3d91"],
     rowTitles: {
-      featured: "Architecture Deep Dives",
       topPicks: "Top Picks for a Fellow Dev",
+      web: "Web & Product Builds",
+      security: "Security & Detection Engineering",
+      ai: "AI & Automation",
       building: "Currently Building",
       skills: "Skills & Tech Stack",
       experience: "Engineering Challenges",
@@ -51,7 +55,7 @@ export const personas: Record<Persona, PersonaDef> = {
   },
   stalker: {
     id: "stalker",
-    label: "Stalker",
+    label: "Curious",
     badge: "The human lens",
     tagline: "Hey — here's what I actually do.",
     heroDescription:
@@ -61,8 +65,10 @@ export const personas: Record<Persona, PersonaDef> = {
     icon: "search",
     tileColor: ["#1f9d6b", "#0b5d3e"],
     rowTitles: {
-      featured: "Stuff I'm Proud Of",
       topPicks: "Get to Know Me",
+      web: "Websites I've Built",
+      security: "My Security Toys",
+      ai: "AI Stuff I'm Into",
       building: "What I'm Tinkering With",
       skills: "Things I'm Good At",
       experience: "The Story So Far",

@@ -116,6 +116,36 @@ export default function PlaceholderArt({
   const src = variant === "banner" ? item.banner : item.image;
 
   if (src) {
+    // Certificates ship as light, paper-colored scans. On thumbnails we mat them
+    // on a dark frame (contain + accent glow) so they read as framed credentials
+    // instead of bright rectangles fighting the dark UI. The banner stays full-bleed.
+    if (item.type === "certification" && variant !== "banner") {
+      return (
+        <div
+          className={`relative h-full w-full overflow-hidden ${className}`}
+          role="img"
+          aria-label={item.title}
+          style={{
+            background: "linear-gradient(158deg, #161618 0%, #0c0c0e 100%)",
+          }}
+        >
+          <div
+            className="absolute inset-0"
+            style={{
+              background: `radial-gradient(80% 70% at 50% 0%, ${item.accent[0]}33, transparent 65%)`,
+            }}
+          />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={src}
+            alt={item.title}
+            className="absolute inset-0 h-full w-full object-contain p-3"
+            loading="lazy"
+          />
+          <div className="art-grain pointer-events-none absolute inset-0 opacity-20" />
+        </div>
+      );
+    }
     return (
       // eslint-disable-next-line @next/next/no-img-element
       <img

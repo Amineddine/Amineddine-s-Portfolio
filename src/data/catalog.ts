@@ -442,17 +442,17 @@ export const catalog: CatalogItem[] = [
       recruiter: {
         blurb:
           "Polished, responsive web interfaces that load fast and convert — the front-of-house clients and users judge you on, done with discipline.",
-        cta: { label: "See it in the work", href: "#row-featured" },
+        cta: { label: "See it in the work", href: "#row-web" },
       },
       developer: {
         blurb:
           "React, Next.js, TypeScript, Vite, Tailwind. Component architecture with strong pacing, accessibility-minded markup, and a tight responsive discipline.",
-        cta: { label: "See it in the work", href: "#row-featured" },
+        cta: { label: "See it in the work", href: "#row-web" },
       },
       stalker: {
         blurb:
           "The part you can see and click. I make websites that feel smooth and look sharp on any screen.",
-        cta: { label: "See it in the work", href: "#row-featured" },
+        cta: { label: "See it in the work", href: "#row-web" },
       },
     },
   },
@@ -471,17 +471,17 @@ export const catalog: CatalogItem[] = [
       recruiter: {
         blurb:
           "Reliable systems behind the interface — APIs and services that hold up in production and don't surprise you six months later.",
-        cta: { label: "See it in the work", href: "#row-featured" },
+        cta: { label: "See it in the work", href: "#row-web" },
       },
       developer: {
         blurb:
           "Node.js, Python, FastAPI, REST API design, pragmatic architecture. Services built to be readable, testable, and maintainable by whoever inherits them.",
-        cta: { label: "See it in the work", href: "#row-featured" },
+        cta: { label: "See it in the work", href: "#row-web" },
       },
       stalker: {
         blurb:
           "The engine-room stuff — the bits that make the buttons actually do something.",
-        cta: { label: "See it in the work", href: "#row-featured" },
+        cta: { label: "See it in the work", href: "#row-web" },
       },
     },
   },
@@ -502,17 +502,17 @@ export const catalog: CatalogItem[] = [
       recruiter: {
         blurb:
           "A genuine security background — risk spotted early, safer defaults, and the audit-and-harden instincts that protect the business.",
-        cta: { label: "See the security work", href: "#row-featured" },
+        cta: { label: "See the security work", href: "#row-security" },
       },
       developer: {
         blurb:
           "MITRE ATT&CK, Sigma, alert enrichment, detection logic, SOC workflows. Detection-engineering instincts baked into how I build, not bolted on after.",
-        cta: { label: "See the security work", href: "#row-featured" },
+        cta: { label: "See the security work", href: "#row-security" },
       },
       stalker: {
         blurb:
           "I think like a defender. I build tools that help catch the bad guys — and I keep that mindset even on a normal website.",
-        cta: { label: "See the security work", href: "#row-featured" },
+        cta: { label: "See the security work", href: "#row-security" },
       },
     },
   },
@@ -1213,8 +1213,22 @@ export const billboardId = "about-amineddine";
 // from the active persona; the *contents* are identical across personas.
 // ───────────────────────────────────────────────────────────────────────────
 export const rows: RowConfig[] = [
+  // A curated, mixed spotlight — the best of every pillar in one shelf.
   {
-    key: "featured",
+    key: "topPicks",
+    itemIds: [
+      "about-amineddine",
+      "moroccan-mirage",
+      "sigmapack-builder",
+      "gogestion",
+      "automate",
+      "attck-tagger",
+      "the-seven-saints",
+    ],
+  },
+  // Pillar 1 — Web & Product.
+  {
+    key: "web",
     itemIds: [
       "moroccan-mirage",
       "gogestion",
@@ -1222,25 +1236,29 @@ export const rows: RowConfig[] = [
       "visitare-il-marocco",
       "the-seven-saints",
       "mahal-films",
-      "automate",
+    ],
+  },
+  // Pillar 2 — Security & Detection Engineering.
+  {
+    key: "security",
+    itemIds: [
       "sigmapack-builder",
       "soar-mini-enricher",
       "attck-tagger",
+      "rareguard",
     ],
   },
+  // Pillar 3 — AI & Automation (one build + the Anthropic credentials).
   {
-    key: "topPicks",
+    key: "ai",
     itemIds: [
-      "about-amineddine",
-      "moroccan-mirage",
-      "gogestion",
-      "soar-mini-enricher",
       "automate",
-      "the-seven-saints",
-      "skill-security",
-      "visitare-il-marocco",
-      "mahal-films",
-      "exp-premium",
+      "cert-claude-api",
+      "cert-claude-code-in-action",
+      "cert-claude-code-101",
+      "cert-mcp-intro",
+      "cert-mcp-advanced",
+      "cert-claude-101",
     ],
   },
   {

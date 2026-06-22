@@ -78,12 +78,13 @@ export default function ProfileGate({
         compact ? "" : "min-h-[100dvh]"
       }`}
     >
-      {/* language toggle, up top */}
+      {/* language toggle — in-flow above the heading on phones (so it never
+          collides with the title), pinned to the top on larger screens */}
       <div
         className={
           compact
             ? "mb-8"
-            : "absolute left-1/2 top-8 -translate-x-1/2 sm:top-10"
+            : "mb-8 sm:mb-0 sm:absolute sm:left-1/2 sm:top-10 sm:-translate-x-1/2"
         }
       >
         <LanguageToggle />

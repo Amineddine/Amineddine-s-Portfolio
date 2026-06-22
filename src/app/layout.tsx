@@ -1,12 +1,18 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { PersonaProvider } from "@/context/PersonaContext";
 import LenisProvider from "@/components/netflix/LenisProvider";
 
+// Absolute base for resolving OG/Twitter image URLs. NEXT_PUBLIC_SITE_URL can
+// override this per-environment (e.g. preview deploys); defaults to production.
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://amineddine.online";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "Amineddine Znin — Now Streaming",
   description:
-    "The portfolio of Amineddine Znin, a Morocco-based software developer and cybersecurity builder — retold for whoever's watching. Pick a profile: Recruiter, Developer, or Stalker.",
+    "The portfolio of Amineddine Znin, a Morocco-based software developer and cybersecurity builder — retold for whoever's watching. Pick a profile: Recruiter, Developer, or Curious.",
   keywords: [
     "Amineddine Znin",
     "software developer Morocco",
@@ -23,13 +29,23 @@ export const metadata: Metadata = {
       "One developer, three narrations. A Netflix-style portfolio of web & security work.",
     type: "website",
     locale: "en_US",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Amineddine Znin — Software Developer · Security Builder · Now Streaming",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Amineddine Znin — Now Streaming",
     description: "Pick a profile. Same work, told in your language.",
+    images: ["/og-image.png"],
   },
   robots: { index: true, follow: true },
+  appleWebApp: { title: "Amineddine", capable: true, statusBarStyle: "black-translucent" },
   manifest: "/favicons/site.webmanifest",
   icons: {
     icon: [
@@ -39,6 +55,11 @@ export const metadata: Metadata = {
     ],
     apple: "/favicons/apple-touch-icon.png",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#141414",
+  colorScheme: "dark",
 };
 
 export default function RootLayout({
