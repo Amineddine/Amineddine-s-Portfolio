@@ -1,68 +1,23 @@
-"use client";
+import type { Metadata } from "next";
+import HomeExperience from "@/components/netflix/HomeExperience";
+import EntityContent from "@/components/seo/EntityContent";
+import JsonLd from "@/components/seo/JsonLd";
+import { graph, personSchema, profilePageSchema, websiteSchema } from "@/lib/seo";
 
-import { AnimatePresence, motion } from "framer-motion";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import IntroSplash from "@/components/netflix/IntroSplash";
-import ProfileGate from "@/components/netflix/ProfileGate";
-import { usePersona } from "@/context/PersonaContext";
-import { playTaDum } from "@/lib/sound";
-import type { Persona } from "@/lib/types";
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
-type Phase = "loading" | "splash" | "gate";
-
-export default function EntryPage() {
-  const router = useRouter();
-  const { setPersona, markVisited, muted } = usePersona();
-  const [phase, setPhase] = useState<Phase>("loading");
-
-  // Decide whether to play the splash. Returning visitors skip straight to the
-  // gate. Read localStorage directly to avoid provider/child effect ordering.
-  useEffect(() => {
-    let visited = false;
-    try {
-      visited = localStorage.getItem("nf-visited") === "1";
-    } catch {
-      /* ignore */
-    }
-    // hydrating UI phase from localStorage (an external system) on mount
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setPhase(visited ? "gate" : "splash");
-    // warm up the browse routes
-    router.prefetch("/browse/recruiter");
-    router.prefetch("/browse/developer");
-    router.prefetch("/browse/stalker");
-  }, [router]);
-
-  const handleSplashDone = () => {
-    markVisited();
-    setPhase("gate");
-  };
-
-  const handlePick = (p: Persona) => {
-    setPersona(p);
-    markVisited();
-    if (!muted) playTaDum();
-    router.push(`/browse/${p}`);
-  };
-
+// Server component. Renders the crawlable content layer + JSON-LD into the raw
+// HTML, then mounts the interactive (client) entry experience on top of it.
+export default function HomePage() {
   return (
-    <main className="min-h-[100dvh] bg-[var(--nf-bg)]">
-      <AnimatePresence mode="wait">
-        {phase === "splash" && (
-          <IntroSplash key="splash" onDone={handleSplashDone} />
-        )}
-
-        {phase === "gate" && (
-          <motion.div
-            key="gate"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1, transition: { duration: 0.6 } }}
-          >
-            <ProfileGate onPick={handlePick} />
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </main>
+    <>
+      <JsonLd
+        data={graph([personSchema(), websiteSchema(), profilePageSchema("/")])}
+      />
+      <EntityContent />
+      <HomeExperience />
+    </>
   );
 }

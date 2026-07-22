@@ -1,0 +1,52 @@
+# Amineddine Znin
+
+> Amineddine Znin is a Morocco-based software developer, freelancer and cybersecurity builder, available for work globally. He builds production websites with Next.js, React and TypeScript, security & detection-engineering tooling with Python, MITRE ATT&CK and Sigma, and AI-automation systems for businesses.
+
+## Key facts
+
+- **Name:** Amineddine Znin
+- **Role:** Software Developer · Freelancer · Cybersecurity Builder
+- **Location:** Morocco (works with clients worldwide)
+- **Core web stack:** Next.js, React, TypeScript, Tailwind CSS, Node.js, Python, FastAPI
+- **Security focus:** Detection engineering, MITRE ATT&CK, Sigma rules, SOC tooling, alert enrichment, anomaly detection, ML for security
+- **AI focus:** AI automation, Claude API, Model Context Protocol (MCP)
+- **Website:** https://amineddine.online
+- **GitHub:** https://github.com/Amineddine
+- **LinkedIn:** https://www.linkedin.com/in/amineddine-znin-z999
+- **Email:** amineeddine006@gmail.com
+
+## The site
+
+A portfolio presented as a Netflix-style experience. The same body of work is narrated through three "profiles" — Recruiter, Developer, and Curious — and offered in English and French. Content is identical across profiles; only the tone changes.
+
+- https://amineddine.online/ — entry / profile picker
+- https://amineddine.online/browse/recruiter — hiring-focused view
+- https://amineddine.online/browse/developer — engineering-focused view
+- https://amineddine.online/browse/stalker — casual, plain-language view
+
+## Selected web projects
+
+- **Moroccan Mirage** (https://moroccanmirage.com) — Full-stack, cinematic luxury-travel website with a custom trip planner and dynamic tour catalog. Next.js, React, TypeScript, Framer Motion, Lenis.
+- **GoGestion** (https://gogestion-dusky.vercel.app) — Website for a group operating ten prestige riads across the Marrakech medina, unified as one luxury collection. Next.js, French-first.
+- **Visitare il Marocco** (https://visitareilmarocco.vercel.app) — Italian-language site for a tourism agency bringing Italian travellers to Morocco.
+- **Automate** (https://automate.ma) — Self-initiated AI-automation venture for Moroccan businesses; custom AI agents and workflows.
+- **WeFrame Media** (https://www.weframemedia.com/) — Premium creative-agency website for a Marrakech video studio.
+- **The Seven Saints** (https://ornate-marigold-5e0674.netlify.app/) — Luxury desert-camp website for an Agafay stay.
+- **Mahal Films** (https://www.mahalfilms.com/) — Production-services platform for international shoots in Morocco.
+
+## Selected security projects (open source)
+
+- **SigmaPack-Builder** — Python pipeline converting ATT&CK-tagged detections into deploy-ready Sigma-style YAML rule packs. https://github.com/Amineddine/SigmaPack-Builder
+- **soar-mini-enricher** — FastAPI alert-enrichment microservice: maps alerts to MITRE ATT&CK, scores severity, returns analyst recommendations. https://github.com/Amineddine/soar-mini-enricher
+- **attck-tagger** — Explainable, rule-based ATT&CK enrichment for JSONL security logs with confidence scores. https://github.com/Amineddine/attck-tagger
+- **rareguard** (research) — Self-supervised Transformer for rare security-log anomalies with conformal p-values for calibrated alerts. https://github.com/Amineddine/rareguard
+
+## Certifications
+
+Official Anthropic / Claude credentials (2025): AI Fluency: Framework & Foundations, AI Fluency for Students, AI Fluency for Educators, Claude 101, Claude Platform 101, Building with the Claude API, Claude Code 101, Claude Code in Action, Introduction to Claude Cowork, Introduction to Model Context Protocol, Model Context Protocol: Advanced Topics.
+
+Other credentials: Fullstack Engineering (ALX Morocco), MITRE ATT&CK Defender, File Security Associate (OPSWAT Academy), SOC Analyst — Blue Team, Founder Certificate (ALX Ventures), Cloud & DevOps Fundamentals.
+
+## Contact
+
+For freelance work, collaboration or hiring: email amineeddine006@gmail.com, or reach out on LinkedIn (https://www.linkedin.com/in/amineddine-znin-z999).

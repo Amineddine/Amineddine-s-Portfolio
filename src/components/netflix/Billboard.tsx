@@ -57,12 +57,15 @@ export default function Billboard() {
             <span className="uppercase">{strings.portfolio} · {pt.badge}</span>
           </motion.div>
 
-          <motion.h1
+          {/* Visual headline. The page's semantic <h1> lives in the
+              server-rendered crawlable content (EntityContent), so this is an
+              <h2> to keep a single h1 per page. */}
+          <motion.h2
             variants={fade}
             className="font-display text-[2.5rem] leading-[0.96] text-white [text-shadow:0_2px_24px_rgba(0,0,0,0.95),0_1px_4px_rgba(0,0,0,0.9)] sm:text-[3.5rem] md:text-[4.5rem]"
           >
             {pt.tagline}
-          </motion.h1>
+          </motion.h2>
 
           <motion.div
             variants={fade}

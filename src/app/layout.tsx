@@ -2,11 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { PersonaProvider } from "@/context/PersonaContext";
 import LenisProvider from "@/components/netflix/LenisProvider";
-
-// Absolute base for resolving OG/Twitter image URLs. NEXT_PUBLIC_SITE_URL can
-// override this per-environment (e.g. preview deploys); defaults to production.
-const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://amineddine.online";
+import { SITE_URL } from "@/lib/seo";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -16,13 +12,21 @@ export const metadata: Metadata = {
   keywords: [
     "Amineddine Znin",
     "software developer Morocco",
-    "freelance web developer",
-    "cybersecurity builder",
-    "Next.js portfolio",
-    "Netflix portfolio",
+    "freelance web developer Morocco",
+    "cybersecurity engineer Morocco",
+    "detection engineering",
+    "MITRE ATT&CK",
+    "Sigma rules",
+    "AI automation developer",
+    "Next.js developer Marrakech",
     "SOC tooling",
   ],
-  authors: [{ name: "Amineddine Znin" }],
+  authors: [{ name: "Amineddine Znin", url: SITE_URL }],
+  creator: "Amineddine Znin",
+  publisher: "Amineddine Znin",
+  category: "technology",
+  applicationName: "Amineddine Znin — Portfolio",
+  formatDetection: { email: false, address: false, telephone: false },
   openGraph: {
     title: "Amineddine Znin — Now Streaming",
     description:

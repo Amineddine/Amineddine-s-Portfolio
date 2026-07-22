@@ -90,14 +90,14 @@ export default function ProfileGate({
         <LanguageToggle />
       </div>
 
-      <motion.h1
+      <motion.h2
         className="mb-8 text-center text-3xl font-medium text-white sm:mb-12 sm:text-5xl md:text-6xl"
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
         {title}
-      </motion.h1>
+      </motion.h2>
 
       <motion.ul
         className="flex flex-wrap items-start justify-center gap-5 sm:gap-8"

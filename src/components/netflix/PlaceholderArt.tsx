@@ -138,9 +138,10 @@ export default function PlaceholderArt({
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={src}
-            alt={item.title}
+            alt={`${item.title}${item.issuer ? ` certificate issued by ${item.issuer}` : " certificate"}`}
             className="absolute inset-0 h-full w-full object-contain p-3"
             loading="lazy"
+            decoding="async"
           />
           <div className="art-grain pointer-events-none absolute inset-0 opacity-20" />
         </div>
@@ -150,9 +151,10 @@ export default function PlaceholderArt({
       // eslint-disable-next-line @next/next/no-img-element
       <img
         src={src}
-        alt={item.title}
+        alt={`${item.title}${item.role ? ` — ${item.role}` : ""}`}
         className={`h-full w-full object-cover ${className}`}
         loading="lazy"
+        decoding="async"
       />
     );
   }

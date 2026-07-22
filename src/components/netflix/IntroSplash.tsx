@@ -94,7 +94,9 @@ export default function IntroSplash({ onDone }: { onDone: () => void }) {
           transition={{ duration: 1.4, delay: 0.35, ease: EASE_STD }}
         />
 
-        <motion.h1
+        <motion.div
+          role="presentation"
+          aria-hidden
           className="nf-logo flex overflow-hidden text-[14vw] leading-none md:text-[10rem]"
           variants={container}
           initial="hidden"
@@ -115,7 +117,7 @@ export default function IntroSplash({ onDone }: { onDone: () => void }) {
               </motion.span>
             </span>
           ))}
-        </motion.h1>
+        </motion.div>
 
         {/* baseline glow */}
         <motion.div
