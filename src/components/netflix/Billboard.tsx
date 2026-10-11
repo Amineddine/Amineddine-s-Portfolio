@@ -96,7 +96,7 @@ export default function Billboard() {
             </motion.div>
           )}
         </AnimatePresence>
-        <div className="absolute inset-0 bg-black/35" />
+        <div className="absolute inset-0 bg-black/20" />
         {/* film grain lives in CSS, not in the video (noise would bloat the encode) */}
         <div
           className="art-grain pointer-events-none absolute inset-0 opacity-25 [transform:translateZ(0)] [will-change:transform]"

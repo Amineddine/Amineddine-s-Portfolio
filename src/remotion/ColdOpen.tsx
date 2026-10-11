@@ -37,7 +37,14 @@ const EASE_IO = Easing.bezier(0.45, 0, 0.55, 1);
 
 export const COLD_OPEN_FRAMES = 390;
 const BAR = 120; // letterbox bar height (≈2.39:1 at 1080)
-const ZONE_X = 780; // left edge of the action zone
+// The hero is wider than 16:9, so object-cover trims ~100px off the top and
+// bottom, and the fixed navbar covers the next ~100px. Everything readable
+// starts at SAFE_TOP so it is never cropped or hidden under the nav.
+const SAFE_TOP = 260;
+// Action lives in the RIGHT half: on common laptop widths the hero headline
+// reaches ~55% of the frame, so nothing readable may start left of ZONE_X.
+const ZONE_X = 1080; // left edge of the action zone
+const HEADER_H = 150; // act header row height; visuals start below it
 
 const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 
@@ -177,7 +184,7 @@ const OpenTitles: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          top: BAR + 70,
+          top: SAFE_TOP,
           left: ZONE_X,
           fontFamily: MONO,
           fontSize: 26,
@@ -191,7 +198,7 @@ const OpenTitles: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          top: BAR + 70,
+          top: SAFE_TOP,
           right: 120,
           fontFamily: MONO,
           fontSize: 26,
@@ -205,7 +212,7 @@ const OpenTitles: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          top: BAR + 118,
+          top: SAFE_TOP + 48,
           left: ZONE_X,
           right: 120,
           height: 1,
@@ -230,11 +237,11 @@ const Wall: React.FC = () => {
   const H = 280;
   const GAP = 34;
   return (
-    <AbsoluteFill style={{ perspective: 1300, perspectiveOrigin: "64% 40%" }}>
+    <AbsoluteFill style={{ perspective: 1300, perspectiveOrigin: "72% 42%" }}>
       <div
         style={{
           position: "absolute",
-          left: "64%",
+          left: "72%",
           top: "40%",
           width: cols * W + (cols - 1) * GAP,
           transform: `translate(-50%, -50%) translateZ(${z}px) rotateX(16deg) rotateY(-26deg) rotateZ(5deg)`,
@@ -269,12 +276,12 @@ const Wall: React.FC = () => {
       </div>
       <AbsoluteFill
         style={{
-          background: `radial-gradient(70% 60% at 64% 40%, rgba(255,225,225,${flash}), transparent 70%)`,
+          background: `radial-gradient(70% 60% at 72% 42%, rgba(255,225,225,${flash}), transparent 70%)`,
         }}
       />
       {/* keep the left side calm for the headline */}
       <AbsoluteFill
-        style={{ background: `linear-gradient(90deg, ${INK} 0%, rgba(11,10,12,0.75) 28%, transparent 52%)` }}
+        style={{ background: `linear-gradient(90deg, ${INK} 0%, rgba(11,10,12,0.75) 28%, rgba(11,10,12,0.35) 50%, transparent 64%)` }}
       />
     </AbsoluteFill>
   );
@@ -283,42 +290,39 @@ const Wall: React.FC = () => {
 // ── shared act label ────────────────────────────────────────────────────────
 const ActLabel: React.FC<{
   season: string;
-  title: React.ReactNode;
+  title: string;
   eps: string;
   chip: string;
-  size?: number;
-}> = ({ season, title, eps, chip, size = 150 }) => {
+}> = ({ season, title, eps, chip }) => {
   const f = useCurrentFrame();
   const a = interpolate(f, [2, 16], [0, 1], { ...clamp, easing: EASE });
-  const x = interpolate(f, [2, 20], [-30, 0], { ...clamp, easing: EASE });
+  const x = interpolate(f, [2, 20], [30, 0], { ...clamp, easing: EASE });
   const chipA = interpolate(f, [18, 30], [0, 1], clamp);
   return (
-    <div style={{ position: "absolute", left: ZONE_X, top: BAR + 96, opacity: a, transform: `translateX(${x}px)` }}>
-      <div style={{ fontFamily: MONO, fontSize: 24, letterSpacing: "0.32em", color: RED }}>{season}</div>
-      <div
-        style={{ fontFamily: BEBAS, fontSize: size, lineHeight: 0.9, color: BONE, marginTop: 10, textTransform: "uppercase", letterSpacing: "0.01em" }}
-      >
-        {title}
+    <div style={{ position: "absolute", left: ZONE_X, top: SAFE_TOP, opacity: a, transform: `translateX(${x}px)` }}>
+      <div style={{ display: "flex", alignItems: "baseline", gap: 22, whiteSpace: "nowrap" }}>
+        <span style={{ fontFamily: MONO, fontSize: 26, letterSpacing: "0.2em", color: RED }}>{season}</span>
+        <span style={{ fontFamily: BEBAS, fontSize: 92, lineHeight: 0.9, color: BONE, textTransform: "uppercase" }}>
+          {title}
+        </span>
       </div>
-      <div style={{ fontFamily: MONO, fontSize: 22, letterSpacing: "0.2em", color: "rgba(243,236,226,0.6)", marginTop: 14 }}>
-        {eps}
-      </div>
-      <div
-        style={{
-          display: "inline-block",
-          marginTop: 22,
-          padding: "8px 16px",
-          border: `1px solid rgba(229,9,20,0.75)`,
-          borderRadius: 999,
-          fontFamily: SANS,
-          fontWeight: 600,
-          fontSize: 22,
-          color: BONE,
-          background: "rgba(229,9,20,0.18)",
-          opacity: chipA,
-        }}
-      >
-        {chip}
+      <div style={{ display: "flex", alignItems: "center", gap: 18, marginTop: 14 }}>
+        <span style={{ fontFamily: MONO, fontSize: 20, letterSpacing: "0.2em", color: "rgba(255,255,255,0.6)" }}>{eps}</span>
+        <span
+          style={{
+            padding: "5px 14px",
+            border: "1px solid rgba(229,9,20,0.75)",
+            borderRadius: 999,
+            fontFamily: SANS,
+            fontWeight: 600,
+            fontSize: 19,
+            color: BONE,
+            background: "rgba(229,9,20,0.18)",
+            opacity: chipA,
+          }}
+        >
+          {chip}
+        </span>
       </div>
     </div>
   );
@@ -330,8 +334,8 @@ const WebAct: React.FC = () => {
   const PER = 18;
   const START = 8;
   const idx = Math.min(WEB_SHOTS.length - 1, Math.max(0, Math.floor((f - START) / PER)));
-  const SX = 1190;
-  const SY = BAR + 110;
+  const SX = ZONE_X;
+  const SY = SAFE_TOP + HEADER_H;
   const SW = 640;
   const SH = 330; // ≈ the screenshots' own aspect, so nothing important is cropped
   const enter = interpolate(f, [0, 16], [40, 0], { ...clamp, easing: EASE });
@@ -484,8 +488,8 @@ const LOG = '{"proc":"powershell.exe","args":"-nop -w hidden -enc …","parent":
 
 const SecurityAct: React.FC = () => {
   const f = useCurrentFrame();
-  const GX = 1190;
-  const GY = BAR + 120;
+  const GX = ZONE_X;
+  const GY = SAFE_TOP + HEADER_H;
   const CW = 50;
   const CH = 30;
   const G = 6;
@@ -559,8 +563,8 @@ const SecurityAct: React.FC = () => {
 // ── F5 · S03 AI Automation ──────────────────────────────────────────────────
 const AiAct: React.FC = () => {
   const f = useCurrentFrame();
-  const CX = 1190;
-  const CY = BAR + 110;
+  const CX = ZONE_X;
+  const CY = SAFE_TOP + HEADER_H;
   const bubble = (at: number) => {
     const p = interpolate(f, [at, at + 12], [0, 1], { ...clamp, easing: EASE });
     return { opacity: p, transform: `translateY(${(1 - p) * 26}px)` };
@@ -582,14 +586,7 @@ const AiAct: React.FC = () => {
     <AbsoluteFill>
       <ActLabel
         season="S03"
-        size={84}
-        title={
-          <>
-            AI
-            <br />
-            Automation
-          </>
-        }
+        title="AI Automation"
         eps="E01 — E04"
         chip="~170 tests · analysis only"
       />
@@ -657,7 +654,7 @@ const Lockup: React.FC = () => {
   const burst = interpolate(f, [6, 12, 40], [0, 1, 0.25], clamp);
   const nameA = interpolate(f, [20, 34], [0, 1], { ...clamp, easing: EASE });
   const subA = interpolate(f, [30, 44], [0, 1], clamp);
-  const CX = 1280;
+  const CX = 1450; // centre of the right half
   return (
     <AbsoluteFill>
       <AbsoluteFill
@@ -665,18 +662,18 @@ const Lockup: React.FC = () => {
           background: `radial-gradient(26% 34% at ${(CX / 1920) * 100}% 33%, rgba(255,230,230,${0.35 * burst}), rgba(229,9,20,${0.3 * burst}) 40%, transparent 72%)`,
         }}
       />
-      <div style={{ position: "absolute", left: CX, top: BAR + 30, transform: "translateX(-50%)", textAlign: "center" }}>
+      <div style={{ position: "absolute", left: CX, top: SAFE_TOP - 10, transform: "translateX(-50%)", textAlign: "center" }}>
         <div
           style={{
             fontFamily: BEBAS,
-            fontSize: 330,
+            fontSize: 210,
             lineHeight: 0.85,
             color: RED,
             letterSpacing: "-0.01em",
             opacity: azA,
             transform: `scale(${punch})`,
             textShadow: "0 0 70px rgba(229,9,20,0.5)",
-            WebkitTextStroke: "4px #E50914",
+            WebkitTextStroke: "3px #E50914",
           }}
         >
           AZ
