@@ -57,7 +57,9 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       { source: "/browse/stalker", destination: "/browse/curious", statusCode: 301 },
-      { source: "/Amineddine_Znin_CV-FINAL.pdf", destination: "/amineddine-znin-cv.pdf", statusCode: 301 },
+      // older CV URLs keep working for links already shared
+      { source: "/Amineddine_Znin_CV-FINAL.pdf", destination: "/amineddine-znin-resume.pdf", statusCode: 301 },
+      { source: "/amineddine-znin-cv.pdf", destination: "/amineddine-znin-resume.pdf", statusCode: 301 },
       { source: "/og-image.png", destination: "/og-image.jpg", statusCode: 301 },
       { source: "/title/mahal-films", destination: "/title/mahal-productions", statusCode: 301 },
     ];

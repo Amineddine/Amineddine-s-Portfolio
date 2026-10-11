@@ -3,7 +3,7 @@ import type { Persona, PersonaDef } from "@/lib/types";
 const EMAIL = "mailto:amineeddine006@gmail.com";
 const GITHUB = "https://github.com/Amineddine";
 /** CV lives in /public — referenced here and by the navbar résumé button */
-export const CV_PATH = "/amineddine-znin-cv.pdf";
+export const CV_PATH = "/amineddine-znin-resume.pdf";
 const CV = CV_PATH;
 
 // The three lenses. Each one re-narrates the exact same catalog; only tone,
