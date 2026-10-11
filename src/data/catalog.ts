@@ -1,5 +1,6 @@
 import type { CatalogItem, Persona, RowConfig } from "@/lib/types";
 import { personas } from "./personas";
+import { MEDIA } from "./media";
 
 const GITHUB = "https://github.com/Amineddine";
 const EMAIL = "mailto:amineeddine006@gmail.com";
@@ -27,7 +28,7 @@ export const catalog: CatalogItem[] = [
     accent: ["#e50914", "#3a0608"],
     image: "/poster-about-amineddine.webp",
     banner: "/poster-about-amineddine.webp",
-    video: "/about-card.mp4",
+    video: MEDIA.aboutCard,
     links: { github: GITHUB, linkedin: LINKEDIN, email: EMAIL },
     copy: {
       recruiter: {

@@ -43,7 +43,15 @@ const nextConfig: NextConfig = {
     formats: ["image/avif", "image/webp"],
   },
   async headers() {
-    return [{ source: "/:path*", headers: securityHeaders }];
+    return [
+      { source: "/:path*", headers: securityHeaders },
+      // content-hashed media (scripts/version-media.mjs): the name changes with
+      // the bytes, so it can be cached forever
+      {
+        source: "/:file([a-z0-9-]+\\.[0-9a-f]{8}\\.(?:webm|mp4|webp))",
+        headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
+      },
+    ];
   },
   // True 301s (Next's `permanent: true` would emit 308).
   async redirects() {

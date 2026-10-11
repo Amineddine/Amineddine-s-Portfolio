@@ -1,5 +1,4 @@
 import { Composition, Still } from "remotion";
-import { HeroBackground } from "./HeroBackground";
 import { ABOUT_FRAMES, AboutCard } from "./AboutCard";
 import { COLD_OPEN_FRAMES, ColdOpen } from "./ColdOpen";
 import { OgCard } from "./OgCard";
@@ -28,15 +27,6 @@ export const RemotionRoot: React.FC = () => {
       <Still id="Poster" component={Poster} width={1600} height={900} defaultProps={{ id: "skill-frontend" }} />
       {/* billboard spotlight backdrops — props: { id } */}
       <Still id="Backdrop" component={Backdrop} width={1600} height={900} defaultProps={{ id: "sigmapack-builder" }} />
-      {/* PREVIOUS hero reel — kept until the Cold Open is approved, then deleted */}
-      <Composition
-        id="HeroBackground"
-        component={HeroBackground}
-        durationInFrames={540}
-        fps={30}
-        width={1920}
-        height={1080}
-      />
       {/* 10s @ 30fps, 2:1 — the "Why hire me" detail-modal banner */}
       <Composition
         id="AboutCard"

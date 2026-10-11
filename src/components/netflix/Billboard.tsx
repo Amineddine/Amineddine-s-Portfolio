@@ -4,6 +4,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { usePersona } from "@/context/PersonaContext";
 import { getItem, billboardId, isNewRelease, spotlightIds } from "@/data/catalog";
+import { MEDIA } from "@/data/media";
 import { personas } from "@/data/personas";
 import { itemCopy, personaText, t } from "@/data/i18n";
 import type { CatalogItem, Persona } from "@/lib/types";
@@ -13,10 +14,11 @@ import { PlayIcon, InfoIcon } from "./icons";
 import { EASE_OUT } from "@/lib/motion";
 
 /** The Cold Open reel — see src/remotion/ColdOpen.tsx. */
+// content-hashed paths (scripts/version-media.mjs) — never served stale
 const REEL = {
-  poster: "/cold-open-poster.webp",
-  webm: "/cold-open.webm",
-  mp4: "/cold-open.mp4",
+  poster: MEDIA.reelPoster,
+  webm: MEDIA.reelWebm,
+  mp4: MEDIA.reelMp4,
 };
 const REEL_MS = 13_000;
 const SLIDE_MS = 8_000;
