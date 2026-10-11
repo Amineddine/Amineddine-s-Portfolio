@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { catalog } from "@/data/catalog";
 import { personas } from "@/data/personas";
-import { isPersona } from "@/lib/types";
+import { PERSONAS, isPersona } from "@/lib/types";
 import Browse from "@/components/netflix/Browse";
 import EntityContent from "@/components/seo/EntityContent";
 import JsonLd from "@/components/seo/JsonLd";
@@ -13,10 +13,11 @@ import {
   profilePageSchema,
   projectSchema,
   websiteSchema,
+  workListSchema,
 } from "@/lib/seo";
 
 export function generateStaticParams() {
-  return [{ persona: "recruiter" }, { persona: "developer" }, { persona: "stalker" }];
+  return PERSONAS.map((persona) => ({ persona }));
 }
 
 // Unique, keyword-aware title + description per persona view, each canonicalized
@@ -29,18 +30,18 @@ const META: Record<
     title:
       "Hire Amineddine Znin — Freelance Software Developer & Cybersecurity Builder (Morocco)",
     description:
-      "Morocco-based freelance software developer available globally. Production websites in Next.js/React/TypeScript and security-aware systems, delivered polished and on time. See the work and get in touch.",
+      "Morocco-based freelance software developer available globally. Production websites in Next.js/React/TypeScript for hospitality, travel, education and film clients, security-aware systems and AI automation — delivered polished and on time.",
   },
   developer: {
     title:
       "Amineddine Znin for Engineers — Full-Stack Web & Detection Engineering",
     description:
-      "The engineering cut: React/Next.js/TypeScript front-end, Python/FastAPI back-end, and detection engineering with MITRE ATT&CK, Sigma and anomaly detection. Architecture, tradeoffs and open-source security tooling.",
+      "The engineering cut: React/Next.js/TypeScript front-end, Python back-ends, AI automation (Telegram + Gemini vision) and detection engineering with MITRE ATT&CK and Sigma. Architecture, tradeoffs and open-source security tooling.",
   },
-  stalker: {
+  curious: {
     title: "Get to Know Amineddine Znin — Developer & Security Builder",
     description:
-      "The plain-language story: a Morocco-based developer who builds nice websites and security tools that catch the weird stuff. No buzzwords — just the work and the why.",
+      "The plain-language story: a Morocco-based developer who builds desert-camp, riad and road-trip websites, a trading-prep Telegram bot and security tools that catch the weird stuff. No buzzwords — just the work and the why.",
   },
 };
 
@@ -82,6 +83,7 @@ export default async function BrowsePage({
     websiteSchema(),
     profilePageSchema(`/browse/${persona}`),
     breadcrumbSchema(def.label, persona),
+    workListSchema(projects),
     ...projects.map(projectSchema),
   ]);
 

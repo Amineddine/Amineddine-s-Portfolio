@@ -2,7 +2,17 @@ import type { Metadata } from "next";
 import HomeExperience from "@/components/netflix/HomeExperience";
 import EntityContent from "@/components/seo/EntityContent";
 import JsonLd from "@/components/seo/JsonLd";
-import { graph, personSchema, profilePageSchema, websiteSchema } from "@/lib/seo";
+import { catalog } from "@/data/catalog";
+import {
+  graph,
+  personSchema,
+  profilePageSchema,
+  projectSchema,
+  websiteSchema,
+  workListSchema,
+} from "@/lib/seo";
+
+const projects = catalog.filter((item) => item.type === "project");
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -14,7 +24,13 @@ export default function HomePage() {
   return (
     <>
       <JsonLd
-        data={graph([personSchema(), websiteSchema(), profilePageSchema("/")])}
+        data={graph([
+          personSchema(),
+          websiteSchema(),
+          profilePageSchema("/"),
+          workListSchema(projects),
+          ...projects.map(projectSchema),
+        ])}
       />
       <EntityContent />
       <HomeExperience />

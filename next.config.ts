@@ -45,6 +45,15 @@ const nextConfig: NextConfig = {
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },
+  // True 301s (Next's `permanent: true` would emit 308).
+  async redirects() {
+    return [
+      { source: "/browse/stalker", destination: "/browse/curious", statusCode: 301 },
+      { source: "/Amineddine_Znin_CV-FINAL.pdf", destination: "/amineddine-znin-cv.pdf", statusCode: 301 },
+      { source: "/og-image.png", destination: "/og-image.jpg", statusCode: 301 },
+      { source: "/title/mahal-films", destination: "/title/mahal-productions", statusCode: 301 },
+    ];
+  },
 };
 
 export default nextConfig;

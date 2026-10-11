@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { PersonaProvider } from "@/context/PersonaContext";
 import LenisProvider from "@/components/netflix/LenisProvider";
-import { SITE_URL } from "@/lib/seo";
+import { OG_IMAGE, SITE_URL } from "@/lib/seo";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -30,15 +30,15 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Amineddine Znin — Now Streaming",
     description:
-      "One developer, three narrations. A Netflix-style portfolio of web & security work.",
+      "One developer, three narrations. A streaming-style portfolio of web, security and AI-automation work.",
     type: "website",
     locale: "en_US",
     images: [
       {
-        url: "/og-image.png",
+        url: OG_IMAGE,
         width: 1200,
         height: 630,
-        alt: "Amineddine Znin — Software Developer · Security Builder · Now Streaming",
+        alt: "AZ — Amineddine Znin · Web, Security and AI Automation · Now Showing",
       },
     ],
   },
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Amineddine Znin — Now Streaming",
     description: "Pick a profile. Same work, told in your language.",
-    images: ["/og-image.png"],
+    images: [OG_IMAGE],
   },
   robots: { index: true, follow: true },
   appleWebApp: { title: "Amineddine", capable: true, statusBarStyle: "black-translucent" },

@@ -130,7 +130,7 @@ export default function ProfileGate({
                 <span className="text-sm text-[var(--nf-text-faint)] transition-colors duration-200 group-hover:text-white sm:text-lg">
                   {personaLabel(p.id, locale)}
                 </span>
-                <span className="-mt-1.5 text-[0.7rem] uppercase tracking-[0.18em] text-white/25 transition-colors duration-200 group-hover:text-white/55">
+                <span className="-mt-1.5 text-[0.7rem] uppercase tracking-[0.18em] text-white/55 transition-colors duration-200 group-hover:text-white/55">
                   {personaBadge(p.id, locale)}
                 </span>
               </button>

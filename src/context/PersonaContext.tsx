@@ -9,7 +9,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { isPersona, type Persona } from "@/lib/types";
+import { isPersona, LEGACY_PERSONA, type Persona } from "@/lib/types";
 import { isLocale, type Locale } from "@/data/i18n";
 
 interface PersonaState {
@@ -26,7 +26,7 @@ interface PersonaState {
   activeItemId: string | null;
   openItem: (id: string) => void;
   closeItem: () => void;
-  /** sound preference for the ta-dum (muted by default) */
+  /** sound preference for the intro motif (muted by default) */
   muted: boolean;
   toggleMuted: () => void;
 }
@@ -49,9 +49,12 @@ export function PersonaProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     /* eslint-disable react-hooks/set-state-in-effect */
     try {
-      const storedPersona = localStorage.getItem(KEY_PERSONA);
+      const raw = localStorage.getItem(KEY_PERSONA);
+      // migrate the pre-rename slug ("stalker" → "curious") in place
+      const storedPersona = raw ? (LEGACY_PERSONA[raw] ?? raw) : null;
       if (storedPersona && isPersona(storedPersona)) {
         setPersonaState(storedPersona);
+        if (storedPersona !== raw) localStorage.setItem(KEY_PERSONA, storedPersona);
       }
       const storedLocale = localStorage.getItem(KEY_LOCALE);
       if (storedLocale && isLocale(storedLocale)) setLocaleState(storedLocale);

@@ -10,10 +10,13 @@ export default function ContentRow({
   id,
   title,
   items,
+  numbered = false,
 }: {
   id: string;
   title: string;
   items: CatalogItem[];
+  /** ranked "Top 10" shelf with outlined numerals */
+  numbered?: boolean;
 }) {
   const trackRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef(null);
@@ -28,7 +31,7 @@ export default function ContentRow({
   if (items.length === 0) return null;
 
   return (
-    <section id={id} className="relative py-3 md:py-4">
+    <section id={id} className="row-section relative py-3 md:py-4">
       <motion.h2
         ref={headingRef}
         initial={{ opacity: 0, x: -12 }}
@@ -51,8 +54,12 @@ export default function ContentRow({
         </button>
 
         <div ref={trackRef} className="row-track">
-          {items.map((item) => (
-            <TitleCard key={`${id}-${item.id}`} item={item} />
+          {items.map((item, i) => (
+            <TitleCard
+              key={`${id}-${item.id}`}
+              item={item}
+              rank={numbered ? i + 1 : undefined}
+            />
           ))}
         </div>
 

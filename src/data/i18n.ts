@@ -28,6 +28,15 @@ interface UIStrings {
   currentlyBuilding: string;
   portfolio: string;
   match: (n: number) => string;
+  newRelease: string;
+  episodes: string;
+  episode: (n: number) => string;
+  extras: string;
+  sameClient: string;
+  privateNote: string;
+  topTen: (n: number) => string;
+  nowShowing: string;
+  spotlight: (n: number, total: number) => string;
   meta: { genres: string; issuedBy: string; stack: string; role: string; category: string };
   contact: {
     openChannel: string;
@@ -53,26 +62,35 @@ const en: UIStrings = {
   currentlyBuilding: "Currently building",
   portfolio: "Portfolio",
   match: (n) => `${n}% Match`,
+  newRelease: "New Release",
+  episodes: "Episodes",
+  episode: (n) => `Episode ${n}`,
+  extras: "Deliverables",
+  sameClient: "Same client",
+  privateNote: "Private build — login-gated, so there's no public link. Ask for a walkthrough.",
+  topTen: (n) => `Number ${n} in the Top 10`,
+  nowShowing: "Now Showing",
+  spotlight: (n, total) => `Spotlight ${n} of ${total}`,
   meta: { genres: "Genres", issuedBy: "Issued by", stack: "Stack", role: "Role", category: "Category" },
   contact: {
     openChannel: "Open channel",
     headings: {
       recruiter: "Ready when you are.",
       developer: "Let's talk shop.",
-      stalker: "Come say hi.",
+      curious: "Come say hi.",
     },
     subs: {
       recruiter:
         "Available globally for focused freelance work with a premium finish. Hand me the brief — I'll hand you something shipped.",
       developer:
         "Open to interesting builds: web platforms, security tooling, the gnarly stuff. Ping me and we'll get into the details.",
-      stalker:
+      curious:
         "I'm based in Morocco, I work with people everywhere, and I reply to nice messages. Don't be a stranger.",
     },
     pills: ["Amineddine Znin", "Morocco based", "Available globally", "Web + security"],
     labels: { email: "Email", phone: "Phone" },
     cta: "Contact →",
-    footerNote: "A Netflix-style portfolio.",
+    footerNote: "A streaming-style portfolio.",
     footerRole: "Software developer · Freelancer · Cybersecurity builder · Morocco",
   },
 };
@@ -89,26 +107,35 @@ const fr: UIStrings = {
   currentlyBuilding: "En cours",
   portfolio: "Portfolio",
   match: (n) => `${n} % compatible`,
+  newRelease: "Nouveauté",
+  episodes: "Épisodes",
+  episode: (n) => `Épisode ${n}`,
+  extras: "Livrables",
+  sameClient: "Même client",
+  privateNote: "Projet privé — protégé par connexion, donc pas de lien public. Demandez une démo.",
+  topTen: (n) => `Numéro ${n} du Top 10`,
+  nowShowing: "À l'affiche",
+  spotlight: (n, total) => `À la une ${n} sur ${total}`,
   meta: { genres: "Genres", issuedBy: "Délivré par", stack: "Stack", role: "Rôle", category: "Catégorie" },
   contact: {
     openChannel: "Canal ouvert",
     headings: {
       recruiter: "Prêt quand vous l'êtes.",
       developer: "Parlons technique.",
-      stalker: "Venez dire bonjour.",
+      curious: "Venez dire bonjour.",
     },
     subs: {
       recruiter:
         "Disponible dans le monde entier pour des missions freelance avec une finition premium. Donnez-moi le brief — je vous rends quelque chose de livré.",
       developer:
         "Ouvert aux projets intéressants : plateformes web, outils de sécurité, les trucs costauds. Écrivez-moi et on rentre dans les détails.",
-      stalker:
+      curious:
         "Je suis basé au Maroc, je travaille avec des gens partout, et je réponds aux messages sympas. Ne soyez pas timide.",
     },
     pills: ["Amineddine Znin", "Basé au Maroc", "Disponible mondialement", "Web + sécurité"],
     labels: { email: "E-mail", phone: "Téléphone" },
     cta: "Contact →",
-    footerNote: "Un portfolio façon Netflix.",
+    footerNote: "Un portfolio façon plateforme de streaming.",
     footerRole: "Développeur logiciel · Freelance · Spécialiste cybersécurité · Maroc",
   },
 };
@@ -139,6 +166,9 @@ const personaFr: Record<Persona, PersonaText> = {
     infoLabel: "Pourquoi me recruter",
     primaryCtaLabel: "Télécharger le CV",
     rowTitles: {
+      new: "Nouveautés sur AZ",
+      top10: "Top 10 des projets",
+      morocco: "Fait au Maroc",
       topPicks: "Pourquoi me recruter",
       web: "Du travail client livré",
       security: "Une sécurité qui protège l'entreprise",
@@ -158,6 +188,9 @@ const personaFr: Record<Persona, PersonaText> = {
     infoLabel: "Lire le détail",
     primaryCtaLabel: "Voir sur GitHub",
     rowTitles: {
+      new: "Nouveautés sur AZ",
+      top10: "Top 10 des projets",
+      morocco: "Fait au Maroc",
       topPicks: "Sélection entre devs",
       web: "Projets web & produit",
       security: "Sécurité & ingénierie de détection",
@@ -168,7 +201,7 @@ const personaFr: Record<Persona, PersonaText> = {
       certifications: "Certifs & formations",
     },
   },
-  stalker: {
+  curious: {
     label: "Curieux",
     badge: "Côté humain",
     tagline: "Salut — voici ce que je fais vraiment.",
@@ -177,6 +210,9 @@ const personaFr: Record<Persona, PersonaText> = {
     infoLabel: "En savoir plus",
     primaryCtaLabel: "Dire bonjour",
     rowTitles: {
+      new: "Tout frais sur AZ",
+      top10: "Mon top 10",
+      morocco: "Fait au Maroc",
       topPicks: "Faire connaissance",
       web: "Les sites que j'ai créés",
       security: "Mes joujoux de sécurité",

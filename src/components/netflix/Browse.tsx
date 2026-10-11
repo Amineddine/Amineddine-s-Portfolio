@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { usePersona } from "@/context/PersonaContext";
-import { catalogById, rows } from "@/data/catalog";
+import { catalogById, rowsFor } from "@/data/catalog";
 import { personaText } from "@/data/i18n";
 import type { CatalogItem, Persona } from "@/lib/types";
 import NetflixNav from "./NetflixNav";
@@ -12,24 +12,37 @@ import ContactFooter from "./ContactFooter";
 import DetailModal from "./DetailModal";
 import BrowseSkeleton from "./BrowseSkeleton";
 
-export default function Browse({ persona }: { persona: Persona }) {
-  const { persona: active, setPersona, locale } = usePersona();
+export default function Browse({
+  persona,
+  initialItemId,
+}: {
+  /** route persona (canonical on /browse/*); absent on /title/* pages */
+  persona?: Persona;
+  /** open this title's detail view on arrival (used by /title/[id]) */
+  initialItemId?: string;
+}) {
+  const { persona: active, setPersona, locale, openItem } = usePersona();
   const [ready, setReady] = useState(false);
 
   // the route param is canonical — sync it into shared state
   useEffect(() => {
-    if (active !== persona) setPersona(persona);
+    if (persona && active !== persona) setPersona(persona);
   }, [persona, active, setPersona]);
 
   // brief shimmer so the entry feels like a "loading title" before content
   useEffect(() => {
-    const t = setTimeout(() => setReady(true), 650);
+    const t = setTimeout(() => setReady(true), 450);
     return () => clearTimeout(t);
   }, []);
 
+  useEffect(() => {
+    if (ready && initialItemId) openItem(initialItemId);
+  }, [ready, initialItemId, openItem]);
+
   if (!ready) return <BrowseSkeleton />;
 
-  const rowTitles = personaText(persona, locale).rowTitles;
+  const lens: Persona = persona ?? active ?? "developer";
+  const rowTitles = personaText(lens, locale).rowTitles;
 
   return (
     <div className="min-h-screen bg-[var(--nf-bg)]">
@@ -37,7 +50,7 @@ export default function Browse({ persona }: { persona: Persona }) {
       <main>
         <Billboard />
         <div className="relative z-10 -mt-[3vh] bg-[var(--nf-bg)] pt-[3vh] space-y-1 pb-10 md:-mt-[5vh] md:pt-[5vh]">
-          {rows.map((row) => {
+          {rowsFor(lens).map((row) => {
             const items = row.itemIds
               .map((id) => catalogById[id])
               .filter(Boolean) as CatalogItem[];
@@ -47,6 +60,7 @@ export default function Browse({ persona }: { persona: Persona }) {
                 id={`row-${row.key}`}
                 title={rowTitles[row.key]}
                 items={items}
+                numbered={row.numbered}
               />
             );
           })}

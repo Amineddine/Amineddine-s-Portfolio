@@ -3,11 +3,11 @@ import type { Persona, PersonaDef } from "@/lib/types";
 const EMAIL = "mailto:amineeddine006@gmail.com";
 const GITHUB = "https://github.com/Amineddine";
 /** CV lives in /public — referenced here and by the navbar résumé button */
-export const CV_PATH = "/Amineddine_Znin_CV-FINAL.pdf";
+export const CV_PATH = "/amineddine-znin-cv.pdf";
 const CV = CV_PATH;
 
 // The three lenses. Each one re-narrates the exact same catalog; only tone,
-// hero copy, CTA, and row titles change.
+// hero copy, CTA, row titles and row ORDER change — never which items appear.
 export const personas: Record<Persona, PersonaDef> = {
   recruiter: {
     id: "recruiter",
@@ -19,8 +19,11 @@ export const personas: Record<Persona, PersonaDef> = {
     primaryCta: { label: "Download CV", href: CV, download: true },
     infoLabel: "Why hire me",
     icon: "briefcase",
-    tileColor: ["#b9090b", "#7a0608"],
+    tileColor: ["#e50914", "#7a0608"],
     rowTitles: {
+      new: "New on AZ",
+      top10: "Top 10 Builds",
+      morocco: "Made in Morocco",
       topPicks: "Why You Should Hire Me",
       web: "Client Work That Shipped",
       security: "Security That Protects the Business",
@@ -30,6 +33,7 @@ export const personas: Record<Persona, PersonaDef> = {
       experience: "Track Record",
       certifications: "Credentials",
     },
+    rowOrder: ["new", "topPicks", "top10", "web", "morocco", "ai", "security", "experience", "certifications", "skills", "building"],
   },
   developer: {
     id: "developer",
@@ -43,6 +47,9 @@ export const personas: Record<Persona, PersonaDef> = {
     icon: "terminal",
     tileColor: ["#1f6feb", "#0b3d91"],
     rowTitles: {
+      new: "New on AZ",
+      top10: "Top 10 Builds",
+      morocco: "Made in Morocco",
       topPicks: "Top Picks for a Fellow Dev",
       web: "Web & Product Builds",
       security: "Security & Detection Engineering",
@@ -52,9 +59,10 @@ export const personas: Record<Persona, PersonaDef> = {
       experience: "Engineering Challenges",
       certifications: "Certs & Training",
     },
+    rowOrder: ["new", "top10", "security", "ai", "web", "building", "skills", "experience", "morocco", "topPicks", "certifications"],
   },
-  stalker: {
-    id: "stalker",
+  curious: {
+    id: "curious",
     label: "Curious",
     badge: "The human lens",
     tagline: "Hey — here's what I actually do.",
@@ -65,6 +73,9 @@ export const personas: Record<Persona, PersonaDef> = {
     icon: "search",
     tileColor: ["#1f9d6b", "#0b5d3e"],
     rowTitles: {
+      new: "Fresh on AZ",
+      top10: "My Top 10",
+      morocco: "Made in Morocco",
       topPicks: "Get to Know Me",
       web: "Websites I've Built",
       security: "My Security Toys",
@@ -74,11 +85,12 @@ export const personas: Record<Persona, PersonaDef> = {
       experience: "The Story So Far",
       certifications: "Badges I Earned",
     },
+    rowOrder: ["topPicks", "new", "morocco", "web", "ai", "top10", "security", "experience", "building", "skills", "certifications"],
   },
 };
 
 export const personaList: PersonaDef[] = [
   personas.recruiter,
   personas.developer,
-  personas.stalker,
+  personas.curious,
 ];

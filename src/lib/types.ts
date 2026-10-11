@@ -13,13 +13,16 @@
 // restructuring anything else.
 // ───────────────────────────────────────────────────────────────────────────
 
-export type Persona = "recruiter" | "developer" | "stalker";
+export type Persona = "recruiter" | "developer" | "curious";
 
-export const PERSONAS: Persona[] = ["recruiter", "developer", "stalker"];
+export const PERSONAS: Persona[] = ["recruiter", "developer", "curious"];
 
 export function isPersona(value: string): value is Persona {
   return (PERSONAS as string[]).includes(value);
 }
+
+/** Pre-rename slug, kept so stored preferences and old links still resolve. */
+export const LEGACY_PERSONA: Record<string, Persona> = { stalker: "curious" };
 
 export type ItemType =
   | "project"
@@ -79,13 +82,39 @@ export interface CatalogItem {
   image?: string;
   /** real wide banner once provided; falls back to placeholder art */
   banner?: string;
+  /** billboard spotlight background (falls back to banner) — art without baked-in text */
+  heroArt?: string;
   /** looping video used as the detail-modal banner (takes precedence over banner) */
   video?: string;
+  /** completion month "YYYY-MM" — drives the time-boxed "New Release" badge */
+  releasedAt?: string;
+  /** episode-style chapters on the title page, narrated per persona */
+  episodes?: Episode[];
+  /** extra deliverables shipped under one title (each with its own link) */
+  deliverables?: Deliverable[];
+  /** a sibling title from the same client, surfaced first in "More Like This" */
+  companionId?: string;
   links: Partial<Record<LinkKind, string>>;
   copy: Record<Persona, PersonaCopy>;
 }
 
+export interface Episode {
+  title: string;
+  synopsis: Record<Persona, string>;
+}
+
+export interface Deliverable {
+  label: string;
+  href: string;
+  /** "/name.webp" — AVIF/640w siblings are derived */
+  image: string;
+  note: string;
+}
+
 export type RowKey =
+  | "new"
+  | "top10"
+  | "morocco"
   | "topPicks"
   | "web"
   | "security"
@@ -115,9 +144,13 @@ export interface PersonaDef {
   tileColor: [string, string];
   /** row headings, retitled per persona */
   rowTitles: Record<RowKey, string>;
+  /** row ORDER for this lens — contents are identical, only the order differs */
+  rowOrder: RowKey[];
 }
 
 export interface RowConfig {
   key: RowKey;
   itemIds: string[];
+  /** render as a ranked "Top 10" shelf with large numerals */
+  numbered?: boolean;
 }

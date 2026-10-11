@@ -1,10 +1,12 @@
 import type { MetadataRoute } from "next";
-import { SITE_URL } from "@/lib/seo";
+import { titlePageItems } from "@/data/catalog";
+import { PERSONAS } from "@/lib/types";
+import { SITE_URL, abs } from "@/lib/seo";
 
-// Emitted at /sitemap.xml. Covers the home page and the three persona routes.
+// Emitted at /sitemap.xml. Home, the three persona routes, and one crawlable
+// title page per project (with its screenshot as an image entry).
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
-  const personas = ["recruiter", "developer", "stalker"];
   return [
     {
       url: `${SITE_URL}/`,
@@ -12,11 +14,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 1,
     },
-    ...personas.map((persona) => ({
+    ...PERSONAS.map((persona) => ({
       url: `${SITE_URL}/browse/${persona}`,
       lastModified,
       changeFrequency: "monthly" as const,
       priority: 0.8,
+    })),
+    ...titlePageItems.map((item) => ({
+      url: `${SITE_URL}/title/${item.id}`,
+      lastModified: item.releasedAt ? new Date(`${item.releasedAt}-01T00:00:00Z`) : lastModified,
+      changeFrequency: "yearly" as const,
+      priority: item.releasedAt ? 0.7 : 0.6,
+      images: [
+        ...(item.image ? [abs(item.image)] : []),
+        ...(item.deliverables?.map((d) => abs(d.image)) ?? []),
+      ].filter((src, i, all) => all.indexOf(src) === i),
     })),
   ];
 }

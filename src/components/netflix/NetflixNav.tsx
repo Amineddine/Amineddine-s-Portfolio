@@ -8,6 +8,7 @@ import { t } from "@/data/i18n";
 import { scrollToId, scrollToTop } from "@/lib/scroll";
 import PersonaSwitcher from "./PersonaSwitcher";
 import { BriefcaseIcon } from "./icons";
+import AzMark from "@/components/brand/AzMark";
 
 type NavKey = "home" | "projects" | "skills" | "about" | "contact";
 const navItems: { key: NavKey; action: (open: (id: string) => void) => void }[] = [
@@ -39,14 +40,18 @@ export default function NetflixNav() {
           : "linear-gradient(to bottom, rgba(0,0,0,0.75), transparent)",
       }}
     >
-      <nav className="flex items-center gap-3 px-4 py-3 sm:gap-6 md:px-[clamp(1rem,4vw,3.75rem)]">
+      <nav className="flex h-[var(--nav-h)] items-center gap-3 px-4 sm:gap-6 md:px-[clamp(1rem,4vw,3.75rem)]">
         <button
           type="button"
           onClick={scrollToTop}
-          className="nf-logo shrink-0 text-2xl sm:text-3xl"
-          aria-label="Amineddine — home"
+          className="flex shrink-0 items-center"
+          aria-label="Amineddine Znin — back to top"
         >
-          AMINEDDINE
+          {/* AZ on phones, the full wordmark from sm up */}
+          <AzMark className="text-[2rem] sm:hidden" title="" />
+          <span aria-hidden className="nf-logo hidden text-[1.9rem] font-bold sm:inline md:text-[2.1rem]">
+            AMINEDDINE ZNIN
+          </span>
         </button>
 
         <ul className="hidden items-center gap-5 md:flex">

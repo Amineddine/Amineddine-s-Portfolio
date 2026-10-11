@@ -1,15 +1,19 @@
 @import "tailwindcss";
 
 /* ───────────────────────────────────────────────────────────────────────────
-   NETFLIX-CLONE THEME TOKENS
+   STREAMING THEME TOKENS — AZ brand: #E50914 red on #141414.
+   Contrast note: #E50914 is 4.1:1 on the dark background, so red is used for
+   marks, badges, buttons and large type only; small text stays white.
    ─────────────────────────────────────────────────────────────────────────── */
 :root {
   --nf-bg: #141414;
   --nf-bg-deep: #0b0b0b;
   --nf-card: #181818;
   --nf-card-hover: #2a2a2a;
+  /* white text on --nf-red is 4.8:1 */
   --nf-red: #e50914;
   --nf-red-bright: #f6121d;
+  --az-ink: #000000;
   --nf-text: #ffffff;
   --nf-text-dim: #b3b3b3;
   --nf-text-faint: #808080;
@@ -20,6 +24,8 @@
 
   --ease-out-nf: cubic-bezier(0.16, 1, 0.3, 1);
   --row-gap: clamp(0.4rem, 0.9vw, 0.65rem);
+  /* fixed navbar height — content under it is offset by this */
+  --nav-h: 4rem;
 }
 
 @theme inline {
@@ -127,6 +133,12 @@ body {
 /* ───────────────────────────────────────────────────────────────────────────
    ROW SCROLLERS — native scroll-snap, hidden scrollbar (Lenis owns the page)
    ─────────────────────────────────────────────────────────────────────────── */
+/* Off-screen rows skip style/layout/paint until they approach the viewport. */
+.row-section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 260px;
+}
+
 .row-track {
   display: flex;
   gap: var(--row-gap);
@@ -221,5 +233,68 @@ body {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
+  }
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+   SPOTLIGHT + PREVIEW MOTION (all neutralised by the reduced-motion rule)
+   ─────────────────────────────────────────────────────────────────────────── */
+@keyframes kenburns {
+  from {
+    transform: scale(1.04) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.14) translate3d(-2%, -3%, 0);
+  }
+}
+.kenburns {
+  animation: kenburns 9s cubic-bezier(0.25, 0.1, 0.25, 1) both;
+  will-change: transform;
+}
+
+/* transform-only, so the progress bar never triggers layout */
+@keyframes pip-fill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+.pip-fill {
+  transform-origin: left;
+  animation: pip-fill linear both;
+}
+
+/* hover "trailer": pan slowly down the screenshot like a scroll-through */
+@keyframes preview-pan {
+  0%,
+  12% {
+    object-position: 50% 0%;
+    transform: scale(1.02);
+  }
+  100% {
+    object-position: 50% 100%;
+    transform: scale(1.1);
+  }
+}
+.preview-pan img {
+  animation: preview-pan 6s cubic-bezier(0.45, 0, 0.55, 1) 0.15s both alternate infinite;
+}
+
+/* Top 10 numerals — outlined, sitting behind the card's left edge */
+.rank-numeral {
+  font-family: var(--font-display);
+  line-height: 0.8;
+  color: var(--nf-bg);
+  -webkit-text-stroke: 3px rgba(255, 255, 255, 0.55);
+  paint-order: stroke fill;
+  letter-spacing: -0.06em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kenburns,
+  .preview-pan img {
+    animation: none !important;
   }
 }

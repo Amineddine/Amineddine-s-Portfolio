@@ -28,7 +28,7 @@ export default function ContactFooter() {
     <footer id="contact" className="relative mt-12 border-t border-white/10 bg-[var(--nf-bg-deep)] px-4 py-14 md:px-[clamp(1rem,4vw,3.75rem)]">
       <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1.1fr_0.9fr]">
         <div>
-          <p className="text-sm uppercase tracking-[0.25em] text-nf-red">{c.openChannel}</p>
+          <p className="text-sm font-semibold uppercase tracking-[0.25em] text-white/85">{c.openChannel}</p>
           <h2 className="mt-3 font-display text-4xl text-white sm:text-5xl md:text-6xl">
             {c.headings[key]}
           </h2>
@@ -61,7 +61,7 @@ export default function ContactFooter() {
               rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
               className="flex items-center justify-between gap-3 rounded-md border border-white/10 bg-nf-card px-5 py-3 transition hover:border-white/30 hover:bg-nf-card-hover"
             >
-              <span className="text-xs uppercase tracking-wider text-white/45">{displayLabel(link.label)}</span>
+              <span className="text-xs uppercase tracking-wider text-white/60">{displayLabel(link.label)}</span>
               <span className="flex items-center gap-2 truncate text-sm text-white/85">
                 {link.label === "GitHub" && <GithubIcon width={15} height={15} />}
                 {link.value}
@@ -72,7 +72,7 @@ export default function ContactFooter() {
         </div>
       </div>
 
-      <div className="mx-auto mt-12 flex max-w-6xl flex-col items-center justify-between gap-2 border-t border-white/10 pt-6 text-xs text-white/40 sm:flex-row">
+      <div className="mx-auto mt-12 flex max-w-6xl flex-col items-center justify-between gap-2 border-t border-white/10 pt-6 text-xs text-white/55 sm:flex-row">
         <span>© {new Date().getFullYear()} Amineddine Znin. {c.footerNote}</span>
         <span>{c.footerRole}</span>
       </div>

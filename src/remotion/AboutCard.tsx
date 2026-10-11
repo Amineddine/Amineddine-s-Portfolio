@@ -1,272 +1,180 @@
 import React from "react";
 import {
   AbsoluteFill,
+  Easing,
+  Img,
   Sequence,
   interpolate,
+  staticFile,
   useCurrentFrame,
-  Easing,
-  random,
 } from "remotion";
 import { loadFont as loadBebas } from "@remotion/google-fonts/BebasNeue";
 import { loadFont as loadInter } from "@remotion/google-fonts/Inter";
 
+// ───────────────────────────────────────────────────────────────────────────
+// "WHY HIRE ME" — the bio detail-modal banner. 1600×800 (2:1), 10s loop.
+// The modal lays the name + buttons over the bottom-left, so every scene keeps
+// its content top / right. Each reason is backed by real work on the site.
+// ───────────────────────────────────────────────────────────────────────────
 const { fontFamily: BEBAS } = loadBebas();
-const { fontFamily: INTER } = loadInter("normal", {
-  weights: ["400", "500", "600"],
-  subsets: ["latin"],
-});
+const { fontFamily: SANS } = loadInter("normal", { weights: ["500", "600", "700"], subsets: ["latin"] });
 
 const RED = "#E50914";
-const EASE_OUT = Easing.bezier(0.16, 1, 0.3, 1);
+const INK = "#0b0b0b";
+const EASE = Easing.bezier(0.16, 1, 0.3, 1);
+const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
 
-// the "sell" — value props that cycle in the upper third (the modal overlays
-// the name + buttons along the bottom, so this stays clear of that zone)
-const VALUES = [
-  "SHIPS FAST",
-  "SECURITY-AWARE",
-  "PREMIUM FINISH",
-  "RELIABLE PARTNER",
-  "AVAILABLE GLOBALLY",
+export const ABOUT_FRAMES = 300;
+const ZONE_X = 640; // content starts here — the left side stays for the modal title
+
+const REASONS = [
+  {
+    no: "01",
+    head: "Ships production web",
+    proof: "12 live client sites — hospitality, travel, film, education",
+    shots: ["tawada-desert-camp", "riad-jabador", "morocco-transit", "mahal-productions"],
+  },
+  {
+    no: "02",
+    head: "Security built in",
+    proof: "4 open-source detection tools · MITRE ATT&CK · Sigma",
+    shots: ["sigmapack-builder", "attck-tagger", "soar-mini-enricher", "rareguard"],
+  },
+  {
+    no: "03",
+    head: "AI that does the work",
+    proof: "Telegram trading assistant · ~170 tests · 11 Anthropic certifications",
+    shots: ["mnq-trading-assistant", "automate", "wfm-management", "moroccan-mirage"],
+  },
 ];
-const PER = 56; // frames per value word
-const TOTAL = VALUES.length * PER; // 280
+const INTRO = 54;
+const PER = 64;
+const OUTRO_AT = INTRO + REASONS.length * PER; // 246
 
 export const AboutCard: React.FC = () => {
   const frame = useCurrentFrame();
-  const envelope = interpolate(frame, [0, 12, TOTAL - 12, TOTAL], [0, 1, 1, 0], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-
+  const envelope = interpolate(frame, [0, 10, ABOUT_FRAMES - 12, ABOUT_FRAMES], [0, 1, 1, 0], clamp);
   return (
-    <AbsoluteFill style={{ backgroundColor: "#0b0b0c", opacity: envelope }}>
-      <Background />
-
-      {/* persistent kicker */}
-      <div
-        style={{
-          position: "absolute",
-          top: 54,
-          left: 64,
-          display: "flex",
-          alignItems: "center",
-          gap: 14,
-          fontFamily: INTER,
-          fontWeight: 600,
-          fontSize: 22,
-          letterSpacing: 7,
-          textTransform: "uppercase",
-          color: RED,
-        }}
-      >
-        <Dot />
-        Why Hire Me
-      </div>
-
-      {/* cycling value words, upper third */}
-      {VALUES.map((word, i) => (
-        <Sequence key={word} from={i * PER} durationInFrames={PER}>
-          <ValueWord word={word} />
+    <AbsoluteFill style={{ backgroundColor: INK }}>
+      <AbsoluteFill style={{ opacity: envelope }}>
+        <AbsoluteFill
+          style={{
+            background:
+              "radial-gradient(50% 70% at 78% 30%, rgba(229,9,20,0.22), transparent 70%), radial-gradient(40% 60% at 10% 100%, rgba(229,9,20,0.1), transparent 70%)",
+          }}
+        />
+        <Sequence durationInFrames={INTRO + 6} layout="none">
+          <Fade dur={INTRO + 6}>
+            <Intro />
+          </Fade>
         </Sequence>
-      ))}
-
-      {/* heartbeat rule */}
-      <Heartbeat />
-
-      <AbsoluteFill
-        style={{
-          background:
-            "radial-gradient(120% 110% at 50% 40%, transparent 55%, rgba(0,0,0,0.6) 100%)",
-          pointerEvents: "none",
-        }}
-      />
+        {REASONS.map((r, i) => (
+          <Sequence key={r.no} from={INTRO + i * PER} durationInFrames={PER + 6} layout="none">
+            <Fade dur={PER + 6}>
+              <Reason reason={r} />
+            </Fade>
+          </Sequence>
+        ))}
+        <Sequence from={OUTRO_AT} durationInFrames={ABOUT_FRAMES - OUTRO_AT} layout="none">
+          <Fade dur={ABOUT_FRAMES - OUTRO_AT} out={false}>
+            <Outro />
+          </Fade>
+        </Sequence>
+      </AbsoluteFill>
     </AbsoluteFill>
   );
 };
 
-const Dot: React.FC = () => {
-  const frame = useCurrentFrame();
-  const s = 0.7 + 0.3 * Math.abs(Math.sin(frame / 12));
-  return (
-    <span
-      style={{
-        width: 11,
-        height: 11,
-        borderRadius: 99,
-        background: RED,
-        boxShadow: `0 0 ${10 * s}px ${RED}`,
-        transform: `scale(${s})`,
-        display: "inline-block",
-      }}
-    />
-  );
+const Fade: React.FC<{ dur: number; out?: boolean; children: React.ReactNode }> = ({ dur, out = true, children }) => {
+  const f = useCurrentFrame();
+  const o = interpolate(f, [0, 7, dur - 7, dur], [0, 1, 1, out ? 0 : 1], clamp);
+  return <AbsoluteFill style={{ opacity: o }}>{children}</AbsoluteFill>;
 };
 
-const ValueWord: React.FC<{ word: string }> = ({ word }) => {
-  const frame = useCurrentFrame();
-  const opacity = interpolate(frame, [0, 12, PER - 14, PER], [0, 1, 1, 0], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-  const y = interpolate(frame, [0, 16], [34, 0], {
-    easing: EASE_OUT,
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-  const x = interpolate(frame, [PER - 14, PER], [0, -26], {
-    easing: Easing.in(Easing.cubic),
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-
+const Intro: React.FC = () => {
+  const f = useCurrentFrame();
+  const punch = interpolate(f, [0, 10, 15, 20], [2.2, 0.94, 1.03, 1], { ...clamp, easing: EASE });
+  const a = interpolate(f, [0, 8], [0, 1], clamp);
+  const sub = interpolate(f, [14, 26], [0, 1], clamp);
   return (
-    <AbsoluteFill
-      style={{ alignItems: "center", justifyContent: "flex-start", paddingTop: 188 }}
-    >
+    <div style={{ position: "absolute", left: ZONE_X, top: 110 }}>
       <div
         style={{
-          transform: `translate(${x}px, ${y}px)`,
-          opacity,
           fontFamily: BEBAS,
-          fontSize: 132,
-          letterSpacing: 4,
-          lineHeight: 1,
+          fontSize: 230,
+          lineHeight: 0.85,
           color: "#fff",
-          textShadow: "0 0 50px rgba(229,9,20,0.3)",
-          display: "flex",
-          alignItems: "center",
-          gap: 26,
+          opacity: a,
+          transform: `scale(${punch})`,
+          transformOrigin: "left center",
         }}
       >
-        <span style={{ color: RED }}>/</span>
-        {word}
+        WHY <span style={{ color: RED }}>HIRE</span> ME
       </div>
-    </AbsoluteFill>
-  );
-};
-
-const Heartbeat: React.FC = () => {
-  const frame = useCurrentFrame();
-  const w = interpolate(frame % 90, [0, 60], [0, 100], {
-    easing: EASE_OUT,
-    extrapolateRight: "clamp",
-  });
-  const o = interpolate(frame % 90, [0, 8, 60, 80], [0, 0.7, 0.7, 0], {
-    extrapolateRight: "clamp",
-  });
-  return (
-    <div
-      style={{
-        position: "absolute",
-        left: 64,
-        right: 64,
-        bottom: 84,
-        height: 2,
-        background: "rgba(255,255,255,0.08)",
-      }}
-    >
-      <div
-        style={{
-          height: "100%",
-          width: `${w}%`,
-          background: `linear-gradient(90deg, transparent, ${RED})`,
-          opacity: o,
-        }}
-      />
+      <div style={{ marginTop: 22, fontFamily: SANS, fontWeight: 600, fontSize: 30, letterSpacing: "0.24em", color: "rgba(255,255,255,0.8)", opacity: sub }}>
+        THREE REASONS · ALL OF THEM LIVE
+      </div>
     </div>
   );
 };
 
-// ── distinct background: pulsing rings + diagonal light streaks + dust ──────
-const Background: React.FC = () => {
-  const frame = useCurrentFrame();
-  const glowX = 50 + Math.sin(frame / 60) * 8;
-
+const Reason: React.FC<{ reason: (typeof REASONS)[number] }> = ({ reason }) => {
+  const f = useCurrentFrame();
+  const x = interpolate(f, [0, 16], [40, 0], { ...clamp, easing: EASE });
+  const proofA = interpolate(f, [12, 24], [0, 1], clamp);
   return (
     <AbsoluteFill>
-      <AbsoluteFill
-        style={{
-          background: `radial-gradient(90% 120% at ${glowX}% 38%, rgba(229,9,20,0.2), transparent 58%)`,
-        }}
-      />
-
-      {/* expanding concentric rings from the centre */}
-      {new Array(5).fill(0).map((_, i) => {
-        const cycle = (frame / 30 + i * 0.6) % 3;
-        const t = cycle / 3;
-        const size = 240 + t * 1500;
-        const op = 0.28 * (1 - t);
-        return (
-          <div
-            key={i}
-            style={{
-              position: "absolute",
-              left: "50%",
-              top: "42%",
-              width: size,
-              height: size,
-              marginLeft: -size / 2,
-              marginTop: -size / 2,
-              borderRadius: "50%",
-              border: `1.5px solid rgba(229,9,20,${op.toFixed(3)})`,
-            }}
-          />
-        );
-      })}
-
-      {/* diagonal light streaks */}
-      {new Array(3).fill(0).map((_, i) => {
-        const x = ((frame * 7 + i * 760) % 2600) - 500;
-        return (
-          <div
-            key={i}
-            style={{
-              position: "absolute",
-              top: 0,
-              bottom: 0,
-              left: x,
-              width: 180,
-              transform: "skewX(-14deg)",
-              background:
-                "linear-gradient(90deg, transparent, rgba(229,9,20,0.08), rgba(255,255,255,0.05), transparent)",
-              filter: "blur(6px)",
-            }}
-          />
-        );
-      })}
-
-      <Dust />
+      <div style={{ position: "absolute", left: ZONE_X, top: 80, transform: `translateX(${x}px)` }}>
+        <div style={{ display: "flex", alignItems: "baseline", gap: 22 }}>
+          <span style={{ fontFamily: BEBAS, fontSize: 120, color: RED, lineHeight: 0.8 }}>{reason.no}</span>
+          <span style={{ fontFamily: BEBAS, fontSize: 88, color: "#fff", lineHeight: 0.9, textTransform: "uppercase" }}>
+            {reason.head}
+          </span>
+        </div>
+        <div style={{ marginTop: 18, fontFamily: SANS, fontWeight: 600, fontSize: 28, color: "rgba(255,255,255,0.85)", opacity: proofA }}>
+          {reason.proof}
+        </div>
+      </div>
+      {/* proof strip — real screenshots of the work */}
+      <div style={{ position: "absolute", left: ZONE_X, top: 330, display: "flex", gap: 18 }}>
+        {reason.shots.map((file, i) => {
+          const p = interpolate(f, [6 + i * 4, 20 + i * 4], [0, 1], { ...clamp, easing: EASE });
+          return (
+            <div
+              key={file}
+              style={{
+                width: 210,
+                height: 132,
+                borderRadius: 10,
+                overflow: "hidden",
+                opacity: p,
+                transform: `translateY(${(1 - p) * 30}px)`,
+                boxShadow: "0 20px 50px rgba(0,0,0,0.6)",
+                outline: i === 0 ? `2px solid ${RED}` : "1px solid rgba(255,255,255,0.12)",
+              }}
+            >
+              <Img src={staticFile(`${file}-640.webp`)} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top" }} />
+            </div>
+          );
+        })}
+      </div>
     </AbsoluteFill>
   );
 };
 
-const Dust: React.FC = () => {
-  const frame = useCurrentFrame();
+const Outro: React.FC = () => {
+  const f = useCurrentFrame();
+  const a = interpolate(f, [0, 12], [0, 1], { ...clamp, easing: EASE });
   return (
-    <AbsoluteFill>
-      {new Array(34).fill(0).map((_, i) => {
-        const sx = random(`ax${i}`);
-        const sz = random(`az${i}`);
-        const sp = random(`as${i}`);
-        const baseY = random(`ay${i}`) * 880;
-        const y = ((baseY - frame * (0.2 + sp * 0.7)) % 880 + 880) % 880 - 40;
-        const tw = 0.3 + 0.7 * Math.abs(Math.sin((frame + i * 40) / 26));
-        return (
-          <div
-            key={i}
-            style={{
-              position: "absolute",
-              left: sx * 1600,
-              top: y,
-              width: 1 + sz * 2,
-              height: 1 + sz * 2,
-              borderRadius: "50%",
-              background: random(`ac${i}`) > 0.8 ? RED : "#ffffff",
-              opacity: tw * (0.15 + sz * 0.4),
-            }}
-          />
-        );
-      })}
-    </AbsoluteFill>
+    <div style={{ position: "absolute", left: ZONE_X, top: 130, opacity: a }}>
+      <div style={{ fontFamily: BEBAS, fontSize: 124, lineHeight: 0.9, color: "#fff" }}>
+        MOROCCO-BASED.
+        <br />
+        <span style={{ color: RED }}>AVAILABLE GLOBALLY.</span>
+      </div>
+      <div style={{ marginTop: 26, fontFamily: SANS, fontWeight: 600, fontSize: 28, letterSpacing: "0.2em", color: "rgba(255,255,255,0.8)" }}>
+        WEB · SECURITY · AI — IN ENGLISH & FRENCH
+      </div>
+    </div>
   );
 };

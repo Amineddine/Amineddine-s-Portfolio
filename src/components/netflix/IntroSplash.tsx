@@ -1,34 +1,32 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { usePersona } from "@/context/PersonaContext";
 import { t } from "@/data/i18n";
-import { playTaDum } from "@/lib/sound";
+import { playIntroMotif } from "@/lib/sound";
 import { SoundOnIcon, SoundOffIcon } from "./icons";
-import { EASE_OUT, EASE_IN, EASE_STD } from "@/lib/motion";
+import { EASE_IN, EASE_OUT } from "@/lib/motion";
 
-const WORD = "AMINEDDINE";
+// Pure CSS/JS intro (no video, so `/` stays light), ~2.6s:
+//   0.00s  black
+//   0.25s  the red AZ punches in big — overshoot, light burst, radial streaks
+//   1.75s  zoom-through: the logo rushes past the camera into the profile gate
+// Reduced motion: the AZ simply fades in and hands off after ~1s. Sound only
+// ever plays from the unmute button (a user gesture).
+const PUNCH_AT = 0.25;
+const ZOOM_AT_MS = 1750;
+const DONE_MS = 2600;
 
-const container: Variants = {
-  hidden: {},
-  show: {
-    transition: { staggerChildren: 0.07, delayChildren: 0.15 },
-  },
-};
-
-const letter: Variants = {
-  hidden: { y: "115%", opacity: 0, scaleY: 1.4 },
-  show: {
-    y: "0%",
-    opacity: 1,
-    scaleY: 1,
-    transition: { duration: 0.75, ease: EASE_OUT },
-  },
-};
+const STREAKS = Array.from({ length: 14 }, (_, i) => ({
+  angle: (360 / 14) * i + (i % 2 ? 7 : -5),
+  length: 34 + ((i * 37) % 26),
+  delay: (i % 4) * 0.025,
+}));
 
 export default function IntroSplash({ onDone }: { onDone: () => void }) {
   const { muted, toggleMuted, locale } = usePersona();
+  const reduce = useReducedMotion();
   const [zoom, setZoom] = useState(false);
   const doneRef = useRef(false);
 
@@ -39,21 +37,20 @@ export default function IntroSplash({ onDone }: { onDone: () => void }) {
   };
 
   useEffect(() => {
-    // reveal → hold → zoom-through → handoff to the profile gate
-    const zoomTimer = setTimeout(() => setZoom(true), 1850);
-    const doneTimer = setTimeout(finish, 2750);
+    const zoomTimer = reduce ? undefined : setTimeout(() => setZoom(true), ZOOM_AT_MS);
+    const doneTimer = setTimeout(finish, reduce ? 1000 : DONE_MS);
     return () => {
-      clearTimeout(zoomTimer);
+      if (zoomTimer) clearTimeout(zoomTimer);
       clearTimeout(doneTimer);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [reduce]);
 
   return (
     <motion.div
       className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-black"
       onClick={finish}
-      exit={{ opacity: 0, transition: { duration: 0.5 } }}
+      exit={{ opacity: 0, transition: { duration: 0.35 } }}
       role="button"
       aria-label="Skip intro"
     >
@@ -62,7 +59,7 @@ export default function IntroSplash({ onDone }: { onDone: () => void }) {
         type="button"
         onClick={(e) => {
           e.stopPropagation();
-          if (muted) playTaDum(); // unmuting is a user gesture → safe to play
+          if (muted) playIntroMotif(); // unmuting is a user gesture → safe to play
           toggleMuted();
         }}
         className="absolute right-5 top-5 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-white/25 text-white/80 transition hover:border-white hover:text-white"
@@ -72,67 +69,69 @@ export default function IntroSplash({ onDone }: { onDone: () => void }) {
       </button>
 
       <motion.div
-        className="relative"
+        className="relative flex items-center justify-center"
         animate={
           zoom
-            ? { scale: 9, opacity: 0, filter: "blur(8px)" }
+            ? { scale: [1, 0.94, 18], opacity: [1, 1, 0], filter: ["blur(0px)", "blur(0px)", "blur(12px)"] }
             : { scale: 1, opacity: 1 }
         }
-        transition={{ duration: 0.9, ease: EASE_IN }}
+        transition={zoom ? { duration: 0.8, times: [0, 0.18, 1], ease: EASE_IN } : { duration: 0 }}
       >
-        {/* red light-sweep passing behind the letters */}
-        <motion.div
-          className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3"
-          style={{
-            background:
-              "linear-gradient(90deg, transparent, rgba(229,9,20,0.95), rgba(246,18,29,0.6), transparent)",
-            filter: "blur(8px)",
-            mixBlendMode: "screen",
-          }}
-          initial={{ x: 0 }}
-          animate={{ x: ["0%", "520%"] }}
-          transition={{ duration: 1.4, delay: 0.35, ease: EASE_STD }}
-        />
+        {!reduce && (
+          <>
+            {/* light burst behind the logo */}
+            <motion.div
+              aria-hidden
+              className="pointer-events-none absolute h-[90vmin] w-[90vmin] rounded-full"
+              style={{
+                background:
+                  "radial-gradient(closest-side, rgba(255,255,255,0.9), rgba(246,18,29,0.55) 22%, rgba(229,9,20,0.18) 48%, transparent 72%)",
+                filter: "blur(6px)",
+              }}
+              initial={{ scale: 0.2, opacity: 0 }}
+              animate={{ scale: [0.2, 1.15, 0.9], opacity: [0, 1, 0.28] }}
+              transition={{ duration: 1.1, delay: PUNCH_AT, times: [0, 0.22, 1], ease: EASE_OUT }}
+            />
+            {/* radial light streaks */}
+            {STREAKS.map((s) => (
+              <motion.span
+                key={s.angle}
+                aria-hidden
+                className="pointer-events-none absolute left-1/2 top-1/2 h-[3px] origin-left rounded-full"
+                style={{
+                  width: `${s.length}vmin`,
+                  rotate: `${s.angle}deg`,
+                  background: "linear-gradient(90deg, rgba(255,255,255,0.95), rgba(229,9,20,0.6), transparent)",
+                }}
+                initial={{ scaleX: 0, opacity: 0, x: "6vmin" }}
+                animate={{ scaleX: [0, 1, 1], opacity: [0, 1, 0], x: ["6vmin", "10vmin", "22vmin"] }}
+                transition={{ duration: 0.9, delay: PUNCH_AT + 0.04 + s.delay, ease: EASE_OUT }}
+              />
+            ))}
+          </>
+        )}
 
-        <motion.div
-          role="presentation"
+        {/* the AZ punch-in */}
+        <motion.span
           aria-hidden
-          className="nf-logo flex overflow-hidden text-[14vw] leading-none md:text-[10rem]"
-          variants={container}
-          initial="hidden"
-          animate="show"
-          style={{
-            backgroundImage:
-              "linear-gradient(180deg, #ff3b42 0%, #e50914 55%, #8a0207 100%)",
-            WebkitBackgroundClip: "text",
-            backgroundClip: "text",
-            color: "transparent",
-            textShadow: "0 0 40px rgba(229,9,20,0.35)",
-          }}
+          className="nf-logo relative block font-bold text-[clamp(9rem,38vmin,22rem)] [text-shadow:0_0_60px_rgba(229,9,20,0.45)]"
+          initial={reduce ? { opacity: 0 } : { scale: 2.6, opacity: 0, filter: "blur(14px)" }}
+          animate={
+            reduce
+              ? { opacity: 1 }
+              : { scale: [2.6, 0.92, 1.03, 1], opacity: [0, 1, 1, 1], filter: ["blur(14px)", "blur(0px)", "blur(0px)", "blur(0px)"] }
+          }
+          transition={
+            reduce
+              ? { duration: 0.4 }
+              : { duration: 0.75, delay: PUNCH_AT, times: [0, 0.38, 0.7, 1], ease: EASE_OUT }
+          }
         >
-          {WORD.split("").map((char, i) => (
-            <span key={i} className="inline-block overflow-hidden">
-              <motion.span className="inline-block" variants={letter}>
-                {char}
-              </motion.span>
-            </span>
-          ))}
-        </motion.div>
-
-        {/* baseline glow */}
-        <motion.div
-          className="mx-auto mt-2 h-[3px] rounded-full"
-          style={{
-            background:
-              "linear-gradient(90deg, transparent, #e50914, transparent)",
-          }}
-          initial={{ width: 0, opacity: 0 }}
-          animate={{ width: "100%", opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.9 }}
-        />
+          AZ
+        </motion.span>
       </motion.div>
 
-      <span className="absolute bottom-6 left-1/2 -translate-x-1/2 text-xs uppercase tracking-[0.3em] text-white/30">
+      <span className="absolute bottom-6 left-1/2 -translate-x-1/2 text-xs uppercase tracking-[0.3em] text-white/60">
         {t(locale).clickToSkip}
       </span>
     </motion.div>

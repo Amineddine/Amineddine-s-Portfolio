@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import IntroSplash from "@/components/netflix/IntroSplash";
 import ProfileGate from "@/components/netflix/ProfileGate";
 import { usePersona } from "@/context/PersonaContext";
-import { playTaDum } from "@/lib/sound";
+import { playIntroMotif } from "@/lib/sound";
 import type { Persona } from "@/lib/types";
 
 type Phase = "loading" | "splash" | "gate";
@@ -34,7 +34,7 @@ export default function HomeExperience() {
     // warm up the browse routes
     router.prefetch("/browse/recruiter");
     router.prefetch("/browse/developer");
-    router.prefetch("/browse/stalker");
+    router.prefetch("/browse/curious");
   }, [router]);
 
   const handleSplashDone = () => {
@@ -45,7 +45,7 @@ export default function HomeExperience() {
   const handlePick = (p: Persona) => {
     setPersona(p);
     markVisited();
-    if (!muted) playTaDum();
+    if (!muted) playIntroMotif();
     router.push(`/browse/${p}`);
   };
 

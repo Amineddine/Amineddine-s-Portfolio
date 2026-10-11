@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { usePersona } from "@/context/PersonaContext";
-import { itemCopy } from "@/data/i18n";
+import { itemCopy, t } from "@/data/i18n";
 import type { CatalogItem } from "@/lib/types";
 import PlaceholderArt from "./PlaceholderArt";
 import {
@@ -18,7 +18,7 @@ import { EASE_OUT } from "@/lib/motion";
 
 const CARD_W = "clamp(150px, 42vw, 256px)";
 
-export default function TitleCard({ item }: { item: CatalogItem }) {
+export default function TitleCard({ item, rank }: { item: CatalogItem; rank?: number }) {
   const { persona, openItem, locale } = usePersona();
   const cardRef = useRef<HTMLButtonElement>(null);
   const enterTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -37,6 +37,8 @@ export default function TitleCard({ item }: { item: CatalogItem }) {
   }, []);
 
   const copy = itemCopy(item, persona ?? "developer", locale);
+  const strings = t(locale);
+  const isPrivate = item.maturity === "Private build";
 
   const showPreview = () => {
     if (!hoverCapable || !cardRef.current) return;
@@ -68,6 +70,14 @@ export default function TitleCard({ item }: { item: CatalogItem }) {
 
   return (
     <>
+      {rank !== undefined && (
+        <span
+          aria-hidden
+          className="rank-numeral pointer-events-none -mr-[0.9rem] shrink-0 select-none self-end text-[clamp(5.5rem,13vw,9.5rem)]"
+        >
+          {rank}
+        </span>
+      )}
       <button
         ref={cardRef}
         type="button"
@@ -76,11 +86,24 @@ export default function TitleCard({ item }: { item: CatalogItem }) {
         onClick={() => openItem(item.id)}
         className="group relative shrink-0 overflow-hidden rounded-md bg-nf-card outline-none"
         style={{ width: CARD_W }}
-        aria-label={`${item.title} — open details`}
       >
-        <div className="aspect-video w-full">
+        <span className="sr-only">
+          {rank !== undefined ? `${strings.topTen(rank)}: ` : ""}
+          {item.title}
+          {isPrivate ? ` — ${item.maturity}` : ""}
+        </span>
+        <div className="aspect-video w-full" aria-hidden>
           <PlaceholderArt item={item} variant="thumb" />
         </div>
+
+        {isPrivate && (
+          <span
+            aria-hidden
+            className="pointer-events-none absolute bottom-2 right-2 rounded-sm bg-black/75 px-1.5 py-0.5 text-[0.6rem] font-bold uppercase tracking-[0.12em] text-white ring-1 ring-nf-red"
+          >
+            {item.maturity}
+          </span>
+        )}
 
         {item.inProgress && typeof item.progress === "number" && (
           <span className="absolute inset-x-2 bottom-2 h-[3px] rounded-full bg-white/25">
@@ -116,7 +139,8 @@ export default function TitleCard({ item }: { item: CatalogItem }) {
                       closePreview();
                       openItem(item.id);
                     }}
-                    className="block aspect-video w-full"
+                    className="preview-pan relative block aspect-video w-full overflow-hidden"
+                    aria-label={`${item.title} — ${strings.episodes}`}
                   >
                     <PlaceholderArt item={item} variant="thumb" />
                   </button>
@@ -184,13 +208,18 @@ export default function TitleCard({ item }: { item: CatalogItem }) {
 
                     <div className="flex items-center gap-2 text-[0.7rem]">
                       <span className="font-semibold text-[#46d369]">
-                        {item.match}% Match
+                        {strings.match(item.match)}
                       </span>
                       <span className="rounded border border-white/30 px-1 text-white/60">
                         {item.year}
                       </span>
                       {item.maturity && (
-                        <span className="text-white/55">{item.maturity}</span>
+                        <span className="text-white/70">{item.maturity}</span>
+                      )}
+                      {item.episodes && (
+                        <span className="text-white/70">
+                          {item.episodes.length} {strings.episodes.toLowerCase()}
+                        </span>
                       )}
                     </div>
 

@@ -1,8 +1,10 @@
-// A tiny synthesized "ta-dum" using the Web Audio API — no asset needed.
-// Must be called from within a user gesture to satisfy autoplay policy.
+// A tiny synthesized intro motif using the Web Audio API — no asset needed.
+// Original three-note rising arpeggio (E4 → B4 → F#5, stacked fifths) with a
+// soft bell-like decay. Must be called from within a user gesture to satisfy
+// autoplay policy.
 let ctx: AudioContext | null = null;
 
-export function playTaDum() {
+export function playIntroMotif() {
   if (typeof window === "undefined") return;
   try {
     const AudioCtor =
@@ -14,21 +16,21 @@ export function playTaDum() {
     if (ctx.state === "suspended") void ctx.resume();
 
     const now = ctx.currentTime;
-    // two-note "ta" (lower) → "dum" (drop), the Netflix cadence
     const notes = [
-      { freq: 146.83, start: 0, dur: 0.18 }, // D3 "ta"
-      { freq: 110.0, start: 0.16, dur: 0.5 }, // A2 "dum"
+      { freq: 329.63, start: 0, dur: 0.9 }, // E4
+      { freq: 493.88, start: 0.11, dur: 0.9 }, // B4
+      { freq: 739.99, start: 0.22, dur: 1.3 }, // F#5
     ];
 
     for (const note of notes) {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
-      osc.type = "triangle";
+      osc.type = "sine";
       osc.frequency.value = note.freq;
 
       const t0 = now + note.start;
       gain.gain.setValueAtTime(0.0001, t0);
-      gain.gain.exponentialRampToValueAtTime(0.35, t0 + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.16, t0 + 0.015);
       gain.gain.exponentialRampToValueAtTime(0.0001, t0 + note.dur);
 
       osc.connect(gain).connect(ctx.destination);

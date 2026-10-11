@@ -1,4 +1,5 @@
 import type { CatalogItem } from "@/lib/types";
+import { IMAGE_SIZES, imageSources } from "@/lib/media";
 
 type Variant = "thumb" | "banner" | "tile";
 
@@ -104,14 +105,48 @@ function Motif({ idx, color }: { idx: number; color: string }) {
  * an editorial poster — dark base, a per-item accent motif, and the full title
  * set in the display face (no more generic gradient-with-initials look).
  */
+/** <picture> with AVIF + WebP sources (640w / 1600w) for an optimized screenshot. */
+export function Picture({
+  src,
+  alt,
+  variant,
+  className = "",
+  priority = false,
+}: {
+  src: string;
+  alt: string;
+  variant: Variant;
+  className?: string;
+  priority?: boolean;
+}) {
+  const sources = imageSources(src);
+  const sizes = IMAGE_SIZES[variant];
+  return (
+    <picture>
+      {sources && <source type="image/avif" srcSet={sources.avif} sizes={sizes} />}
+      {sources && <source type="image/webp" srcSet={sources.webp} sizes={sizes} />}
+      <img
+        src={src}
+        alt={alt}
+        className={className}
+        loading={priority ? "eager" : "lazy"}
+        fetchPriority={priority ? "high" : undefined}
+        decoding="async"
+      />
+    </picture>
+  );
+}
+
 export default function PlaceholderArt({
   item,
   variant = "thumb",
   className = "",
+  priority = false,
 }: {
   item: CatalogItem;
   variant?: Variant;
   className?: string;
+  priority?: boolean;
 }) {
   const src = variant === "banner" ? item.banner : item.image;
 
@@ -119,7 +154,8 @@ export default function PlaceholderArt({
     // Certificates ship as light, paper-colored scans. On thumbnails we mat them
     // on a dark frame (contain + accent glow) so they read as framed credentials
     // instead of bright rectangles fighting the dark UI. The banner stays full-bleed.
-    if (item.type === "certification" && variant !== "banner") {
+    // (generated /poster-* art is already dark and full-bleed — no mat needed)
+    if (item.type === "certification" && variant !== "banner" && !src.startsWith("/poster-")) {
       return (
         <div
           className={`relative h-full w-full overflow-hidden ${className}`}
@@ -135,26 +171,23 @@ export default function PlaceholderArt({
               background: `radial-gradient(80% 70% at 50% 0%, ${item.accent[0]}33, transparent 65%)`,
             }}
           />
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Picture
             src={src}
+            variant={variant}
             alt={`${item.title}${item.issuer ? ` certificate issued by ${item.issuer}` : " certificate"}`}
             className="absolute inset-0 h-full w-full object-contain p-3"
-            loading="lazy"
-            decoding="async"
           />
           <div className="art-grain pointer-events-none absolute inset-0 opacity-20" />
         </div>
       );
     }
     return (
-      // eslint-disable-next-line @next/next/no-img-element
-      <img
+      <Picture
         src={src}
+        variant={variant}
+        priority={priority}
         alt={`${item.title}${item.role ? ` — ${item.role}` : ""}`}
         className={`h-full w-full object-cover ${className}`}
-        loading="lazy"
-        decoding="async"
       />
     );
   }
