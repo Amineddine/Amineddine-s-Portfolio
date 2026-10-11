@@ -7,8 +7,8 @@ import { usePersona } from "@/context/PersonaContext";
 import { personas } from "@/data/personas";
 import { t } from "@/data/i18n";
 import type { Persona } from "@/lib/types";
-import ProfileGate from "./ProfileGate";
-import { personaIcon, ChevronDown } from "./icons";
+import ProfileGate, { AVATAR_BG, AvatarFace } from "./ProfileGate";
+import { ChevronDown } from "./icons";
 import { EASE_OUT } from "@/lib/motion";
 
 export default function PersonaSwitcher() {
@@ -18,7 +18,6 @@ export default function PersonaSwitcher() {
   const strings = t(locale);
 
   const current = persona ? personas[persona] : personas.developer;
-  const Icon = personaIcon[current.icon];
 
   const handlePick = (p: Persona) => {
     setOpen(false);
@@ -36,13 +35,10 @@ export default function PersonaSwitcher() {
         aria-label="Switch profile"
       >
         <span
-          className="relative flex h-8 w-8 items-center justify-center overflow-hidden rounded-md text-white sm:h-9 sm:w-9"
-          style={{
-            background: `linear-gradient(140deg, ${current.tileColor[0]}, ${current.tileColor[1]})`,
-          }}
+          className="block h-8 w-8 overflow-hidden rounded-[4px] sm:h-9 sm:w-9"
+          style={{ background: AVATAR_BG[current.id] }}
         >
-          <span className="art-grain absolute inset-0 opacity-40" />
-          <Icon className="relative h-4 w-4" strokeWidth={1.7} />
+          <AvatarFace persona={current.id} />
         </span>
         <ChevronDown
           width={16}
@@ -54,7 +50,7 @@ export default function PersonaSwitcher() {
       <AnimatePresence>
         {open && (
           <motion.div
-            className="fixed inset-0 z-[95] flex items-center justify-center bg-[#141414]/97 backdrop-blur-sm"
+            className="fixed inset-0 z-[95] flex items-center justify-center bg-[#141414]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
